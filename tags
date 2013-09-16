@@ -1,0 +1,64 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+ArgumentException	src/driver/Main.java	/^        ArgumentException(String message) {$/;"	m	class:Main.ArgumentException
+ArgumentException	src/driver/Main.java	/^    private static class ArgumentException extends Exception {$/;"	c	class:Main
+BLUE	src/ndfs/nndfs/Color.java	/^    CYAN, WHITE, RED, BLUE$/;"	e	enum:Color	file:
+CYAN	src/ndfs/nndfs/Color.java	/^    CYAN, WHITE, RED, BLUE$/;"	e	enum:Color	file:
+Color	src/ndfs/nndfs/Color.java	/^public enum Color {$/;"	g
+Colors	src/ndfs/nndfs/Colors.java	/^    Colors(Map<State, Color> map) {$/;"	m	class:Colors
+Colors	src/ndfs/nndfs/Colors.java	/^class Colors {$/;"	c
+CycleFound	src/ndfs/CycleFound.java	/^    public CycleFound() {$/;"	m	class:CycleFound
+CycleFound	src/ndfs/CycleFound.java	/^    public CycleFound(String message) {$/;"	m	class:CycleFound
+CycleFound	src/ndfs/CycleFound.java	/^    public CycleFound(int id) {$/;"	m	class:CycleFound
+CycleFound	src/ndfs/CycleFound.java	/^    public CycleFound(int id, String message) {$/;"	m	class:CycleFound
+CycleFound	src/ndfs/CycleFound.java	/^public class CycleFound extends Result {$/;"	c
+Main	src/driver/Main.java	/^public class Main {$/;"	c
+NDFS	src/ndfs/NDFS.java	/^public interface NDFS {$/;"	i
+NDFSFactory	src/ndfs/NDFSFactory.java	/^public class NDFSFactory {$/;"	c
+NNDFS	src/ndfs/nndfs/NNDFS.java	/^    public NNDFS(Graph graph, Map<State, Color> colorStore) {$/;"	m	class:NNDFS
+NNDFS	src/ndfs/nndfs/NNDFS.java	/^public class NNDFS implements NDFS {$/;"	c
+NoCycleFound	src/ndfs/NoCycleFound.java	/^    public NoCycleFound() {$/;"	m	class:NoCycleFound
+NoCycleFound	src/ndfs/NoCycleFound.java	/^    public NoCycleFound(String message) {$/;"	m	class:NoCycleFound
+NoCycleFound	src/ndfs/NoCycleFound.java	/^    public NoCycleFound(int id) {$/;"	m	class:NoCycleFound
+NoCycleFound	src/ndfs/NoCycleFound.java	/^    public NoCycleFound(int id, String message) {$/;"	m	class:NoCycleFound
+NoCycleFound	src/ndfs/NoCycleFound.java	/^public class NoCycleFound extends Result {$/;"	c
+RED	src/ndfs/nndfs/Color.java	/^    CYAN, WHITE, RED, BLUE$/;"	e	enum:Color	file:
+Result	src/ndfs/Result.java	/^    public Result(String message) {$/;"	m	class:Result
+Result	src/ndfs/Result.java	/^public class Result extends Throwable {$/;"	c
+WHITE	src/ndfs/nndfs/Color.java	/^    CYAN, WHITE, RED, BLUE$/;"	e	enum:Color	file:
+color	src/ndfs/nndfs/Colors.java	/^    void color(State state, Color color) {$/;"	m	class:Colors
+colors	src/ndfs/nndfs/NNDFS.java	/^    private Colors colors; $/;"	f	class:NNDFS	file:
+createMCNDFSNaive	src/ndfs/NDFSFactory.java	/^    public static NDFS createMCNDFSNaive(Graph graph, Map<State,$/;"	m	class:NDFSFactory
+createNNDFS	src/ndfs/NDFSFactory.java	/^    public static NDFS createNNDFS(Graph graph, $/;"	m	class:NDFSFactory
+dfsBlue	src/ndfs/nndfs/NNDFS.java	/^    private void dfsBlue(State s) throws Result {$/;"	m	class:NNDFS	file:
+dfsRed	src/ndfs/nndfs/NNDFS.java	/^    private void dfsRed(State s) throws Result {$/;"	m	class:NNDFS	file:
+dispatch	src/driver/Main.java	/^    private static void dispatch(File file, String version, int nrWorkers)$/;"	m	class:Main	file:
+driver	src/driver/Main.java	/^package driver;$/;"	p
+graph	src/ndfs/nndfs/NNDFS.java	/^    private Graph graph;$/;"	f	class:NNDFS	file:
+hasColor	src/ndfs/nndfs/Colors.java	/^    boolean hasColor(State state, Color color) {$/;"	m	class:Colors
+init	src/ndfs/NDFS.java	/^    public void init();$/;"	m	interface:NDFS
+init	src/ndfs/nndfs/NNDFS.java	/^    public void init() {}$/;"	m	class:NNDFS
+main	src/driver/Main.java	/^    public static void main(String[] argv) {$/;"	m	class:Main
+map	src/ndfs/nndfs/Colors.java	/^    private Map<State, Color> map;$/;"	f	class:Colors	file:
+ndfs	src/ndfs/CycleFound.java	/^package ndfs;$/;"	p
+ndfs	src/ndfs/NDFS.java	/^    public void ndfs() throws Result;$/;"	m	interface:NDFS
+ndfs	src/ndfs/NDFS.java	/^package ndfs;$/;"	p
+ndfs	src/ndfs/NDFSFactory.java	/^package ndfs;$/;"	p
+ndfs	src/ndfs/NoCycleFound.java	/^package ndfs;$/;"	p
+ndfs	src/ndfs/Result.java	/^package ndfs;$/;"	p
+ndfs	src/ndfs/nndfs/NNDFS.java	/^    public void ndfs() throws Result {$/;"	m	class:NNDFS
+ndfs.nndfs	src/ndfs/nndfs/Color.java	/^package ndfs.nndfs;$/;"	p
+ndfs.nndfs	src/ndfs/nndfs/Colors.java	/^package ndfs.nndfs;$/;"	p
+ndfs.nndfs	src/ndfs/nndfs/NNDFS.java	/^package ndfs.nndfs;$/;"	p
+nndfs	src/ndfs/nndfs/NNDFS.java	/^    private void nndfs(State s) throws Result {$/;"	m	class:NNDFS	file:
+printUsage	src/driver/Main.java	/^    private static void printUsage() {$/;"	m	class:Main	file:
+runMCNDFS	src/driver/Main.java	/^    private static void runMCNDFS(File file) throws FileNotFoundException {$/;"	m	class:Main	file:
+runNDFS	src/driver/Main.java	/^    private static void runNDFS(Map<State, Color> colorStore,$/;"	m	class:Main	file:
+serialVersionUID	src/driver/Main.java	/^        private static final long serialVersionUID = 1L;$/;"	f	class:Main.ArgumentException	file:
+serialVersionUID	src/ndfs/CycleFound.java	/^    private static final long serialVersionUID = 1L;$/;"	f	class:CycleFound	file:
+serialVersionUID	src/ndfs/NoCycleFound.java	/^    private static final long serialVersionUID = 1L;$/;"	f	class:NoCycleFound	file:
+serialVersionUID	src/ndfs/Result.java	/^    private static final long serialVersionUID = 1L;$/;"	f	class:Result	file:
