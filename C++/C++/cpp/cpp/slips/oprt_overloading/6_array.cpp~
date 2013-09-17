@@ -1,0 +1,73 @@
+#include<iostream>
+using namespace std;
+
+class matrix
+{
+int m,n;
+int **mat;
+public:
+matrix();
+void accept();
+void display();
+};
+matrix::matrix(){}
+
+void matrix::accept()
+{
+int m,n;
+cout<<"\n\t\tEnter the order of matrix ";
+cin>>m>>n;
+
+mat= new int*[m];
+for(int i=0;i<m;i++)
+mat[i]=new int[n];  //mat[i] contains a row of matrix
+
+for( i=0;i<m;i++)
+{
+for(int j=0;j<n;j++)
+{
+cout<<"\n\t\tEnter element <<["<<i<<"]["<<j<<"] : ";
+cin>>mat[i][j];
+}
+}
+
+}
+
+
+int menu()
+{
+int ch;
+cout<<"\n\t\t0)Exit";
+cout<<"\n\t\t1)Add ";
+cout<<"\n\t\t2)Equal ";
+cout<<"\n\t\tEnter choice : ";
+cin>>ch;
+return ch;
+}
+
+main()
+{
+//matrix m;
+int ch;
+while((ch=menu())!=0)
+{
+
+switch(ch)
+{
+case 1:
+
+break;
+
+case 2://equal
+matrix m1,m2;
+m1.accept();
+m1.display();
+break;
+
+default:break;
+
+}//swi
+
+}//while
+
+}

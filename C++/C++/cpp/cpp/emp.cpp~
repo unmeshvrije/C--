@@ -1,0 +1,133 @@
+#include<iostream>
+#include<fstream>
+using namespace std;
+
+class emp
+{
+int id,sal;
+char name[20];
+
+public:
+void getdata();
+void putdata();
+
+};
+
+void emp::getdata()
+{
+int id,sal;
+char name[20];
+cout<<"\nEnter : ";
+cin >>id>>name>>sal;
+
+ofstream fout;
+fout.open("emp.txt",ios::app);
+fout<<"\n"<< id <<"\t"<< name<< "\t"<< sal;
+
+fout.close();
+}
+
+void emp::putdata()
+{
+int id,sal;
+char name[20];
+ifstream fin;
+fin.open("emp.txt",ios::in);
+while(!fin.eof())
+{
+fin >> id >> name >> sal;
+cout<<"\n"<<id<<"\t"<<name<<"\t"<<sal;
+}
+fin.close();
+}
+
+
+
+                                                                                                 
+int menu()
+{
+int c;
+cout<<"\n\t\t0)Exit";
+cout<<"\n\t\t1)Append";
+cout<<"\n\t\t2)Display";
+cout<<"\n\t\t3)Delete";
+cout<<"\n\t\t4)Modify";
+cout<<"\n\t\tEnter choice";
+cin>>c;
+return c;
+}
+
+
+void find(int n)
+{
+cout<< n;
+int id,sal;
+char name[20];
+ifstream fp;
+fp.open("emp.txt",ios::in);
+int cnt=0;
+while(!fp.eof())
+{
+fp>>id>>name>>sal;
+if(id!=n)
+{ofstream temp;
+temp.open("t.txt",ios::app);
+temp<<"\n"<<id<<"\t"<<name<<"\t"<<sal;
+//cnt++;
+//getchar();
+//getchar();
+
+temp.close();
+ifstream temp2;
+temp2.open("t.txt",ios::in);
+while(!temp2.eof())
+{
+temp2 >>id>>name>>sal;
+cout<<"\n"<<id<<"\t"<<name<<"\t"<<sal;
+}
+temp.close();
+}
+}
+return;
+}
+
+int main()
+{
+int c;
+emp e;
+while((c=menu())!=0)
+{
+switch(c)
+{
+case 1:
+e.getdata();
+                                                                                                 
+break;
+                                                                                                 
+case 2:
+e.putdata();
+break;
+
+
+case 3://delete
+cout<<"\n\t\tEnter id";
+int n;
+cin>>n;
+
+find(n);
+
+break;
+
+case 4://modify
+break;
+
+}//swi
+
+}//while
+
+
+
+return 0;
+}
+
+

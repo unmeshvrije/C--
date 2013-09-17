@@ -1,0 +1,77 @@
+#include<iostream>
+#include<fstream>
+#include<ios>
+#include<iomanip>
+#define MAX 12
+using namespace std;   //purpose of fn ?
+class File
+{
+fstream fp;
+char fn[MAX];
+public:
+File(char *);
+File();
+void display();
+};
+File::File(){}
+
+File::File(char *temp)
+{
+fp.open(temp,ios::in);
+int t;
+if((t=fp.rdstate()) !=0)
+{
+int i=0;
+cout<<"\n\t\tNot properly opened in read mode : ";
+fp.clear();
+fp.open(temp,ios::out);
+t=fp.rdstate();
+cout<<"\nt="<<t;
+char c;
+while((c=getchar())!='~')
+{
+fp.put(c);
+fn[++i]=c;
+}
+}
+else//file already exists
+{
+char c;
+int i=0;
+fp.seekg(0,ios::beg);
+while(!fp.eof())
+{
+fp.get(c);
+if(!fp.eof())
+{
+fn[++i]=c;
+cout<<c;
+}
+}
+}//else
+fp.close();
+fp.open(temp,ios::in|ios::out);
+}
+
+void File::display()
+{
+for(int i=0; fn[i]!='\0';i++)
+cout<<fn[i];
+}
+
+main()
+{
+char n1[20],n2[20];
+cout<<"\n\t\tEnter filename : ";
+cin>>n1;
+cout<<"\n\t\tEnter filename : ";
+cin>>n2;
+
+File f1("f1.txt");
+File f2("f2.txt");
+
+
+f1.display();
+//File f3;
+//f3=f1+f2;
+}

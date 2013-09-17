@@ -1,0 +1,6 @@
+1	ponds	32	49
+1	cinthol	12	12
+1	ponds	15	50
+2	lux	20	10
+
+5	parle	20	5

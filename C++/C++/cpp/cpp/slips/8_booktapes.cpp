@@ -1,0 +1,165 @@
+#include<iostream>
+using namespace std;
+
+class publication
+{
+  char title[30];
+  int price;
+
+public:
+  void getpub ();
+  void putpub ();
+};
+
+void
+publication::getpub ()
+{
+  cout << "\n\n\t\tEnter the title of publication : ";
+  cin >> title;
+  cout << "\n\n\t\tEnter the price : ";
+  cin >> price;
+}
+
+void
+publication::putpub ()
+{
+  cout << "\n" << title << "\t" << price;
+}
+
+/*************************CLASS BOOK***********************************************/
+class book:public publication
+{
+  int pgcnt;
+public:
+  void getbook ();
+  void putbook ();
+  void cmp (int);
+};
+
+void
+book::getbook ()
+{
+  this->getpub ();
+  //getpub();
+  cout << "\n\n\t\tEnter the pages of the book : ";
+  cin >> pgcnt;
+}
+
+void
+book::putbook ()
+{
+  this->putpub ();
+  cout << "\t" << pgcnt;
+}
+
+/*************************CLASS TAPE***********************************************/
+class tape:public publication
+{
+
+  int time;			//in minutes
+public:
+  void gettape ();
+  void puttape ();
+  void cmptape (int);
+};
+
+void
+tape::gettape ()
+{
+  this->getpub ();
+  cout << "\n\n\t\tEnter the time of the tape in minutes : ";
+  cin >> time;
+}
+
+void
+tape::puttape ()
+{
+  this->putpub ();
+  cout << "\t" << time;
+}
+/*************************menu***********************************/
+int
+menu ()
+{
+  int ch;
+  cout << "\n\t\t0)Exit";
+  cout << "\n\t\t1)Dispaly all books";
+  cout << "\n\t\t2)Dispaly all tapes";
+  cout << "\n\t\t3)All books having pages > n";
+  cout << "\n\t\t4)All tapes having time >= n";
+  cout << "\n\t\tEnter the choice : ";
+  cin >> ch;
+  return ch;
+}
+/*********************************MAIN*****************************************/
+int
+main ()
+{
+  int ch, sizeb, sizet;
+  system ("clear");
+
+  book b[10];//array of objects
+  tape t[10];
+  cout << "\n\t\tHow many books you want :";
+  cin >> sizeb;
+
+  for (int i = 0; i < sizeb; i++)
+    b[i].getbook ();
+
+  cout << "\n\t\tHow many tapes you want :";
+  cin >> sizet;
+
+  for (int i = 0; i < sizet; i++)
+    t[i].gettape ();
+
+  while ((ch = menu ()) != 0)
+    {
+      switch (ch)
+	{
+	case 1:
+	  cout <<
+	    "\n\t\tThe record of books is :\n\t\t\nTitle\tPrice\tNumber_of_pages_in_books";
+	  for (int i = 0; i < sizeb; i++)
+	    b[i].putbook ();
+	  break;
+	case 2:
+
+	  cout <<
+	    "\n\t\tThe record of tapes is :\n\t\t\nTitle\tPrice\tTime_of_tapes_in_minutes";
+	  for (int i = 0; i < sizet; i++)
+	    t[i].puttape ();
+	  break;
+	case 3:
+	  int n;
+	  cout << "\n\t\tEnter 'n':";//no of pages
+	  cin >> n;
+	  for (int k = 0; k < sizeb; k++)
+	    b[k].cmp (n);
+	  break;
+	case 4:
+	  cout << "\n\t\tEnter 'n':";	// time
+	  cin >> n;
+	  for (int k = 0; k < sizet; k++)
+	    t[k].cmptape (n);
+	  break;
+
+	default:
+	  break;
+	}			//swi
+    }				//while
+  return 0;
+}
+
+void
+book::cmp (int n)
+{	// 100
+  if (this->pgcnt > n)
+    this->putbook ();
+}
+
+void
+tape::cmptape (int n)
+{
+  if (this->time >= n)
+    this->puttape ();
+}

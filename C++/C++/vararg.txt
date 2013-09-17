@@ -1,0 +1,23 @@
+va_start(argp, name)
+
+This will initialize argp with the argument which is immediately after "name"
+
+
+va_end(argp)
+This macro is to indicate that we are finished with the use of "argp"
+
+argp is of type va_list : stands for
+"variable argument" list
+
+<type> va_arg(argp, <type>)
+
+This macro extracts <type> type of argument from
+"argp"  and returns
+
+
+
+
+unmesh.joshi126@gmail.com
+
+
+

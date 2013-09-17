@@ -1,0 +1,889 @@
+Characteristics of OOP
+
+1)Emphasis on data rather than on procedure
+2)Program is divided into "OBJECTS".
+3) "Data Structures" are designed such that they characterize the objects.
+4)Functions that operate on data of object are tied together in data structure.
+5) Data is hidden and cannot be accessed by
+external functions
+6) Objects may communicate with each other through functions
+7)New data and functions can be easily added 
+whenever necessary.
+8) Follows "BOTTOM-UP" approach in program design.
+
+Definition of Object Oriented Programming:
+Object Oriented Programming is an approach that provides a way of modularizing program by creating partitioned memory area for both data and functions that can be used as templates for creating copies of such modules on demand.
+
+
+Objects:
+Objects are basic run-time entities in an object oriented systems.
+
+Classes:
+Class is a template for an object.
+The entire set of data and code of an object can be made user defined data type with the help of "CLASS".
+
+*Object is  a variable of type class
+
+Class is collection of objects of similar type.
+
+e.g.
+  mango,guava,apple are objects of class fruit.
+  
+  class fruit
+  {
+
+    // data section
+   char color[20];
+   char taste[10];
+   
+   ripe();
+   void setColor(char temp[])
+   {
+       strcpy(this->color,temp);
+   }
+   
+  };
+	main ()
+	{
+	  fruit mango;
+	  fruit apple;
+	  fruit guava;
+	  mango.setColor("yellow");
+	  apple.setColor("red");
+	  guava.setColor("green");
+	}
+
+Data Abstraction
+Abstraction refers to act of representing essential features without nicluding the background details or explanations.
+
+Encapsulation:
+The wrapping up of data and functions into a single unit(called as class) is known as "encapsulation".
+
+Only functions defined in the class can access the data. Outside functions can not access that data.
+Functions provide "interface"  between object's data and the program.
+This insulation of data from direct access by the program is called "DATA HIDING" Or "INFORMATION HIDING".
+
+
+*Classes use the concept of abstraction and are defined as a list of ATTRIBUTES such as size ,weight,cost, and FUNCTIONS to operate on these  attributes.
+The attributes are sometime called as "DATA MEMBERS" because they hold "information".
+The functions are sometimes called "METHODS" or "MEMBER FUNCTIONS".
+
+***Since classes use the concept of data abstraction , they are known as Abstract Data Types (ADT).
+
+Examples of Pure OOP languages:
+   Java,Simula,Smalltalk,Eiffel
+   
+Examples of Object based language : Ada
+
+C++ is NOT pure OO langugae.
+ because 
+ We can write C-like programs in C++.
+ like 
+  class A
+  {
+  };
+  main()
+  {
+  }
+  C++ is EXTENDED CONVENTIONAL language.
+
+
+Input Operator (>>)
+
+cin >> number;
+This statement is input statement in c++.
+This causes program to wait for the user to type the number.
+The opeartor >> is called EXTRACTION operator or "get from " opeartor.
+cin is built in object of standard input stream class. Here standard input stream corresponds to keyboard.
+
+
+Cascadation of I/O operators:
+
+e.g.
+cout<<"\nSum of "<< a <<"and " << b <<" is" <<c;
+
+
+#include<iostream>
+
+ This directive causes the PREPROCESSOR to add the contents of the iostream file to the program.
+  It contains declarations of cin,cout,<<,>>,...
+  In older versions of c++, people used to write #include<iostream.h>
+  
+  The header file iostream should be included at the beginning of all programs which use inout/output statements.
+  
+Q.What is Namespace?
+  Namespace is new concept introduced by ANSI C++ committee.
+  This defines a scope  for the identifiers that are used in a program.
+  For using the identifiers defined in the namespace scope, we must include the "using"
+  directive.
+  e.g.
+  using namespace std;
+  
+  Here, std is the namespace where ANSI C++ standard class libraries are defined.
+  All ANSI C++ programs must include this directive.This will bring all the identifiers defined in "std" to the current global scope.
+  "using" and "namespace" are new keywords in C++.
+  
+**Return type of main in C++ : int
+  
+  
+	Chp3. Tokens,Expressions
+
+1) Major difference between C and C++ is the limit on the length of a name. While ANSI C recognizes only first 32 characters in name, ANSI C++ has no limit on its length,all the characters in a name are significant.  
+
+2) wchar_t  type is a wide-character literal introduced by ANSI C++ and it is intended for characters that do not fit into a single byte.
+  Wide character literals begin with letter   'L'.
+ 
+3)
+   void *gp;  // generic pointer
+   
+   A generic pointer can be assigned a pointer value of any basic data type, but it may not be dereferenced.
+   e.g.
+   int *ip;  // int pointer 
+   gp = ip; //assign int pointer to void ptr
+   
+   above 2 are valid statements, but
+   
+   *ip = *gp; // Invalid statement
+   because it would not make sense to dereference a pointer to a void value.
+
+/**************************************/
+  void *gp;
+  int  *ip;
+  
+  gp = ip;  // allowed in both  C and C++
+  ip = gp;  // allowed in only C
+  
+  ip = (int) gp; // In C++ we have to use 			typecasting
+
+
+4) Use of constants :
+
+In both C and C++ we use keyword "const" to declare constant variable that can not be changed through out the program.
+
+Difference in implementation :
+
+  const int size  =10; //allowed in both
+  char arr[size]; // allowed in C++ not in C
+  
+  const size = 10;
+  is same as 
+    const int size=10;
+    
+ # C++ requires constants to be initialized. ANSI C does not require an initializer; if none is given , it initializes the const to '0'.
+ e.q.
+ 	const int x;  // Error in C++
+ 	/* Allowed in C , x automatically initialized to '0'*/
+ 	
+ 5) Type Compatibility :
+
+ In C, characters are stored as ints, hence
+
+ 	sizeof('x') is same as  sizeof(int)
+ 
+ In C++, char is not PROMOTED to the size of int and hence,
+   	sizeof('x') is same as sizeof(char).
+   	
+6) Declaration of variables :
+
+  In C, we can declare variables only at the beginning of the scope.
+  In C++, we can declare variables ANYWHERE in the scope.
+  
+  e.g.
+  In C -
+  main()
+  {
+    int a,b,c;
+    float r,t,y;
+  	if(..)  
+  	{
+  	   char c,d,e;
+  	   ...
+  	}
+  	else
+  	{
+ 	....
+  	}
+    /**we cannot declare variable here*/
+  }
+  
+In C++ we can write :
+	int main()  
+	{
+	   float a,b,c;
+	int sum = 0;
+	   
+	   for(int i =0; i < 5 ;i++)
+	   {
+	   
+	    ....
+	   }
+	
+	   float avg = sum /(i-1);// Dynamic initialization of variable
+	
+	}
+
+#Operators in C++ : 
+
+:: 	Scope resolution operator
+::*	 Pointer-to-member declarator
+->*	Pointer-to-member operator
+.*	Pointer-to-member operator
+delete  Memory release operator(free in C)
+endl	Line feed operator
+new	memory allocation opreator
+setw	Field width operator
+
+
+  Chp4: Functions
+  
+Function Overloading :
+
+ Overloading refers to the use of the same thing for different purposes.
+ C++ permits overloading of functions.
+ It means we can use the same function name to create functions that perform a variety of different tasks,this is known as "FUNCTION POLYMORPHISM" in OOP.
+ 
+ Usingthe concept of function overloading, we can design a family of functions with one function name but with DIFFERENT arg. lists.
+ e.g.add() function overloaded as below:
+ 
+  	//Declarations
+int add(int a , int b);//prototype1
+int add(int a , int b , int c);//prototype2
+double add(double x , double y);//prototype3
+
+	//Function Calls
+cout << add(5,10); //use prototype 1
+cout << add(5,10, 15); //use prototype 2
+cout << add(12.5,10.7); //use prototype 3
+
+chp4 : 
+
+
+Inline functions :
+
+main()
+{
+
+  f()		f()
+  		{
+  ;;		..
+  ;;		..
+  f()
+  ..  ..	}
+  ..
+  f()
+  ...
+
+}
+
+ C solves this problem by Macros.
+ C++ solves this problem by inline functions.
+ 
+ An inline function is  function that is expanded in line when it is invoked. i.e. compiler replaces the function call with the corresponding function code.
+ 
+ e.g.
+ 
+ inline	function-header
+ {
+ 	//function body
+ }
+ 
+ inline is a "hint" to compiler , i.e. Compiler may not expand the function in some situations like:
+ 1) for functions returning values, if a loop,switch or goto exists in function
+ 2)For functions not returning values, if a return statement exists
+ 3) If function contain static variables
+ 4) If function is recursive.
+
+
+Constructor:
+It is a special member function which has same name as that of class.
+Constructor RETURNS NOTHING , not even a void.
+Constructor NEVER ALLOCATES MEMORY, it INITIALIZES already ALLOCATED MEMORY.
+e.g.1)
+	class A
+	{
+		int a;
+		char c;
+		A()  //Default constructor
+		{
+		}
+		//constructor with args
+		A(int a,char c)
+		{
+		
+		}
+	
+	};
+
+e.g.2) 
+	class Date
+	{
+		//private data members
+		int day,month,year;
+	   Date(){}//Default constructor
+	   Date(int d)
+	   {
+	     day = d;
+	   }
+	   Date(int d,int m)
+	   {
+	     day = d;
+	     month = m;
+	   }
+	   Date(int d,int m,int y)
+	   {
+	     day = d;
+	     month = m;
+	     year = y;
+	   }
+	   
+	   ~Date()//destructor
+	   {
+	     // here we can write code for
+	     //releasing file handles,
+	    //database connections etc.
+	    //i.e.code that must run before 
+	   //an object gets destroyed.
+	   }
+
+	}
+
+Destructor:
+
+It is also special member function which is used to clean up resources.
+
+A constructor initializes an object.
+It creates the environment in which the member functions operate.Sometimes creating the environment involves acquiring resources-such as a file, a lock or some memory that must be released after use.
+Thus, we need a function that is guaranteed to be invoked when an object is destroyed.
+Such functions are called "Destructors".
+
+Destructors NEVER destroys objects,they typically clean up and release resources.
+
+Destructors are called implicitly when an object goes out of scope,object on free store is deleted etc.
+
+*****Typical use of Destructors is : when we allocate memory using "new" operator in constructor ,then we MUST write Destructors to release it using "delete" operator.
+
+
+Q.What is 'this'?
+"this" is constant pointer, points to the caller object of the method.
+In any member function of class it signifies the CURRENT OBJECT.
+
+e.g.
+	class Stack
+	{
+		int max;
+		int data;
+		void push(int data)
+		{	      //argument
+		  this->data  =	 data;
+		}//class Stack's data
+		
+	};
+	main()
+	{
+	
+	 Stack s;
+	 s.push(4);
+	}
+
+
+#new operator:
+It is used to allocate memory dynamically .
+Similar to malloc in 'C'.
+malloc is function, new is operator.
+
+
+e.g.
+  int i;  =   int *ptr;
+  		  ptr = new int;
+  		  //creates memory for int
+  		  
+  Stack s;	=  Stack *ptr;
+  			ptr = new Stack();
+  
+
+  int *ptr = new int(5);
+  //creates memory  for 5 integers
+
+
+delete operator:-
+It is memory release operator.
+Similar to free() functio in 'C'.
+
+Syntax: 
+	delete ptr;
+	
+	int *ptr = new int;
+	..
+	..
+	delete ptr;
+ 
+
+Copy Constructor|:
+
+Copy Constructor is used to copy the data of one OBJECT into another OBJECT at the time of creating object.
+Copy Constructor takes REFERENCE of the object of the SAME type of which it is a member.
+It can't receive the object of same type of which it is a member.
+e.q.
+  for String class :
+    String(String s)//wrong copy constructor
+   {
+   ...
+   }
+   main()
+   {
+      String s1("hello");
+      String s2 = s1;// this call results in
+      
+      String s = s1;// call to copy constr.
+      String s = s1;
+      String s = s1;
+      .
+      .
+      .
+      // infinite recursion
+   }
+
+So , corrected version of copy constructor :
+
+	String(String &s)
+	{
+	  this->length = s.length;
+	  this->str= new char(this->length);
+	  strcpy(this->str , s.str); 
+	}
+
+
+	Chapter 7.Operator Overloading
+	
+	C++ has the ability to provide the operators with a special meanings for a data type. The mechanism of giving such special meanings to an operator is known as "operator ovaerloading".
+	
+***Q.Which operators can NOT be overloaded
+
+  1) Class member access operator (. , .*)
+  2) Scope Resolution Operator(::)
+  3) Size operator (sizeof)
+  4) Conditional operator (?:)
+  
+  Note: When operator is overloaded, its original meaning is not lost,
+  e.g.
+   If we have overloaded + operator for String class
+   then
+   String s1("abc");
+   String s2("def");
+   String s3 = s1 + s2; //Concatenation
+   int a=1,b=2;
+   c= a+b ;// integer addition
+   //i.e. original meaning is retained.
+   
+   
+   Defining Operator Overloading:
+   
+   General Form of operator function:
+return_type classname ::operator op(arglist)
+{
+	Function body // task defined
+}
+
+Description: To define an additional task to an opeartor, we must specify what it means in relation to the class to which the operator is applied. This is done with the help of special function called "operator function".
+   
+   
+   VVIMP:
+1) Operator functions must be either member functions (NON-STATIC) or FRIEND functions.
+2)FRIEND function will have 
+  - Only one argument for unary operators
+  -      Two arguments for binary operators
+  
+3)Member function will have
+   - NO argument for unary operators
+   -Only one argument for binary operator
+   because the object is used to invoke the member function is passed IMPLICITLY (this) and it is available in member function.
+   
+
+Type Conversion
+
+int a=10;
+int b ='A'//automatic type conversion
+
+For user defined type like class e.g.
+class year
+{
+..
+};
+
+class day
+{
+..
+};
+
+1) year y  = 4; //conversion from constant to class type(user defined type)
+
+2) year y = x;// Conversion from built-in type(variable) to class type.
+
+Both above can be achieved using cosntructor.
+
+ year y;// constructor runs for y.
+ 
+ y = x;// constructor runs for unnamed obj.
+ 
+
+  8. Inheritance 
+  
+protected
+
+In an ideal world, private members would always be hard-and-fast private, but in real projects there are times when you want to make something hidden from the world at large and yet allow access for members of derived classes. The protected keyword solves this problem. It says, “This is private as far as the class user is concerned, but available to anyone who inherits from this class.”
+
+  Different Visibility modes while inheriting:
+  B
+  |  
+  V
+  A
+  1) private inheritance:
+  
+  class A: private B {...}; or
+  class A: B {...}; //default inheritance is 				private
+  
+  B's public members become PRIVATE of A
+  B's protected members become PRIVATE of A.
+  B's private members are inherited but NOT ACCESSIBLE.
+  
+  2) public inheritance:
+  
+  class A: public B{...};
+  B's public members become PUBLIC of A
+ B's protected members become PROTECTED of A.
+  B's private members are inherited but NOT ACCESSIBLE.
+
+  3) protected inheritance:
+  class A: protected B{...};
+  B's public members become PROTECTED of A
+ B's protected members become PROTECTED of A.
+  B's private members are inherited but NOT ACCESSIBLE.
+
+private inheritance:
+
+When you inherit privately, you’re “implementing in terms of;” that is, you’re creating a new class that has all of the data and functionality of the base class, but that functionality is hidden, so it’s only part of the underlying implementation. The class user has no access to the underlying functionality, and an object cannot be treated as a instance of the base class
+
+
+
+When you’re inheriting, the base class 
+defaults to private, which means that all of the public member functions are private to the user of the new class. Normally, you’ll make the inheritance public so the interface of the base class is also the interface of the derived class. However, you can also use the protected keyword during inheritance.
+
+Protected derivation means “implemented-in-terms-of” to other classes but “is-a” for derived classes and friends. 
+
+
+ 	Virtual Base Class :
+
+ The Amphibian class has 2 direct base classes - 'Terrestrial' an 'Aquatic' 
+ Both these calsses have common base class "Animal". The Amphibian  inherits traits of Animal (say int height,weight;). It is shown using dotted line.
+  In this case Animal is called INDIRECT BASE CLASS
+  
+  another example:
+  
+  		Grandfather
+  	
+  	Parent1		 	Parent2
+  		  Child
+ 
+ The problem here is : All public and protected members of Grandfather are inherited TWICE into 'child' class., first via parent1 and second via parent2. This introduces 'AMBIGUITY'.
+ 
+ Solution: 
+  Make common base class as virtual base class while declaring the direct or intermediate base classes as shown below:
+  
+  class Grandfather
+  {
+  .....
+  };
+  
+  class Parent1 : public virtual Grandfather
+  {
+  ....
+  };
+  class Parent2 : virtual public Grandfather
+  {
+  ....
+  };
+  class Child: public Parent1,public Parent2
+  {
+  ..// only one copy of Grandfather's 
+    //  attributes will be inherited!
+  };
+
+
+  * Imp Rules for Inheritance:
+  1) Derived object can access its own members and inherited members from bsae class.
+  2)Base class can access its own members but CAN NOT access derive's member except inherited one.
+  3)Base class ptr. is made compatible to derived class memory("Promise less,deliver more" principle).
+  
+
+	Chp9: Pointers, Polymorphism and
+	 	Virtual Functions
+
+  Some facts about C++ pointers:
+  
+  1) the pointers, which are not initialized in the program are called NULL pointers. 
+  If we dereference such pointer, then it causes a RUN TIME ERROR (as NULL can not be dereferenced). 
+  So it is essential that pointer must ne initialized before dereferencing it.
+  
+  e.g.
+  main()
+  {
+	int a=4;    
+    int *p;
+cout << *p; //causes run time error     
+
+/*
+ 	int *p=&a;
+ 	cout << *p; //will print 4
+
+*/
+  }
+	 	
+2) Arithmatic supported for a pointer:
+
+# A pointer can be incremented(ptr++)	
+  or decremented(ptr--) 	
+
+# Any integer can be added to or subtracted from a pointer.
+
+# One pointer can be subtracted from another
+  but CAN NOT be added to other
+	 	
+
+3) There is no error checking of array bounds in C++. Suppose we declare an array of size 25. The compiler issues no warning if we try to access 26th location. It is the programmer's task to check the array limits.
+
+	char a[25];
+	a[25] =3;// No warning ,but run 
+		  time error.
+
+	Pointer to function
+	
+Pointer to function is also called CAllBACK FUNCTION. We can use these function Pointers to refer to a function.
+Use: 1)We can allow a C++ program  to select a function dynamically at run time.
+	2)We can also pass a function as an argument to another function. Here the function is passed as pointer.
+	
+ C++ provides 2 types of function Pointers:
+ 1) Function Pointers that point to static member functions.
+ 2) Function Pointers that point to 
+NON-static member functions.
+
+Syntax:
+
+return_type_of_fun(* ptr_name)(argument list of fun);
+
+e.g. void (*ptr) (int,int)
+Description: ptr is pointer to function which returns void and expects 2 params - both are integers.
+ 
+
+  Constructor in Derived Class:
+  
+  As long as no base class constructor takes any arguments,the derived class need not have a constructor function. However if any base class contains a constructor with one or more arguements, then it is 
+MANDATORY(compulsory) for the derived class to have constructor and pass arguements.
+
+In case of multiple inheritance, the base classes are constructed in the order in which they appear in the declaration of the derived class.
+
+In multilevel inheritance, the constructors will be executed in the order of inheritance.
+
+
+General form of derived class constructor:
+
+
+Derived_constructor (arg1,arg2,...ar)
+		:Base1(arglist1),
+		:Base2(arglist2),
+		:Base3(arglist3),
+		...
+		...
+		...
+		:BaseN(arglistN)
+		{
+		  //body of derived constructor
+		}
+		
+		
+	 	
+(applies for C also)	 	
+
+
+	 	
+	Virtual Functions
+
+class Base
+{
+  public:
+	display()
+	{
+	 cout<<"Base";
+	}
+};
+
+class Derived : public Base
+{
+  public:
+	display()
+	{
+	 cout<<"Derived";
+	}
+};
+
+
+* Base class pointer is always linked with base class function, because linking the function call with function definition based on the  type of pointer.
+
+* Base class ptr may  link with Derived class function when linking is dependent of TYPE of MEMORY allocated to the pointer.
+
+Linking is the word used to describe the process of making the address of function available to the function call.i.e.  linking the function call to respective function definition.
+
+Linking is performed by LINKER.
+
+	Compilation produces object code
+	   |
+	   V
+	Linking  produces object code with 
+		     library modules code 
+		     expanded
+	   
+Linker makes the linking and certain other changes in the object module to make ot ready to execute program (executable file)	   
+
+Q. What is static linking(binding)?
+ (normal member functions and static functions)
+Which function definition is to execute for a particular fun call is decided BEFORE the execution and accordingly the linking  takes place BEFORE the execution. It is called as "Static Linking" or "Early Binding".
+
+Q.What is Dynamic Linking?
+
+If the information about which fun call should be linked to which definition is not available during compilation process
+i.e. not predecided before execution
+e.g.
+  Base *ptr; 
+  // here compiler will think that
+  ptr can point to Base memory
+  and can also point to Derived memory.
+  
+  Here linker fails to decide the exact linking before execution.
+  
+  Since, which fun call should invoke which fun definition is decided DURING execution(at RUN TIME) it is called "Late Binding" or "Run-time Linking".
+  
+ Q.How C++ handles Run-time polymorphism?
+ With the help of virtual function concept, C++ allows base ptr to point to function definition according to the memory allocated to the ptr.
+ Looking at the Type Of ADDRESS the ptr holds in it(i.e. memory allocated to ptr),
+ linker introduces the code in exe. This code changes (assigns) the address of function definition to pointer at RUN-TIME
+ 
+ To do this Run-time linking, functions should have SAME SIGNATURE (prototype).
+ 
+ Even if 2 functions exist with similar prototype, linker differentiates between 2 functions and link to the appropriate fun depending upon the type of memory the ptr is pointing to. Hence, this is also considered as type of "polymorphism". Here the polymorphism works on type of memory the pointer is pointing to at run-time. HEnce it is called "Run-Time Polymorphism".
+  
+
+(VVIMP)  Rules for Virtual Functions
+
+When virtual functions are created for implementing LATE BINDING, we shoule observe some basic rules:
+
+1)The virtual functions must be member function of some class.
+2)virtual functions can NOT be static members.
+3)They are accessed by using object pointers.
+4) A virtual function can be a friend of another class.
+5) A virtual function in base class must be defined, even though it may not be used.
+6) The prototypes of the base class version of virtual function and all the derived class versions must be indentical. If 2 functions with same name have different prototypes,C++ considers them as "overloaded" functions and virtual mechanism is ignored.
+****7)We CAN NOT virtual Constructors, but we  CAN HAVE virtual destructors.
+8)While a base pointer can point to any type of the derived object, the reverse is not true.i.e. We can't use derived ptr to  access the object of base type.
+9)When the base ptr points to a derived class, incrementing or decrementing it will not make it to point to the next object of the derived class. It is incremented or decremented only relative to its base type.
+hence we should not use this method to move the ptr to the next object.
+10)If a virtual function is defined in the base class, it need not be necessarily redefined in the derived class. In such cases, calls will invoke the base function.
+
+
+*Pure Virtual Functions:
+
+Generally we declare fun as virtual in base class and redefine it in the derived class. The fun inside the base class is only used for performing any task. It only serves as "place-holder". 
+such functions are called "do-nothing" functions. or "pure virtual functions"
+
+It is defined as below:
+
+virtual void display()=0;
+
+It has NO definition!
+
+A class containing atleast one pure virtual function is "ABSTRACT CLASS" 
+i.e. it cannot be instantiated.
+e.g.
+
+  class A
+  {
+    virtual void display()=0;
+    ....
+  };
+  main()
+  {
+    A a;// ERROR
+  }
+
+# Each derived class of an abstract base class has to give definition to the pure virtual function or redeclare it as pure virtual.
+e.g.
+	class A
+	{
+	  virtual void display()=0;
+	  ...
+	};
+	class B:public A
+	{
+	  void display()
+	  {
+	  .. //OK
+	  }
+	  /* or
+ 	  virtual void display()=0;
+	  */
+	};
+	
+ Containership (Nesting of classes)
+ 
+ C++ supports another way of inheriting properties of one class into another. This approach takes a view that , an object can be collection of many other objects.
+ that is A CLASS CAN CONTAIN objects of other classes as its members.
+ e.g.
+   class Hand{...};
+   class Leg {};
+   class Body
+   {
+      Hand lhand;
+      Leg   leftLeg;
+   };
+
+ All objects of body class will contain the objects of hand and leg.
+ This kind of relationship
+ is called "containership" or "nesting"
+
+
+   Destructor :DONE
+   
+   
+ 
+ Chp 10;
+ 
+ Stream : It is sequence of bytes.
+ It acts as source stream or destination stream.
+ The source stream that provides data to the program is called "INPUT STREAM"
+ 
+  The destination stream that receives output from the program is called "OUTPUT STREAM"
+  In other words, a program EXTRACTS the bytes from an input stream and INSERTS bytes
+  into an OUTPUT stream.
+  
+  
+  C++ contains several pre-defined streams that are automatically opened when a program begins its execution.e.g. cin,cout
+  cin represents the input stream connected to standard input i.e. KEYBOARD
+  
+  cin represents the output stream connected to standard output i.e. screen
+  (VDU: Video Display Unit)
+  Note that keyboard and screen are default options ,we can redirect streams to other devices of files.
+  
+  
+	11. File Handling
+
+file opening modes  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 

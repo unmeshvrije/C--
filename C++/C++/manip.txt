@@ -1,0 +1,14 @@
+dec
+hex
+oct
+endl
+ends  cout << ends; // inserts NULL
+ws  : cin >> ws >> str;
+setw(int) - width()
+setfill(int) - fill()
+setprecision(int) - precision()
+setbase(int) 
+resetiosflags(long) - unsetf()
+setiosflags(long) - setf()
+flush
+
