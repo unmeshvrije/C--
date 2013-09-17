@@ -16,5 +16,9 @@ public class NDFSFactory {
   public static NDFS createMCNDFSNaive(Graph graph) {
     return new ndfs.mcndfs_alg2.NNDFS(graph);
   }
+  
+  public static NDFS createMCNDFSAllRedEarlyCycle(Graph graph){
+    return new ndfs.mcndfs_alg3.NNDFS(graph);
+  }
 
 }

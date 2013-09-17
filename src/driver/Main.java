@@ -89,6 +89,8 @@ public class Main {
       // Map<State, ndfs.mcndfs_1_naive.Color> map = new HashMap<State,ndfs.mcndfs_1_naive.Color>();
       //runMCNDFS(map, file);
       runMCNDFS(file);
+    } else if (version.equals("alg3")){
+      // TODO stuff
     }
     else {
       throw new ArgumentException("Unkown version: " + version);
