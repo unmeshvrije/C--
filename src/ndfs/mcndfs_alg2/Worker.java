@@ -45,7 +45,7 @@ class Worker implements Runnable
         isPink.setValue(s, true);
 	
 	List<State> shuffledList = graph.post(s);
-	Collections.shuffle(shuffledList, new Random(randomSeed));
+	//Collections.shuffle(shuffledList, new Random(randomSeed));
         for (State t : shuffledList) {
             if  (colors.hasKeyValuePair(t, Color.CYAN)) {
                 throw new CycleFound();
@@ -70,7 +70,7 @@ class Worker implements Runnable
     private void dfsBlue(State s) throws Result {
         colors.setValue(s, Color.CYAN);
 	List<State> shuffledList = graph.post(s);
-	Collections.shuffle(shuffledList, new Random(randomSeed));
+	//Collections.shuffle(shuffledList, new Random(randomSeed));
         for (State t : shuffledList) {
             if (
 	    	colors.hasKeyValuePair(t, Color.WHITE) &&
@@ -103,7 +103,7 @@ class Worker implements Runnable
     {
         try {
             dfsBlue(state);
-        throw new NoCycleFound();
+            throw new NoCycleFound();
         } catch (Result e) {
             // TODO: Set a flag
             System.out.println("We got : " + e.toString());

@@ -25,7 +25,9 @@ public class MapWithDefaultValues<KeyType, ValueType> {
 
     boolean hasKeyValuePair(KeyType key,ValueType value){
        ValueType v = getValue(key);
-       return (v == value) || (v == null || value == defaultValue);
+       // If key does not map to any value (null), then value should be default value
+       // OR it must match the value 'v'
+       return ( (v == null && value.equals(defaultValue)) || v.equals(value) );
     }
 
 
