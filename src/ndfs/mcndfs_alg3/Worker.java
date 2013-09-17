@@ -19,7 +19,6 @@ class Worker implements Runnable
   // Locals
   private final Graph graph;
   private MapWithDefaultValues<State,Color> colors;
-  private MapWithDefaultValues<State,Boolean> isPink;
   private long randomSeed;
 
   // Globals
@@ -34,7 +33,6 @@ class Worker implements Runnable
     // Locals
     this.graph = graph;
     this.colors = new MapWithDefaultValues<State,Color>(new HashMap<State,Color>(),Color.WHITE);
-    this.isPink = new MapWithDefaultValues<State,Boolean>(new HashMap<State,Boolean>(), false);
     this.randomSeed = randomSeed;
 
     // Globals
@@ -43,7 +41,7 @@ class Worker implements Runnable
   }
 
   private void dfsRed(State s) throws Result {
-    isPink.setValue(s, true);
+    colors.SetValue(s, Color.PINK);
   
     List<State> shuffledList = graph.post(s);
     Collections.shuffle(shuffledList, new Random(randomSeed));
@@ -52,7 +50,7 @@ class Worker implements Runnable
           throw new CycleFound();
         }
         else if ( true
-          && isPink.hasKeyValuePair(t, false) 
+          && (!colors.hasKeyValuePair(t, Color.PINK))
           && isRed.hasKeyValuePair(t, false) 
         ){
           dfsRed(t);
@@ -65,23 +63,35 @@ class Worker implements Runnable
         }
       }
       isRed.setValue(s, true);
-      isPink.setValue(s, false);
     }
 
 
   private void dfsBlue(State s) throws Result {
+    boolean allRed = true;
     colors.setValue(s, Color.CYAN);
     List<State> shuffledList = graph.post(s);
     Collections.shuffle(shuffledList, new Random(randomSeed));
     for (State t : shuffledList) {
+      if( true
+        && hasValue(t, Color.CYAN)
+        && (s.isAccepting() || t.isAccepting())
+      ){
+          throw new CycleFound();
+      }
       if( true
         && colors.hasKeyValuePair(t, Color.WHITE)
         && isRed.hasKeyValuePair(t, false)
       ){
         dfsBlue(t);
       }
+      if(isRed.hasKeyValuePair(t, false){
+        allRed = false;
+      }
     }
-    if(s.isAccepting()){
+    if(allRed){
+      isRed.setValueSynchronized(s, true);
+    }
+    else if(s.isAccepting()){
       atomicIncrementVisitCount(s);
       dfsRed(s);
     }
@@ -100,10 +110,10 @@ class Worker implements Runnable
 
   public void run(){
     try {
-     dfsBlue(graph.getInitialState());
-     throw new NoCycleFound();
+      dfsBlue(graph.getInitialState());
+      throw new NoCycleFound();
     } catch (Result e) {
-    // TODO: Set a flag
+      // TODO: Set a flag
       System.out.println("We got : " + e.toString());
     }
   }
