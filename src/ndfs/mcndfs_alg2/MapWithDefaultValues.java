@@ -1,42 +1,48 @@
 package ndfs.mcndfs_alg2;
 
-
-
 import java.util.HashMap;
 
 import graph.State;
 
+/*
+ * This class is very much like a hashmap, but it acts as if all keys not present
+ * in the hashmap actually are, having value defaultValue, which can only be set
+ * at construction of this object  
+ */
+public class MapWithDefaultValues<KeyType, ValueType>{
 
+  private HashMap<KeyType, ValueType> hashMap;
+  private ValueType defaultValue;
 
-public class MapWithDefaultValues<KeyType, ValueType> {
+  MapWithDefaultValues(HashMap<KeyType, ValueType> hashMap, ValueType defaultValue){
+    this.hashMap = hashMap;
+    this.defaultValue = defaultValue;
+  }
 
-    private HashMap<KeyType, ValueType> hashmap;
-    ValueType defaultValue;
+  // TODO: make const method
+  ValueType getValue(KeyType key){
+  	return this.hashMap.get(key);
+  }
 
-    MapWithDefaultValues(HashMap<KeyType, ValueType> hashmap, ValueType defaultValue){
-        this.hashmap = hashmap;
-	this.defaultValue = defaultValue;
+  /* returns true if either
+   * - (key,value) pair is in hashmap
+   * - (key,value) pair is not in hashmap AND the requested value is the default value 
+   */
+  boolean hasKeyValuePair(KeyType key,ValueType value){
+    ValueType v = getValue(key);
+    if(v==null){
+      return v.equals(defaultValue);
     }
-
-    // TODO: make const method
-    ValueType getValue(KeyType key) {
-    	return this.hashmap.get(key);
-    }
-
-    boolean hasKeyValuePair(KeyType key,ValueType value){
-       ValueType v = getValue(key);
-       // If key does not map to any value (null), then value should be default value
-       // OR it must match the value 'v'
-       return ( (v == null && value.equals(defaultValue)) || v.equals(value) );
-    }
+    return v.equals(value);
+  }
 
 
-    synchronized void setValueSynchronized(KeyType key,ValueType value){
-        hashmap.put(key,value);
-    }
+  synchronized void setValueSynchronized(KeyType key,ValueType value){
+    hashMap.put(key,value);
+  }
 
-    void setValue(KeyType key,ValueType value){
-        hashmap.put(key,value);
-    }
+  void setValue(KeyType key,ValueType value){
+    hashMap.put(key,value);
+  }
 
 }
