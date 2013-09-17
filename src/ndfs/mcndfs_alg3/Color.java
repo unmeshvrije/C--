@@ -1,8 +1,9 @@
-package ndfs.mcndfs_alg2;
+package ndfs.mcndfs_alg3;
 
 public enum Color {
   CYAN,
   WHITE,
   RED,
-  BLUE
+  BLUE,
+  PINK
 }

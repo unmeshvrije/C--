@@ -1,4 +1,4 @@
-package ndfs.mcndfs_alg2;
+package ndfs.mcndfs_alg3;
 
 import java.lang.Runnable;
 import java.util.HashMap;
@@ -12,7 +12,7 @@ import graph.State;
 import ndfs.Result;
 import ndfs.CycleFound;
 import ndfs.NoCycleFound;
-import ndfs.mcndfs_alg2.MapWithDefaultValues;
+import ndfs.mcndfs_alg3.MapWithDefaultValues;
 
 class Worker implements Runnable
 {
@@ -41,7 +41,7 @@ class Worker implements Runnable
   }
 
   private void dfsRed(State s) throws Result {
-    colors.SetValue(s, Color.PINK);
+    colors.setValue(s, Color.PINK);
   
     List<State> shuffledList = graph.post(s);
     Collections.shuffle(shuffledList, new Random(randomSeed));
@@ -73,7 +73,7 @@ class Worker implements Runnable
     Collections.shuffle(shuffledList, new Random(randomSeed));
     for (State t : shuffledList) {
       if( true
-        && hasValue(t, Color.CYAN)
+        && colors.hasKeyValuePair(t, Color.CYAN)
         && (s.isAccepting() || t.isAccepting())
       ){
           throw new CycleFound();
@@ -84,7 +84,7 @@ class Worker implements Runnable
       ){
         dfsBlue(t);
       }
-      if(isRed.hasKeyValuePair(t, false){
+      if(isRed.hasKeyValuePair(t, false)){
         allRed = false;
       }
     }
