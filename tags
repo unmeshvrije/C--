@@ -32,7 +32,7 @@ Result	src/ndfs/Result.java	/^public class Result extends Throwable {$/;"	c
 WHITE	src/ndfs/nndfs/Color.java	/^    CYAN, WHITE, RED, BLUE$/;"	e	enum:Color	file:
 color	src/ndfs/nndfs/Colors.java	/^    void color(State state, Color color) {$/;"	m	class:Colors
 colors	src/ndfs/nndfs/NNDFS.java	/^    private Colors colors; $/;"	f	class:NNDFS	file:
-createMCNDFSNaive	src/ndfs/NDFSFactory.java	/^    public static NDFS createMCNDFSNaive(Graph graph, Map<State,$/;"	m	class:NDFSFactory
+createMCNDFSNaive	src/ndfs/NDFSFactory.java	/^    public static NDFS createMCNDFSNaive(Graph graph) {$/;"	m	class:NDFSFactory
 createNNDFS	src/ndfs/NDFSFactory.java	/^    public static NDFS createNNDFS(Graph graph, $/;"	m	class:NDFSFactory
 dfsBlue	src/ndfs/nndfs/NNDFS.java	/^    private void dfsBlue(State s) throws Result {$/;"	m	class:NNDFS	file:
 dfsRed	src/ndfs/nndfs/NNDFS.java	/^    private void dfsRed(State s) throws Result {$/;"	m	class:NNDFS	file:
