@@ -36,7 +36,7 @@ public class NNDFS implements NDFS {
     // Create threads here
     // Thread run() method will call dfsBlue(s);
     //throw new NoCycleFound();
-    int n = 1;
+    int n = 2;
     Worker[] worker = new Worker[n];
 
     try{
