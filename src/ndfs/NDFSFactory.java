@@ -14,15 +14,15 @@ public class NDFSFactory {
     return new ndfs.nndfs.NNDFS(graph, map);
   }
 
-  public static NDFS createMCNDFSAlg2(Graph graph) {
-    return new ndfs.mcndfs_alg2.NNDFS(graph);
+  public static NDFS createMCNDFSAlg2(Graph graph, int nWorkers) {
+    return new ndfs.mcndfs_alg2.NNDFS(graph, nWorkers);
   }
   
-  public static NDFS createMCNDFSAlg3(Graph graph){
-    return new ndfs.mcndfs_alg3.NNDFS(graph);
+  public static NDFS createMCNDFSAlg3(Graph graph, int nWorkers){
+    return new ndfs.mcndfs_alg3.NNDFS(graph, nWorkers);
   }
 
- /* public static NDFS createMCNDFSOptimizations(Graph graph, BitSet optimizations) {
+ /* public static NDFS createMCNDFSOptimizations(Graph graph, int nWorkers, BitSet optimizations) {
     return new ndfs.mcndfs_optimizations.NNDFS(graph, optimizations);
   }*/
 

@@ -17,11 +17,13 @@ public class NNDFS implements NDFS {
   private Graph graph;
   private MapWithDefaultValues<State, Boolean> isRed;
   private MapWithDefaultValues<State, AtomicInteger> visitCount;
+  private int nThreads;
 
-  public NNDFS(Graph graph){
+  public NNDFS(Graph graph, int nThreads){
     this.graph = graph;
     this.isRed = new MapWithDefaultValues<State, Boolean>(new HashMap<State, Boolean>(), false);
     this.visitCount = new MapWithDefaultValues<State, AtomicInteger>(new HashMap<State, AtomicInteger>(), new AtomicInteger(0));
+    this.nThreads = nThreads;
   }
 
   public void init(){
@@ -34,13 +36,10 @@ public class NNDFS implements NDFS {
 
   private void nndfs(State s) throws Result {
     // Create threads here
-    // Thread run() method will call dfsBlue(s);
-    //throw new NoCycleFound();
-    int n = 2;
-    Worker[] worker = new Worker[n];
+    Worker[] worker = new Worker[nThreads];
 
     try{
-      for (int i = 0; i < n; ++i){
+      for (int i = 0; i < nThreads; ++i){
         worker[i] = new Worker(graph, isRed, visitCount, getRandomSeed(i));
         worker[i].run();
       }
