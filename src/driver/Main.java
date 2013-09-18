@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.BitSet;
 
 import graph.GraphFactory;
 import graph.Graph;
@@ -34,12 +35,23 @@ public class Main {
     System.out.println("Usage: bin/ndfs <file> <version> <nrWorkers>");
     System.out.println("  where"); 
     System.out.println("  <file> is a Promela file (.prom)");
-    System.out.println("  <version> is one of {seq}");
+    System.out.println("  <version> is one of {seq,alg2,alg3,op1,op2,op3,op4}");
   }
 
-  private static void runMCNDFS(File file) throws FileNotFoundException {
+  private static void runMCNDFS(File file, String version, BitSet optimizations) throws FileNotFoundException, ArgumentException {
     Graph graph = GraphFactory.createGraph(file);
-    NDFS ndfs = NDFSFactory.createMCNDFSNaive(graph);
+
+    NDFS ndfs = null;
+    if (version.equals("alg2")) {
+      ndfs = NDFSFactory.createMCNDFSAlg2(graph);
+    } else if (version.equals("alg3")) {
+      ndfs = NDFSFactory.createMCNDFSAlg3(graph);
+    } else if (version.equals("op")) {
+     // ndfs = NDFSFactory.createMCNDFSOptimizations(graph, optimizations);
+    } else {
+      throw new ArgumentException("Invalid arguments");
+    }
+
     long start = System.currentTimeMillis();
     long end;
 
@@ -85,12 +97,18 @@ public class Main {
       }
       Map<State, Color> map = new HashMap<State, Color>();
       runNDFS(map, file);
-    } else if (version.equals("naive")) {
-      // Map<State, ndfs.mcndfs_1_naive.Color> map = new HashMap<State,ndfs.mcndfs_1_naive.Color>();
-      //runMCNDFS(map, file);
-      runMCNDFS(file);
-    } else if (version.equals("alg3")){
-      // TODO stuff
+    } else if ( false
+              || version.equals("alg2")
+              ||(version.equals("alg3"))
+    ) {
+      runMCNDFS(file, version, null);
+    } else if (version.contains("op")) {
+      BitSet bitset = new BitSet(4);
+      for (int i = 2; i < version.length(); ++i) {
+        bitset.set(version.charAt(i) - 1);
+      }
+
+      runMCNDFS(file, "op", bitset);
     }
     else {
       throw new ArgumentException("Unkown version: " + version);

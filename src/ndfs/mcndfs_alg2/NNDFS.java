@@ -1,6 +1,7 @@
 package ndfs.mcndfs_alg2;
 
 import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import graph.State;
 import graph.Graph;
@@ -15,12 +16,12 @@ public class NNDFS implements NDFS {
 
   private Graph graph;
   private MapWithDefaultValues<State, Boolean> isRed;
-  private MapWithDefaultValues<State, Integer> visitCount;
+  private MapWithDefaultValues<State, AtomicInteger> visitCount;
 
   public NNDFS(Graph graph){
     this.graph = graph;
     this.isRed = new MapWithDefaultValues<State, Boolean>(new HashMap<State, Boolean>(), false);
-    this.visitCount = new MapWithDefaultValues<State, Integer>(new HashMap<State, Integer>(), 0);
+    this.visitCount = new MapWithDefaultValues<State, AtomicInteger>(new HashMap<State, AtomicInteger>(), new AtomicInteger(0));
   }
 
   public void init(){
@@ -35,7 +36,7 @@ public class NNDFS implements NDFS {
     // Create threads here
     // Thread run() method will call dfsBlue(s);
     //throw new NoCycleFound();
-    int n = 2;
+    int n = 1;
     Worker[] worker = new Worker[n];
 
     try{

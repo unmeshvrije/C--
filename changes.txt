@@ -1,0 +1,5 @@
+Algo 2
+POST(S) is not part of locals 
+We use Java's default random number generator to permutate the post's
+
+Use of annotations

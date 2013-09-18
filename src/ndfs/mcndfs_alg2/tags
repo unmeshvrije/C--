@@ -4,28 +4,77 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-BLUE	Color.java	/^    CYAN, WHITE, RED, BLUE$/;"	e	enum:Color	file:
-CYAN	Color.java	/^    CYAN, WHITE, RED, BLUE$/;"	e	enum:Color	file:
+ArgumentException	../../driver/Main.java	/^    ArgumentException(String message) {$/;"	m	class:Main.ArgumentException
+ArgumentException	../../driver/Main.java	/^  private static class ArgumentException extends Exception {$/;"	c	class:Main
+BLUE	Color.java	/^  BLUE$/;"	e	enum:Color	file:
+CYAN	Color.java	/^  CYAN,$/;"	e	enum:Color	file:
 Color	Color.java	/^public enum Color {$/;"	g
-Colors	Colors.java	/^    Colors(Map<State, Color> map) {$/;"	m	class:Colors
-Colors	Colors.java	/^class Colors {$/;"	c
-NNDFS	NNDFS.java	/^    public NNDFS(Graph graph, Map<State, Color> colorStore) {$/;"	m	class:NNDFS
+CycleFound	../CycleFound.java	/^  public CycleFound() {$/;"	m	class:CycleFound
+CycleFound	../CycleFound.java	/^  public CycleFound(String message) {$/;"	m	class:CycleFound
+CycleFound	../CycleFound.java	/^  public CycleFound(int id) {$/;"	m	class:CycleFound
+CycleFound	../CycleFound.java	/^  public CycleFound(int id, String message) {$/;"	m	class:CycleFound
+CycleFound	../CycleFound.java	/^public class CycleFound extends Result {$/;"	c
+Main	../../driver/Main.java	/^public class Main {$/;"	c
+MapWithDefaultValues	MapWithDefaultValues.java	/^  MapWithDefaultValues(HashMap<KeyType, ValueType> hashMap, ValueType defaultValue){$/;"	m	class:MapWithDefaultValues
+MapWithDefaultValues	MapWithDefaultValues.java	/^public class MapWithDefaultValues<KeyType, ValueType>{$/;"	c
+NDFS	../NDFS.java	/^public interface NDFS {$/;"	i
+NDFSFactory	../NDFSFactory.java	/^public class NDFSFactory {$/;"	c
+NNDFS	NNDFS.java	/^  public NNDFS(Graph graph){$/;"	m	class:NNDFS
 NNDFS	NNDFS.java	/^public class NNDFS implements NDFS {$/;"	c
-RED	Color.java	/^    CYAN, WHITE, RED, BLUE$/;"	e	enum:Color	file:
-WHITE	Color.java	/^    CYAN, WHITE, RED, BLUE$/;"	e	enum:Color	file:
+NoCycleFound	../NoCycleFound.java	/^  public NoCycleFound() {$/;"	m	class:NoCycleFound
+NoCycleFound	../NoCycleFound.java	/^  public NoCycleFound(String message) {$/;"	m	class:NoCycleFound
+NoCycleFound	../NoCycleFound.java	/^  public NoCycleFound(int id) {$/;"	m	class:NoCycleFound
+NoCycleFound	../NoCycleFound.java	/^  public NoCycleFound(int id, String message) {$/;"	m	class:NoCycleFound
+NoCycleFound	../NoCycleFound.java	/^public class NoCycleFound extends Result {$/;"	c
+RED	Color.java	/^  RED,$/;"	e	enum:Color	file:
+Result	../Result.java	/^    public Result(String message) {$/;"	m	class:Result
+Result	../Result.java	/^public class Result extends Throwable {$/;"	c
+WHITE	Color.java	/^  WHITE,$/;"	e	enum:Color	file:
+Worker	Worker.java	/^  public Worker(final Graph graph,$/;"	m	class:Worker
 Worker	Worker.java	/^class Worker implements Runnable$/;"	c
-color	Colors.java	/^    void color(State state, Color color) {$/;"	m	class:Colors
-colors	NNDFS.java	/^    private Colors colors; $/;"	f	class:NNDFS	file:
-dfsBlue	NNDFS.java	/^    private void dfsBlue(State s) throws Result {$/;"	m	class:NNDFS	file:
-dfsBlue	Worker.java	/^    private void dfsBlue(State s) throws Result {$/;"	m	class:Worker	file:
-dfsRed	NNDFS.java	/^    private void dfsRed(State s) throws Result {$/;"	m	class:NNDFS	file:
-dfsRed	Worker.java	/^    private void dfsRed(State s) throws Result {$/;"	m	class:Worker	file:
-graph	NNDFS.java	/^    private Graph graph;$/;"	f	class:NNDFS	file:
-hasColor	Colors.java	/^    boolean hasColor(State state, Color color) {$/;"	m	class:Colors
-init	NNDFS.java	/^    public void init() {}$/;"	m	class:NNDFS
-map	Colors.java	/^    private Map<State, Color> map;$/;"	f	class:Colors	file:
-ndfs	NNDFS.java	/^    public void ndfs() throws Result {$/;"	m	class:NNDFS
-ndfs.mcndfs_1_naive	Color.java	/^package ndfs.mcndfs_1_naive;$/;"	p
-ndfs.mcndfs_1_naive	Colors.java	/^package ndfs.mcndfs_1_naive;$/;"	p
-ndfs.mcndfs_1_naive	NNDFS.java	/^package ndfs.mcndfs_1_naive;$/;"	p
-nndfs	NNDFS.java	/^    private void nndfs(State s) throws Result {$/;"	m	class:NNDFS	file:
+colors	Worker.java	/^  private MapWithDefaultValues<State,Color> colors;$/;"	f	class:Worker	file:
+createMCNDFSAlg2	../NDFSFactory.java	/^  public static NDFS createMCNDFSAlg2(Graph graph) {$/;"	m	class:NDFSFactory
+createMCNDFSAlg3	../NDFSFactory.java	/^  public static NDFS createMCNDFSAlg3(Graph graph){$/;"	m	class:NDFSFactory
+createNNDFS	../NDFSFactory.java	/^  public static NDFS createNNDFS(Graph graph, $/;"	m	class:NDFSFactory
+defaultValue	MapWithDefaultValues.java	/^  private ValueType defaultValue;$/;"	f	class:MapWithDefaultValues	file:
+dfsBlue	Worker.java	/^  private void dfsBlue(State s) throws Result {$/;"	m	class:Worker	file:
+dfsRed	Worker.java	/^  private void dfsRed(State s) throws Result {$/;"	m	class:Worker	file:
+dispatch	../../driver/Main.java	/^  private static void dispatch(File file, String version, int nrWorkers)$/;"	m	class:Main	file:
+driver	../../driver/Main.java	/^package driver;$/;"	p
+getRandomSeed	NNDFS.java	/^  private long getRandomSeed(Integer i) {$/;"	m	class:NNDFS	file:
+getValue	MapWithDefaultValues.java	/^  ValueType getValue(KeyType key){$/;"	m	class:MapWithDefaultValues
+graph	NNDFS.java	/^  private Graph graph;$/;"	f	class:NNDFS	file:
+graph	Worker.java	/^  private final Graph graph;$/;"	f	class:Worker	file:
+hasKeyValuePair	MapWithDefaultValues.java	/^  boolean hasKeyValuePair(KeyType key,ValueType value){$/;"	m	class:MapWithDefaultValues
+hashMap	MapWithDefaultValues.java	/^  private HashMap<KeyType, ValueType> hashMap;$/;"	f	class:MapWithDefaultValues	file:
+init	../NDFS.java	/^  public void init();$/;"	m	interface:NDFS
+init	NNDFS.java	/^  public void init(){$/;"	m	class:NNDFS
+isPink	Worker.java	/^  private MapWithDefaultValues<State,Boolean> isPink;$/;"	f	class:Worker	file:
+isRed	NNDFS.java	/^  private MapWithDefaultValues<State, Boolean> isRed;$/;"	f	class:NNDFS	file:
+isRed	Worker.java	/^  private MapWithDefaultValues<State, Boolean> isRed;$/;"	f	class:Worker	file:
+main	../../driver/Main.java	/^  public static void main(String[] argv) {$/;"	m	class:Main
+ndfs	../CycleFound.java	/^package ndfs;$/;"	p
+ndfs	../NDFS.java	/^  public void ndfs() throws Result;$/;"	m	interface:NDFS
+ndfs	../NDFS.java	/^package ndfs;$/;"	p
+ndfs	../NDFSFactory.java	/^package ndfs;$/;"	p
+ndfs	../NoCycleFound.java	/^package ndfs;$/;"	p
+ndfs	../Result.java	/^package ndfs;$/;"	p
+ndfs	NNDFS.java	/^  public void ndfs() throws Result {$/;"	m	class:NNDFS
+ndfs.mcndfs_alg2	Color.java	/^package ndfs.mcndfs_alg2;$/;"	p
+ndfs.mcndfs_alg2	MapWithDefaultValues.java	/^package ndfs.mcndfs_alg2;$/;"	p
+ndfs.mcndfs_alg2	NNDFS.java	/^package ndfs.mcndfs_alg2;$/;"	p
+ndfs.mcndfs_alg2	Worker.java	/^package ndfs.mcndfs_alg2;$/;"	p
+nndfs	NNDFS.java	/^  private void nndfs(State s) throws Result {$/;"	m	class:NNDFS	file:
+printUsage	../../driver/Main.java	/^  private static void printUsage() {$/;"	m	class:Main	file:
+randomSeed	Worker.java	/^  private long randomSeed;$/;"	f	class:Worker	file:
+run	Worker.java	/^  public void run(){$/;"	m	class:Worker
+runMCNDFS	../../driver/Main.java	/^  private static void runMCNDFS(File file, String version, BitSet optimizations) throws FileNotFoundException, ArgumentException {$/;"	m	class:Main	file:
+runNDFS	../../driver/Main.java	/^  private static void runNDFS($/;"	m	class:Main	file:
+serialVersionUID	../../driver/Main.java	/^    private static final long serialVersionUID = 1L;$/;"	f	class:Main.ArgumentException	file:
+serialVersionUID	../CycleFound.java	/^  private static final long serialVersionUID = 1L;$/;"	f	class:CycleFound	file:
+serialVersionUID	../NoCycleFound.java	/^  private static final long serialVersionUID = 1L;$/;"	f	class:NoCycleFound	file:
+serialVersionUID	../Result.java	/^    private static final long serialVersionUID = 1L;$/;"	f	class:Result	file:
+setValue	MapWithDefaultValues.java	/^  void setValue(KeyType key,ValueType value){$/;"	m	class:MapWithDefaultValues
+setValueSynchronized	MapWithDefaultValues.java	/^  synchronized void setValueSynchronized(KeyType key,ValueType value){$/;"	m	class:MapWithDefaultValues
+visitCount	NNDFS.java	/^  private MapWithDefaultValues<State, Integer> visitCount;$/;"	f	class:NNDFS	file:
+visitCount	Worker.java	/^  private MapWithDefaultValues<State, AtomicInteger> visitCount;$/;"	f	class:Worker	file:

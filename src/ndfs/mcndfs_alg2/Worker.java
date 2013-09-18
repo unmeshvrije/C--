@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.Collections;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import graph.Graph;
 import graph.State;
@@ -24,11 +25,11 @@ class Worker implements Runnable
 
   // Globals
   private MapWithDefaultValues<State, Boolean> isRed;
-  private MapWithDefaultValues<State, Integer> visitCount;
+  private MapWithDefaultValues<State, AtomicInteger> visitCount;
 
   public Worker(final Graph graph,
       MapWithDefaultValues<State, Boolean> isRed,
-      MapWithDefaultValues<State, Integer> visitCount,
+      MapWithDefaultValues<State, AtomicInteger> visitCount,
       long randomSeed)
   {
     // Locals
@@ -46,7 +47,7 @@ class Worker implements Runnable
     isPink.setValue(s, true);
   
     List<State> shuffledList = graph.post(s);
-    Collections.shuffle(shuffledList, new Random(randomSeed));
+    //Collections.shuffle(shuffledList, new Random(randomSeed));
       for (State t : shuffledList) {
         if (colors.hasKeyValuePair(t, Color.CYAN)) {
           throw new CycleFound();
@@ -59,8 +60,8 @@ class Worker implements Runnable
         }
       }
       if (s.isAccepting()) {
-        atomicDecrementVisitCount(s);
-        while (visitCount.getValue(s) != 0){
+        visitCount.getValue(s).decrementAndGet();
+        while (visitCount.getValue(s).get() != 0){
           // spin
         }
       }
@@ -72,7 +73,7 @@ class Worker implements Runnable
   private void dfsBlue(State s) throws Result {
     colors.setValue(s, Color.CYAN);
     List<State> shuffledList = graph.post(s);
-    Collections.shuffle(shuffledList, new Random(randomSeed));
+    //Collections.shuffle(shuffledList, new Random(randomSeed));
     for (State t : shuffledList) {
       if( true
         && colors.hasKeyValuePair(t, Color.WHITE)
@@ -82,28 +83,18 @@ class Worker implements Runnable
       }
     }
     if(s.isAccepting()){
-      atomicIncrementVisitCount(s);
+      visitCount.getValue(s).incrementAndGet();
       dfsRed(s);
     }
     colors.setValue(s, Color.BLUE);
   }
 
-  synchronized void atomicIncrementVisitCount(State s){
-    int value = visitCount.getValue(s);
-    visitCount.setValueSynchronized(s, value + 1);
-  }
-
-  synchronized void atomicDecrementVisitCount(State s){
-    int value = visitCount.getValue(s);
-    visitCount.setValueSynchronized(s, value - 1);
-  }
-
   public void run(){
     try {
-     dfsBlue(graph.getInitialState());
-     throw new NoCycleFound();
+      dfsBlue(graph.getInitialState());
+      throw new NoCycleFound();
     } catch (Result e) {
-    // TODO: Set a flag
+      // TODO: Set a flag
       System.out.println("We got : " + e.toString());
     }
   }
