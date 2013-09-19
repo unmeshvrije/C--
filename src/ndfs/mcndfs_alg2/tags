@@ -6,9 +6,9 @@
 !_TAG_PROGRAM_VERSION	5.8	//
 ArgumentException	/home/ppp1229/git/src/driver/Main.java	/^    ArgumentException(String message) {$/;"	m	class:Main.ArgumentException
 ArgumentException	/home/ppp1229/git/src/driver/Main.java	/^  private static class ArgumentException extends Exception {$/;"	c	class:Main
-BLUE	Color.java	/^  BLUE$/;"	e	enum:Color	file:
-CYAN	Color.java	/^  CYAN,$/;"	e	enum:Color	file:
-Color	Color.java	/^public enum Color {$/;"	g
+BLUE	/home/ppp1229/git/src/ndfs/Color.java	/^  BLUE,$/;"	e	enum:Color	file:
+CYAN	/home/ppp1229/git/src/ndfs/Color.java	/^  CYAN,$/;"	e	enum:Color	file:
+Color	/home/ppp1229/git/src/ndfs/Color.java	/^public enum Color {$/;"	g
 CycleFound	/home/ppp1229/git/src/ndfs/CycleFound.java	/^  public CycleFound() {$/;"	m	class:CycleFound
 CycleFound	/home/ppp1229/git/src/ndfs/CycleFound.java	/^  public CycleFound(String message) {$/;"	m	class:CycleFound
 CycleFound	/home/ppp1229/git/src/ndfs/CycleFound.java	/^  public CycleFound(int id) {$/;"	m	class:CycleFound
@@ -26,20 +26,22 @@ NoCycleFound	/home/ppp1229/git/src/ndfs/NoCycleFound.java	/^  public NoCycleFoun
 NoCycleFound	/home/ppp1229/git/src/ndfs/NoCycleFound.java	/^  public NoCycleFound(int id) {$/;"	m	class:NoCycleFound
 NoCycleFound	/home/ppp1229/git/src/ndfs/NoCycleFound.java	/^  public NoCycleFound(int id, String message) {$/;"	m	class:NoCycleFound
 NoCycleFound	/home/ppp1229/git/src/ndfs/NoCycleFound.java	/^public class NoCycleFound extends Result {$/;"	c
-RED	Color.java	/^  RED,$/;"	e	enum:Color	file:
+PINK	/home/ppp1229/git/src/ndfs/Color.java	/^  PINK$/;"	e	enum:Color	file:
+RED	/home/ppp1229/git/src/ndfs/Color.java	/^  RED,$/;"	e	enum:Color	file:
 Result	/home/ppp1229/git/src/ndfs/Result.java	/^    public Result(String message) {$/;"	m	class:Result
 Result	/home/ppp1229/git/src/ndfs/Result.java	/^public class Result extends Throwable {$/;"	c
-WHITE	Color.java	/^  WHITE,$/;"	e	enum:Color	file:
+WHITE	/home/ppp1229/git/src/ndfs/Color.java	/^  WHITE,$/;"	e	enum:Color	file:
 Worker	Worker.java	/^  public Worker(final Graph graph,$/;"	m	class:Worker
 Worker	Worker.java	/^class Worker implements Runnable$/;"	c
 colors	Worker.java	/^  private MapWithDefaultValues<State,Color> colors;$/;"	f	class:Worker	file:
 createMCNDFSAlg2	/home/ppp1229/git/src/ndfs/NDFSFactory.java	/^  public static NDFS createMCNDFSAlg2(Graph graph, int nWorkers) {$/;"	m	class:NDFSFactory
 createMCNDFSAlg3	/home/ppp1229/git/src/ndfs/NDFSFactory.java	/^  public static NDFS createMCNDFSAlg3(Graph graph, int nWorkers){$/;"	m	class:NDFSFactory
+createMCNDFSOp1	/home/ppp1229/git/src/ndfs/NDFSFactory.java	/^  public static NDFS createMCNDFSOp1(Graph graph, int nWorkers, int depth) {$/;"	m	class:NDFSFactory
 createNNDFS	/home/ppp1229/git/src/ndfs/NDFSFactory.java	/^  public static NDFS createNNDFS(Graph graph, $/;"	m	class:NDFSFactory
 defaultValue	/home/ppp1229/git/src/ndfs/MapWithDefaultValues.java	/^  private ValueType defaultValue;$/;"	f	class:MapWithDefaultValues	file:
 dfsBlue	Worker.java	/^  private void dfsBlue(State s) throws Result {$/;"	m	class:Worker	file:
 dfsRed	Worker.java	/^  private void dfsRed(State s) throws Result {$/;"	m	class:Worker	file:
-dispatch	/home/ppp1229/git/src/driver/Main.java	/^  private static void dispatch(File file, String version, int nWorkers)$/;"	m	class:Main	file:
+dispatch	/home/ppp1229/git/src/driver/Main.java	/^  private static void dispatch(File file, String version, int nWorkers, int depth)$/;"	m	class:Main	file:
 driver	/home/ppp1229/git/src/driver/Main.java	/^package driver;$/;"	p
 getRandomSeed	NNDFS.java	/^  private long getRandomSeed(Integer i) {$/;"	m	class:NNDFS	file:
 getValue	/home/ppp1229/git/src/ndfs/MapWithDefaultValues.java	/^  public ValueType getValue(KeyType key){$/;"	m	class:MapWithDefaultValues
@@ -54,6 +56,7 @@ isRed	NNDFS.java	/^  private MapWithDefaultValues<State, Boolean> isRed;$/;"	f	c
 isRed	Worker.java	/^  private MapWithDefaultValues<State, Boolean> isRed;$/;"	f	class:Worker	file:
 main	/home/ppp1229/git/src/driver/Main.java	/^  public static void main(String[] argv) {$/;"	m	class:Main
 nThreads	NNDFS.java	/^  private int nThreads;$/;"	f	class:NNDFS	file:
+ndfs	/home/ppp1229/git/src/ndfs/Color.java	/^package ndfs;$/;"	p
 ndfs	/home/ppp1229/git/src/ndfs/CycleFound.java	/^package ndfs;$/;"	p
 ndfs	/home/ppp1229/git/src/ndfs/MapWithDefaultValues.java	/^package ndfs;$/;"	p
 ndfs	/home/ppp1229/git/src/ndfs/NDFS.java	/^  public void ndfs() throws Result;$/;"	m	interface:NDFS
@@ -62,14 +65,13 @@ ndfs	/home/ppp1229/git/src/ndfs/NDFSFactory.java	/^package ndfs;$/;"	p
 ndfs	/home/ppp1229/git/src/ndfs/NoCycleFound.java	/^package ndfs;$/;"	p
 ndfs	/home/ppp1229/git/src/ndfs/Result.java	/^package ndfs;$/;"	p
 ndfs	NNDFS.java	/^  public void ndfs() throws Result {$/;"	m	class:NNDFS
-ndfs.mcndfs_alg2	Color.java	/^package ndfs.mcndfs_alg2;$/;"	p
 ndfs.mcndfs_alg2	NNDFS.java	/^package ndfs.mcndfs_alg2;$/;"	p
 ndfs.mcndfs_alg2	Worker.java	/^package ndfs.mcndfs_alg2;$/;"	p
 nndfs	NNDFS.java	/^  private void nndfs(State s) throws Result {$/;"	m	class:NNDFS	file:
 printUsage	/home/ppp1229/git/src/driver/Main.java	/^  private static void printUsage() {$/;"	m	class:Main	file:
 randomSeed	Worker.java	/^  private long randomSeed;$/;"	f	class:Worker	file:
 run	Worker.java	/^  public void run(){$/;"	m	class:Worker
-runMCNDFS	/home/ppp1229/git/src/driver/Main.java	/^  private static void runMCNDFS(File file, String version, int nWorkers, BitSet optimizations) throws FileNotFoundException, ArgumentException {$/;"	m	class:Main	file:
+runMCNDFS	/home/ppp1229/git/src/driver/Main.java	/^  private static void runMCNDFS(File file, String version, int nWorkers, int depth) throws FileNotFoundException, ArgumentException {$/;"	m	class:Main	file:
 runNDFS	/home/ppp1229/git/src/driver/Main.java	/^  private static void runNDFS($/;"	m	class:Main	file:
 serialVersionUID	/home/ppp1229/git/src/driver/Main.java	/^    private static final long serialVersionUID = 1L;$/;"	f	class:Main.ArgumentException	file:
 serialVersionUID	/home/ppp1229/git/src/ndfs/CycleFound.java	/^  private static final long serialVersionUID = 1L;$/;"	f	class:CycleFound	file:

@@ -45,8 +45,7 @@ public class NNDFS implements NDFS {
         worker[i].run();
       }
     } catch (Exception e) {
-      //e.prIntegerStackTrace();
-      System.out.println("Our Exception");
+      e.printStackTrace();
     }
   }
 

@@ -9,7 +9,7 @@ import ndfs.NDFS;
 import ndfs.Result;
 import ndfs.CycleFound;
 import ndfs.NoCycleFound;
-
+import ndfs.Color;
 
 
 public class NNDFS implements NDFS {

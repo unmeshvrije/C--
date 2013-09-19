@@ -13,7 +13,7 @@ import graph.GraphFactory;
 import graph.Graph;
 import graph.State;
 
-import ndfs.nndfs.Color;
+import ndfs.Color;
 
 import ndfs.NDFS;
 import ndfs.NDFSFactory;
@@ -38,7 +38,7 @@ public class Main {
     System.out.println("  <version> is one of {seq,alg2,alg3,op1,op2,op3,op4}");
   }
 
-  private static void runMCNDFS(File file, String version, int nWorkers, BitSet optimizations) throws FileNotFoundException, ArgumentException {
+  private static void runMCNDFS(File file, String version, int nWorkers, int depth) throws FileNotFoundException, ArgumentException {
     Graph graph = GraphFactory.createGraph(file);
 
     NDFS ndfs = null;
@@ -46,8 +46,8 @@ public class Main {
       ndfs = NDFSFactory.createMCNDFSAlg2(graph, nWorkers);
     } else if (version.equals("alg3")) {
       ndfs = NDFSFactory.createMCNDFSAlg3(graph, nWorkers);
-    } else if (version.equals("op")) {
-     // ndfs = NDFSFactory.createMCNDFSOptimizations(graph, nWorkers, optimizations);
+    } else if (version.equals("op1")) {
+      ndfs = NDFSFactory.createMCNDFSOp1(graph, nWorkers, depth);
     } else {
       throw new ArgumentException("Invalid arguments");
     }
@@ -88,7 +88,7 @@ public class Main {
   }
 
 
-  private static void dispatch(File file, String version, int nWorkers)
+  private static void dispatch(File file, String version, int nWorkers, int depth)
       throws ArgumentException, FileNotFoundException 
   {
     if (version.equals("seq")) {
@@ -99,18 +99,11 @@ public class Main {
       runNDFS(map, file);
     } else if ( false
               || version.equals("alg2")
-              ||(version.equals("alg3"))
-    ) {
-      runMCNDFS(file, version, nWorkers, null);
-    } else if (version.contains("op")) {
-      BitSet bitset = new BitSet(4);
-      for (int i = 2; i < version.length(); ++i) {
-        bitset.set(version.charAt(i) - 1);
-      }
-
-      runMCNDFS(file, "op", nWorkers, bitset);
-    }
-    else {
+              || version.equals("alg3")
+              || version.equals("op1"))
+    {
+      runMCNDFS(file, version, nWorkers, depth);
+    } else {
       throw new ArgumentException("Unkown version: " + version);
     }
   }
@@ -118,13 +111,20 @@ public class Main {
 
   public static void main(String[] argv) {
     try {
-      if (argv.length != 3) 
+    
+      if (argv.length != 3 && argv.length != 4) 
         throw new ArgumentException("Wrong number of arguments");
+        
       File file = new File(argv[0]);
       String version = argv[1];
       int nWorkers = new Integer(argv[2]);
+      int depth = 0;
+      
+      if (argv.length > 3) {
+        depth = new Integer(argv[3]);
+      }
 
-      dispatch(file, version, nWorkers);
+      dispatch(file, version, nWorkers, depth);
     }
     catch (FileNotFoundException e) {
       System.err.println(e.getMessage());

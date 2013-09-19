@@ -14,6 +14,7 @@ import ndfs.Result;
 import ndfs.CycleFound;
 import ndfs.NoCycleFound;
 import ndfs.MapWithDefaultValues;
+import ndfs.Color;
 
 class Worker implements Runnable
 {

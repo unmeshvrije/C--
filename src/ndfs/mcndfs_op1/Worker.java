@@ -1,4 +1,4 @@
-package ndfs.mcndfs_alg3;
+package ndfs.mcndfs_op1;
 
 import java.lang.Runnable;
 import java.util.HashMap;
@@ -22,6 +22,8 @@ class Worker implements Runnable
   private final Graph graph;
   private MapWithDefaultValues<State,Color> colors;
   private long randomSeed;
+  private State initialState;
+  private NDFSThreadState threadState;
 
   // Globals
   private MapWithDefaultValues<State, Boolean> isRed;
@@ -30,18 +32,29 @@ class Worker implements Runnable
   public Worker(final Graph graph,
       MapWithDefaultValues<State, Boolean> isRed,
       MapWithDefaultValues<State, AtomicInteger> visitCount,
-      long randomSeed)
+      long randomSeed,
+      State initialState
+      )
   {
     // Locals
     this.graph = graph;
     this.colors = new MapWithDefaultValues<State,Color>(new HashMap<State,Color>(),Color.WHITE);
     this.randomSeed = randomSeed;
+    this.initialState = initialState;
 
     // Globals
     this.isRed = isRed;
     this.visitCount  = visitCount;
   }
 
+  public NDFSThreadState getThreadState() {
+    return threadState;
+  }
+  
+  public void setThreadState(NDFSThreadState threadState) {
+    this.threadState = threadState;
+  }
+  
   private void dfsRed(State s) throws Result {
     colors.setValue(s, Color.PINK);
   
@@ -104,14 +117,28 @@ class Worker implements Runnable
   
     long start = System.currentTimeMillis();
     long end;
-    
-    try {
-      dfsBlue(graph.getInitialState());
-      throw new NoCycleFound();
-    } catch (Result r) {
-      end = System.currentTimeMillis();
-      System.out.println(r.getMessage());
-      System.out.printf("%s took %d ms\n", "MC_NDFS", end - start);
+ 
+    threadState = NDFSThreadState.DONE;
+
+    while (true){
+      if(Thread.currentThread().isInterrupted()){
+        break;
+      }
+        // wait until master 
+        // - assigns task to this thread
+        // - master sets threadState to BUSY 
+        // in THIS order
+      while(threadState== NDFSThreadState.DONE){
+      }
+      
+      try{
+        dfsBlue(initialState);
+        threadState = NDFSThreadState.DONE; // cycle not found
+      }
+      catch(Result r){
+        threadState = NDFSThreadState.CYCLE_FOUND;
+      }
+      
     }
   }
 

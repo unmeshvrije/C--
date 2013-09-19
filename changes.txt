@@ -2,9 +2,28 @@ Algo 2
 POST(S) is not part of locals 
 We use Java's default random number generator to permutate the post's
 
+ThreadState
+WAITING state is now called DONE (meaning that thread is DONE with task and WAITING for new)
+
 
 @ : apen staartje / Monkey tail / at the rate
 
 # things to do
 Use of annotations
 Dont call new Random() inside
+Make Java threads actually run on separate processors/cores (Use prun in test)
+
+# Algo of Master worker
+
+Master()
+{
+  Create tasks ,say T tasks
+  and we have N threads
+
+  N == T : easiest to implement
+  N > T : Some threads will be idle
+
+  N < T : All threads will have work and work queue will be full
+          Master should wait for any thread to ask for next job
+}
+

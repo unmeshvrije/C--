@@ -10,7 +10,7 @@ import graph.State;
 public class NDFSFactory {
 
   public static NDFS createNNDFS(Graph graph, 
-    Map<State, ndfs.nndfs.Color> map) {
+    Map<State, ndfs.Color> map) {
     return new ndfs.nndfs.NNDFS(graph, map);
   }
 
@@ -22,8 +22,8 @@ public class NDFSFactory {
     return new ndfs.mcndfs_alg3.NNDFS(graph, nWorkers);
   }
 
- /* public static NDFS createMCNDFSOptimizations(Graph graph, int nWorkers, BitSet optimizations) {
-    return new ndfs.mcndfs_optimizations.NNDFS(graph, optimizations);
-  }*/
+  public static NDFS createMCNDFSOp1(Graph graph, int nWorkers, int depth) {
+    return new ndfs.mcndfs_op1.Master(graph, nWorkers, depth);
+  }
 
 }
