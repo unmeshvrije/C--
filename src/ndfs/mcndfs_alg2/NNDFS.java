@@ -10,7 +10,7 @@ import ndfs.NDFS;
 import ndfs.Result;
 import ndfs.CycleFound;
 import ndfs.NoCycleFound;
-
+import ndfs.MapWithDefaultValues;
 
 public class NNDFS implements NDFS {
 
@@ -44,8 +44,8 @@ public class NNDFS implements NDFS {
         worker[i].run();
       }
     } catch (Exception e) {
-      //e.prIntegerStackTrace();
-      System.out.println("Our Exception");
+      e.printStackTrace();
+      //System.out.println("Our Exception: " + e.toString());
     }
   }
 

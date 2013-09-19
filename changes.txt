@@ -2,4 +2,9 @@ Algo 2
 POST(S) is not part of locals 
 We use Java's default random number generator to permutate the post's
 
+
+@ : apen staartje / Monkey tail / at the rate
+
+# things to do
 Use of annotations
+Dont call new Random() inside

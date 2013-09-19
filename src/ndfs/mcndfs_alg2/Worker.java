@@ -13,7 +13,7 @@ import graph.State;
 import ndfs.Result;
 import ndfs.CycleFound;
 import ndfs.NoCycleFound;
-import ndfs.mcndfs_alg2.MapWithDefaultValues;
+import ndfs.MapWithDefaultValues;
 
 class Worker implements Runnable
 {
@@ -47,14 +47,14 @@ class Worker implements Runnable
     isPink.setValue(s, true);
   
     List<State> shuffledList = graph.post(s);
-    //Collections.shuffle(shuffledList, new Random(randomSeed));
+    Collections.shuffle(shuffledList, new Random(randomSeed));
       for (State t : shuffledList) {
         if (colors.hasKeyValuePair(t, Color.CYAN)) {
           throw new CycleFound();
         }
-        else if ( true
-          && isPink.hasKeyValuePair(t, false) 
-          && isRed.hasKeyValuePair(t, false) 
+        if ( true
+             && isPink.hasKeyValuePair(t, false) 
+             && isRed.hasKeyValuePair(t, false) 
         ){
           dfsRed(t);
         }
@@ -73,7 +73,7 @@ class Worker implements Runnable
   private void dfsBlue(State s) throws Result {
     colors.setValue(s, Color.CYAN);
     List<State> shuffledList = graph.post(s);
-    //Collections.shuffle(shuffledList, new Random(randomSeed));
+    Collections.shuffle(shuffledList, new Random(randomSeed));
     for (State t : shuffledList) {
       if( true
         && colors.hasKeyValuePair(t, Color.WHITE)
@@ -90,12 +90,17 @@ class Worker implements Runnable
   }
 
   public void run(){
+  
+    long start = System.currentTimeMillis();
+    long end;
+    
     try {
       dfsBlue(graph.getInitialState());
       throw new NoCycleFound();
-    } catch (Result e) {
-      // TODO: Set a flag
-      System.out.println("We got : " + e.toString());
+    } catch (Result r) {
+      end = System.currentTimeMillis();
+      System.out.println(r.getMessage());
+      System.out.printf("%s took %d ms\n", "MC_NDFS", end - start);
     }
   }
 

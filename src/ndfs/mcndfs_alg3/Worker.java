@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.Collections;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import graph.Graph;
 import graph.State;
@@ -12,7 +13,7 @@ import graph.State;
 import ndfs.Result;
 import ndfs.CycleFound;
 import ndfs.NoCycleFound;
-import ndfs.mcndfs_alg3.MapWithDefaultValues;
+import ndfs.MapWithDefaultValues;
 
 class Worker implements Runnable
 {
@@ -23,11 +24,11 @@ class Worker implements Runnable
 
   // Globals
   private MapWithDefaultValues<State, Boolean> isRed;
-  private MapWithDefaultValues<State, Integer> visitCount;
+  private MapWithDefaultValues<State, AtomicInteger> visitCount;
 
   public Worker(final Graph graph,
       MapWithDefaultValues<State, Boolean> isRed,
-      MapWithDefaultValues<State, Integer> visitCount,
+      MapWithDefaultValues<State, AtomicInteger> visitCount,
       long randomSeed)
   {
     // Locals
@@ -49,16 +50,16 @@ class Worker implements Runnable
         if (colors.hasKeyValuePair(t, Color.CYAN)) {
           throw new CycleFound();
         }
-        else if ( true
-          && (!colors.hasKeyValuePair(t, Color.PINK))
-          && isRed.hasKeyValuePair(t, false) 
+        if ( true
+             && (!colors.hasKeyValuePair(t, Color.PINK))
+             && isRed.hasKeyValuePair(t, false) 
         ){
           dfsRed(t);
         }
       }
       if (s.isAccepting()) {
-        atomicDecrementVisitCount(s);
-        while (visitCount.getValue(s) != 0){
+        visitCount.getValue(s).decrementAndGet();
+        while (visitCount.getValue(s).get() != 0){
           // spin
         }
       }
@@ -89,32 +90,27 @@ class Worker implements Runnable
       }
     }
     if(allRed){
-      isRed.setValueSynchronized(s, true);
+      isRed.setValue(s, true);
     }
     else if(s.isAccepting()){
-      atomicIncrementVisitCount(s);
+      visitCount.getValue(s).incrementAndGet();
       dfsRed(s);
     }
     colors.setValue(s, Color.BLUE);
   }
 
-  synchronized void atomicIncrementVisitCount(State s){
-    int value = visitCount.getValue(s);
-    visitCount.setValueSynchronized(s, value + 1);
-  }
-
-  synchronized void atomicDecrementVisitCount(State s){
-    int value = visitCount.getValue(s);
-    visitCount.setValueSynchronized(s, value - 1);
-  }
-
   public void run(){
+  
+    long start = System.currentTimeMillis();
+    long end;
+    
     try {
       dfsBlue(graph.getInitialState());
       throw new NoCycleFound();
-    } catch (Result e) {
-      // TODO: Set a flag
-      System.out.println("We got : " + e.toString());
+    } catch (Result r) {
+      end = System.currentTimeMillis();
+      System.out.println(r.getMessage());
+      System.out.printf("%s took %d ms\n", "MC_NDFS", end - start);
     }
   }
 

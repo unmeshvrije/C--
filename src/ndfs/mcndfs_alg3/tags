@@ -4,28 +4,80 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-BLUE	Color.java	/^    CYAN, WHITE, RED, BLUE$/;"	e	enum:Color	file:
-CYAN	Color.java	/^    CYAN, WHITE, RED, BLUE$/;"	e	enum:Color	file:
+ArgumentException	/home/ppp1229/git/src/driver/Main.java	/^    ArgumentException(String message) {$/;"	m	class:Main.ArgumentException
+ArgumentException	/home/ppp1229/git/src/driver/Main.java	/^  private static class ArgumentException extends Exception {$/;"	c	class:Main
+BLUE	Color.java	/^  BLUE,$/;"	e	enum:Color	file:
+CYAN	Color.java	/^  CYAN,$/;"	e	enum:Color	file:
 Color	Color.java	/^public enum Color {$/;"	g
-Colors	Colors.java	/^    Colors(Map<State, Color> map) {$/;"	m	class:Colors
-Colors	Colors.java	/^class Colors {$/;"	c
-NNDFS	NNDFS.java	/^    public NNDFS(Graph graph, Map<State, Color> colorStore) {$/;"	m	class:NNDFS
+CycleFound	/home/ppp1229/git/src/ndfs/CycleFound.java	/^  public CycleFound() {$/;"	m	class:CycleFound
+CycleFound	/home/ppp1229/git/src/ndfs/CycleFound.java	/^  public CycleFound(String message) {$/;"	m	class:CycleFound
+CycleFound	/home/ppp1229/git/src/ndfs/CycleFound.java	/^  public CycleFound(int id) {$/;"	m	class:CycleFound
+CycleFound	/home/ppp1229/git/src/ndfs/CycleFound.java	/^  public CycleFound(int id, String message) {$/;"	m	class:CycleFound
+CycleFound	/home/ppp1229/git/src/ndfs/CycleFound.java	/^public class CycleFound extends Result {$/;"	c
+Main	/home/ppp1229/git/src/driver/Main.java	/^public class Main {$/;"	c
+MapWithDefaultValues	/home/ppp1229/git/src/ndfs/MapWithDefaultValues.java	/^  public MapWithDefaultValues(HashMap<KeyType, ValueType> hashMap, ValueType defaultValue){$/;"	m	class:MapWithDefaultValues
+MapWithDefaultValues	/home/ppp1229/git/src/ndfs/MapWithDefaultValues.java	/^public class MapWithDefaultValues<KeyType, ValueType>{$/;"	c
+NDFS	/home/ppp1229/git/src/ndfs/NDFS.java	/^public interface NDFS {$/;"	i
+NDFSFactory	/home/ppp1229/git/src/ndfs/NDFSFactory.java	/^public class NDFSFactory {$/;"	c
+NNDFS	NNDFS.java	/^  public NNDFS(Graph graph, int nThreads){$/;"	m	class:NNDFS
 NNDFS	NNDFS.java	/^public class NNDFS implements NDFS {$/;"	c
-RED	Color.java	/^    CYAN, WHITE, RED, BLUE$/;"	e	enum:Color	file:
-WHITE	Color.java	/^    CYAN, WHITE, RED, BLUE$/;"	e	enum:Color	file:
+NoCycleFound	/home/ppp1229/git/src/ndfs/NoCycleFound.java	/^  public NoCycleFound() {$/;"	m	class:NoCycleFound
+NoCycleFound	/home/ppp1229/git/src/ndfs/NoCycleFound.java	/^  public NoCycleFound(String message) {$/;"	m	class:NoCycleFound
+NoCycleFound	/home/ppp1229/git/src/ndfs/NoCycleFound.java	/^  public NoCycleFound(int id) {$/;"	m	class:NoCycleFound
+NoCycleFound	/home/ppp1229/git/src/ndfs/NoCycleFound.java	/^  public NoCycleFound(int id, String message) {$/;"	m	class:NoCycleFound
+NoCycleFound	/home/ppp1229/git/src/ndfs/NoCycleFound.java	/^public class NoCycleFound extends Result {$/;"	c
+PINK	Color.java	/^  PINK$/;"	e	enum:Color	file:
+RED	Color.java	/^  RED,$/;"	e	enum:Color	file:
+Result	/home/ppp1229/git/src/ndfs/Result.java	/^    public Result(String message) {$/;"	m	class:Result
+Result	/home/ppp1229/git/src/ndfs/Result.java	/^public class Result extends Throwable {$/;"	c
+WHITE	Color.java	/^  WHITE,$/;"	e	enum:Color	file:
+Worker	Worker.java	/^  public Worker(final Graph graph,$/;"	m	class:Worker
 Worker	Worker.java	/^class Worker implements Runnable$/;"	c
-color	Colors.java	/^    void color(State state, Color color) {$/;"	m	class:Colors
-colors	NNDFS.java	/^    private Colors colors; $/;"	f	class:NNDFS	file:
-dfsBlue	NNDFS.java	/^    private void dfsBlue(State s) throws Result {$/;"	m	class:NNDFS	file:
-dfsBlue	Worker.java	/^    private void dfsBlue(State s) throws Result {$/;"	m	class:Worker	file:
-dfsRed	NNDFS.java	/^    private void dfsRed(State s) throws Result {$/;"	m	class:NNDFS	file:
-dfsRed	Worker.java	/^    private void dfsRed(State s) throws Result {$/;"	m	class:Worker	file:
-graph	NNDFS.java	/^    private Graph graph;$/;"	f	class:NNDFS	file:
-hasColor	Colors.java	/^    boolean hasColor(State state, Color color) {$/;"	m	class:Colors
-init	NNDFS.java	/^    public void init() {}$/;"	m	class:NNDFS
-map	Colors.java	/^    private Map<State, Color> map;$/;"	f	class:Colors	file:
-ndfs	NNDFS.java	/^    public void ndfs() throws Result {$/;"	m	class:NNDFS
-ndfs.mcndfs_1_naive	Color.java	/^package ndfs.mcndfs_1_naive;$/;"	p
-ndfs.mcndfs_1_naive	Colors.java	/^package ndfs.mcndfs_1_naive;$/;"	p
-ndfs.mcndfs_1_naive	NNDFS.java	/^package ndfs.mcndfs_1_naive;$/;"	p
-nndfs	NNDFS.java	/^    private void nndfs(State s) throws Result {$/;"	m	class:NNDFS	file:
+atomicDecrementVisitCount	Worker.java	/^  synchronized void atomicDecrementVisitCount(State s){$/;"	m	class:Worker
+atomicIncrementVisitCount	Worker.java	/^  synchronized void atomicIncrementVisitCount(State s){$/;"	m	class:Worker
+colors	Worker.java	/^  private MapWithDefaultValues<State,Color> colors;$/;"	f	class:Worker	file:
+createMCNDFSAlg2	/home/ppp1229/git/src/ndfs/NDFSFactory.java	/^  public static NDFS createMCNDFSAlg2(Graph graph, int nWorkers) {$/;"	m	class:NDFSFactory
+createMCNDFSAlg3	/home/ppp1229/git/src/ndfs/NDFSFactory.java	/^  public static NDFS createMCNDFSAlg3(Graph graph, int nWorkers){$/;"	m	class:NDFSFactory
+createNNDFS	/home/ppp1229/git/src/ndfs/NDFSFactory.java	/^  public static NDFS createNNDFS(Graph graph, $/;"	m	class:NDFSFactory
+defaultValue	/home/ppp1229/git/src/ndfs/MapWithDefaultValues.java	/^  private ValueType defaultValue;$/;"	f	class:MapWithDefaultValues	file:
+dfsBlue	Worker.java	/^  private void dfsBlue(State s) throws Result {$/;"	m	class:Worker	file:
+dfsRed	Worker.java	/^  private void dfsRed(State s) throws Result {$/;"	m	class:Worker	file:
+dispatch	/home/ppp1229/git/src/driver/Main.java	/^  private static void dispatch(File file, String version, int nWorkers)$/;"	m	class:Main	file:
+driver	/home/ppp1229/git/src/driver/Main.java	/^package driver;$/;"	p
+getRandomSeed	NNDFS.java	/^  private long getRandomSeed(Integer i) {$/;"	m	class:NNDFS	file:
+getValue	/home/ppp1229/git/src/ndfs/MapWithDefaultValues.java	/^  public ValueType getValue(KeyType key){$/;"	m	class:MapWithDefaultValues
+graph	NNDFS.java	/^  private Graph graph;$/;"	f	class:NNDFS	file:
+graph	Worker.java	/^  private final Graph graph;$/;"	f	class:Worker	file:
+hasKeyValuePair	/home/ppp1229/git/src/ndfs/MapWithDefaultValues.java	/^  public boolean hasKeyValuePair(KeyType key,ValueType value){$/;"	m	class:MapWithDefaultValues
+hashMap	/home/ppp1229/git/src/ndfs/MapWithDefaultValues.java	/^  private HashMap<KeyType, ValueType> hashMap;$/;"	f	class:MapWithDefaultValues	file:
+init	/home/ppp1229/git/src/ndfs/NDFS.java	/^  public void init();$/;"	m	interface:NDFS
+init	NNDFS.java	/^  public void init(){$/;"	m	class:NNDFS
+isRed	NNDFS.java	/^  private MapWithDefaultValues<State, Boolean> isRed;$/;"	f	class:NNDFS	file:
+isRed	Worker.java	/^  private MapWithDefaultValues<State, Boolean> isRed;$/;"	f	class:Worker	file:
+main	/home/ppp1229/git/src/driver/Main.java	/^  public static void main(String[] argv) {$/;"	m	class:Main
+nThreads	NNDFS.java	/^  private int nThreads;$/;"	f	class:NNDFS	file:
+ndfs	/home/ppp1229/git/src/ndfs/CycleFound.java	/^package ndfs;$/;"	p
+ndfs	/home/ppp1229/git/src/ndfs/MapWithDefaultValues.java	/^package ndfs;$/;"	p
+ndfs	/home/ppp1229/git/src/ndfs/NDFS.java	/^  public void ndfs() throws Result;$/;"	m	interface:NDFS
+ndfs	/home/ppp1229/git/src/ndfs/NDFS.java	/^package ndfs;$/;"	p
+ndfs	/home/ppp1229/git/src/ndfs/NDFSFactory.java	/^package ndfs;$/;"	p
+ndfs	/home/ppp1229/git/src/ndfs/NoCycleFound.java	/^package ndfs;$/;"	p
+ndfs	/home/ppp1229/git/src/ndfs/Result.java	/^package ndfs;$/;"	p
+ndfs	NNDFS.java	/^  public void ndfs() throws Result {$/;"	m	class:NNDFS
+ndfs.mcndfs_alg3	Color.java	/^package ndfs.mcndfs_alg3;$/;"	p
+ndfs.mcndfs_alg3	NNDFS.java	/^package ndfs.mcndfs_alg3;$/;"	p
+ndfs.mcndfs_alg3	Worker.java	/^package ndfs.mcndfs_alg3;$/;"	p
+nndfs	NNDFS.java	/^  private void nndfs(State s) throws Result {$/;"	m	class:NNDFS	file:
+printUsage	/home/ppp1229/git/src/driver/Main.java	/^  private static void printUsage() {$/;"	m	class:Main	file:
+randomSeed	Worker.java	/^  private long randomSeed;$/;"	f	class:Worker	file:
+run	Worker.java	/^  public void run(){$/;"	m	class:Worker
+runMCNDFS	/home/ppp1229/git/src/driver/Main.java	/^  private static void runMCNDFS(File file, String version, int nWorkers, BitSet optimizations) throws FileNotFoundException, ArgumentException {$/;"	m	class:Main	file:
+runNDFS	/home/ppp1229/git/src/driver/Main.java	/^  private static void runNDFS($/;"	m	class:Main	file:
+serialVersionUID	/home/ppp1229/git/src/driver/Main.java	/^    private static final long serialVersionUID = 1L;$/;"	f	class:Main.ArgumentException	file:
+serialVersionUID	/home/ppp1229/git/src/ndfs/CycleFound.java	/^  private static final long serialVersionUID = 1L;$/;"	f	class:CycleFound	file:
+serialVersionUID	/home/ppp1229/git/src/ndfs/NoCycleFound.java	/^  private static final long serialVersionUID = 1L;$/;"	f	class:NoCycleFound	file:
+serialVersionUID	/home/ppp1229/git/src/ndfs/Result.java	/^    private static final long serialVersionUID = 1L;$/;"	f	class:Result	file:
+setValue	/home/ppp1229/git/src/ndfs/MapWithDefaultValues.java	/^  public void setValue(KeyType key,ValueType value){$/;"	m	class:MapWithDefaultValues
+setValueSynchronized	/home/ppp1229/git/src/ndfs/MapWithDefaultValues.java	/^  public synchronized void setValueSynchronized(KeyType key,ValueType value){$/;"	m	class:MapWithDefaultValues
+visitCount	NNDFS.java	/^  private MapWithDefaultValues<State, Integer> visitCount;$/;"	f	class:NNDFS	file:
+visitCount	Worker.java	/^  private MapWithDefaultValues<State, Integer> visitCount;$/;"	f	class:Worker	file:
