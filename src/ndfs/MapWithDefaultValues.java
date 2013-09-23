@@ -26,11 +26,11 @@ public class MapWithDefaultValues<KeyType, ValueType>{
     hashMap.put(key,value);
   }
 
-  // TODO: make const method
   public ValueType getValue(KeyType key){
   
     if (null == this.hashMap.get(key) ) {
       this.setValue(key, defaultValue);
+      return defaultValue;
     }
     
     return this.hashMap.get(key);

@@ -2,7 +2,9 @@ package ndfs.mcndfs_alg3;
 
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicInteger;
-
+import java.util.concurrent.Executors;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.RejectedExecutionException;
 import graph.State;
 import graph.Graph;
 
@@ -38,14 +40,22 @@ public class NNDFS implements NDFS {
   private void nndfs(State s) throws Result {
     // Create threads here
     Worker[] worker = new Worker[nThreads];
+    ExecutorService executor = Executors.newFixedThreadPool(nThreads);
 
     try{
       for (int i = 0; i < nThreads; ++i){
-        worker[i] = new Worker(graph, isRed, visitCount, getRandomSeed(i));
-        worker[i].run();
+        worker[i] = new Worker(graph, isRed, visitCount, getRandomSeed(i), executor);
+        try{
+          executor.submit(worker[i]);
+        } catch (RejectedExecutionException re) {
+          // Do Nothing
+        }
+        
       }
     } catch (Exception e) {
       e.printStackTrace();
+    } finally {
+      executor.shutdownNow();
     }
   }
 
