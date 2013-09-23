@@ -39,7 +39,7 @@ public class NDFSGraph {
 		
 		boolean setChanged;
 		
-		// explore the whole graph and put all nodes in stateSet 
+		// explore the graph and put the nodes in stateSet 
 		do{
 			setChanged = false;
 			for(State s : stateSet){
