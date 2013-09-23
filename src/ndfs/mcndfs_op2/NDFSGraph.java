@@ -11,9 +11,13 @@ import graph.State;
 public class NDFSGraph {
   
   Graph graph;
+  long maxExploredNodes
   
-  public NDFSGraph(Graph graph){
+  // use maxExploredNodes = 0 to explore the whole graph
+  // WARNING: this could cause an out of memory error
+  public NDFSGraph(Graph graph,long maxExploredNodes){
 		this.graph = graph;
+		this.maxExploredNodes = maxExploredNodes;
 	}
   
   public State getInitialState(){
@@ -23,13 +27,6 @@ public class NDFSGraph {
   
   // do we want a member to cache it?
   // public ArrayList<NDFSState> allStates;
-  
-  
-  //
-  //
-  // WARNING: WE DO NOT LIMIT THE SEARCH YET TO A CONFIGURABLE AMOUNT OF NODES
-  //
-  // 
   
   
   // We decided to use an array instead of ArrayList
@@ -48,7 +45,11 @@ public class NDFSGraph {
 			for(State s : stateSet){
 				setChanged |= stateSet.addAll(graph.post(s));
 			}			
-		}while(setChanged);
+		}while( false
+				|| setChanged 
+				|| ((maxEploredNodes != 0) && (stateSet.size() > maxExploredNodes))
+		);
+		
 		
 		// this number will be the uniqueIndex of every NDFSState
 		int index = 0;
