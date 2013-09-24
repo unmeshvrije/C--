@@ -52,6 +52,7 @@ hasKeyValuePair	/home/ppp1229/git/src/ndfs/MapWithDefaultValues.java	/^  public 
 hashMap	/home/ppp1229/git/src/ndfs/MapWithDefaultValues.java	/^  private HashMap<KeyType, ValueType> hashMap;$/;"	f	class:MapWithDefaultValues	file:
 init	/home/ppp1229/git/src/ndfs/NDFS.java	/^  public void init();$/;"	m	interface:NDFS
 init	NNDFS.java	/^  public void init(){$/;"	m	class:NNDFS
+initialState	Worker.java	/^  private State initialState;$/;"	f	class:Worker	file:
 isRed	NNDFS.java	/^  private MapWithDefaultValues<State, Boolean> isRed;$/;"	f	class:NNDFS	file:
 isRed	Worker.java	/^  private MapWithDefaultValues<State, Boolean> isRed;$/;"	f	class:Worker	file:
 main	/home/ppp1229/git/src/driver/Main.java	/^  public static void main(String[] argv) {$/;"	m	class:Main
@@ -65,8 +66,8 @@ ndfs	/home/ppp1229/git/src/ndfs/NDFSFactory.java	/^package ndfs;$/;"	p
 ndfs	/home/ppp1229/git/src/ndfs/NoCycleFound.java	/^package ndfs;$/;"	p
 ndfs	/home/ppp1229/git/src/ndfs/Result.java	/^package ndfs;$/;"	p
 ndfs	NNDFS.java	/^  public void ndfs() throws Result {$/;"	m	class:NNDFS
-ndfs.mcndfs_alg3	NNDFS.java	/^package ndfs.mcndfs_alg3;$/;"	p
-ndfs.mcndfs_alg3	Worker.java	/^package ndfs.mcndfs_alg3;$/;"	p
+ndfs.mcndfs_op1	NNDFS.java	/^package ndfs.mcndfs_op1;$/;"	p
+ndfs.mcndfs_op1	Worker.java	/^package ndfs.mcndfs_op1;$/;"	p
 nndfs	NNDFS.java	/^  private void nndfs(State s) throws Result {$/;"	m	class:NNDFS	file:
 printUsage	/home/ppp1229/git/src/driver/Main.java	/^  private static void printUsage() {$/;"	m	class:Main	file:
 randomSeed	Worker.java	/^  private long randomSeed;$/;"	f	class:Worker	file:

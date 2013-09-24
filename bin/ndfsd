@@ -1,0 +1,5 @@
+#!/bin/sh
+#jdb -classpath "${JAR_FILE}:${CLASS_PATH}" ${MAIN_CLASS} ${ARGS}
+#echo $#
+#jdb -classpath lib/graph.jar:lib/spinja.jar:build/jar/ndfs.jar driver.Main input/bintree-cycle.prom alg3 6 
+jdb -classpath lib/graph.jar:lib/spinja.jar:build/jar/ndfs.jar driver.Main $*

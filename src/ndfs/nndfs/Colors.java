@@ -2,7 +2,7 @@ package ndfs.nndfs;
 
 import java.util.Map;
 import graph.State;
-
+import ndfs.Color;
 
 class Colors {
 

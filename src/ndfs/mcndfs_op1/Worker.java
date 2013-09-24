@@ -1,4 +1,4 @@
-package ndfs.mcndfs_alg3;
+package ndfs.mcndfs_op1;
 
 import java.lang.Runnable;
 import java.util.HashMap;
@@ -7,7 +7,7 @@ import java.util.Random;
 import java.util.Collections;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.ExecutorService;
-
+import java.util.Stack;
 
 import graph.Graph;
 import graph.State;
@@ -24,12 +24,13 @@ class Worker implements Runnable
   private final Graph graph;
   private MapWithDefaultValues<State,Color> colors;
   private long randomSeed;
+  private State initialState;
+  private ExecutorService executor;
 
   // Globals
   private MapWithDefaultValues<State, Boolean> isRed;
   private MapWithDefaultValues<State, AtomicInteger> visitCount;
-  private ExecutorService executor;
-  
+
   public Worker(final Graph graph,
       MapWithDefaultValues<State, Boolean> isRed,
       MapWithDefaultValues<State, AtomicInteger> visitCount,
@@ -41,6 +42,7 @@ class Worker implements Runnable
     this.graph = graph;
     this.colors = new MapWithDefaultValues<State,Color>(new HashMap<State,Color>(),Color.WHITE);
     this.randomSeed = randomSeed;
+    this.initialState = initialState;
 
     // Globals
     this.isRed = isRed;
@@ -49,15 +51,21 @@ class Worker implements Runnable
   }
 
   private void dfsRed(State s) throws Result {
-    
+
     if (Thread.currentThread().isInterrupted()) {
       return;
     }
+
+    Stack<State> stack = new Stack<State>();
+    stack.push(s);
+    State state;
+
+    while (!stack.isEmpty()) {
+      state = stack.pop();
+      colors.setValue(state, Color.PINK);
     
-    colors.setValue(s, Color.PINK);
-            
-    List<State> shuffledList = graph.post(s);
-    Collections.shuffle(shuffledList, new Random(randomSeed));
+      List<State> shuffledList = graph.post(state);
+      Collections.shuffle(shuffledList, new Random(randomSeed));
       for (State t : shuffledList) {
         if (colors.hasKeyValuePair(t, Color.CYAN)) {
           throw new CycleFound();
@@ -66,61 +74,77 @@ class Worker implements Runnable
              && (!colors.hasKeyValuePair(t, Color.PINK))
              && isRed.hasKeyValuePair(t, false) 
         ){
-          dfsRed(t);
+          stack.push(t);
         }
       }
-      if (s.isAccepting()) {
-        visitCount.getValue(s).decrementAndGet();
-        while (visitCount.getValue(s).get() != 0){
+      if (state.isAccepting()) {
+        // Error: for 1 thread: this this value could be -1 ???
+
+        visitCount.getValue(state).decrementAndGet();
+        //visitCount.getValue(state).getAndDecrement();
+        while (visitCount.getValue(state).get() != 0){ //ugly workaround: condition was "!= 0"
           // spin
           if (Thread.currentThread().isInterrupted()) {
             break;
           }
+          System.out.println("dfsRed(): " + visitCount.getValue(state).get());
         }
       }
-      isRed.setValue(s, true);
+      isRed.setValue(state, true);
     }
+  }
 
 
   private void dfsBlue(State s) throws Result {
-    
+
     if (Thread.currentThread().isInterrupted()) {
       return;
     }
-    
-    boolean allRed = true;
-    colors.setValue(s, Color.CYAN);
-    List<State> shuffledList = graph.post(s);
-    Collections.shuffle(shuffledList, new Random(randomSeed));
-    for (State t : shuffledList) {
-      if( true
-        && colors.hasKeyValuePair(t, Color.CYAN)
-        && (s.isAccepting() || t.isAccepting())
-      ){
-          throw new CycleFound();
+
+    Stack<State> stack = new Stack<State>();
+    stack.push(s);
+    State state;
+
+    while (!stack.isEmpty()){
+      state = stack.pop();
+
+      boolean allRed = true;
+      colors.setValue(state, Color.CYAN);
+      List<State> shuffledList = graph.post(state);
+      Collections.shuffle(shuffledList, new Random(randomSeed));
+      for (State t : shuffledList) {
+        if( true
+          && colors.hasKeyValuePair(t, Color.CYAN)
+          && (state.isAccepting() || t.isAccepting())
+        ){
+            throw new CycleFound();
+        }
+        if( true
+          && colors.hasKeyValuePair(t, Color.WHITE)
+          && isRed.hasKeyValuePair(t, false)
+        ){
+          stack.push(t);
+        }
+        if(isRed.hasKeyValuePair(t, false)){
+          allRed = false;
+        }
       }
-      if( true
-        && colors.hasKeyValuePair(t, Color.WHITE)
-        && isRed.hasKeyValuePair(t, false)
-      ){
-        dfsBlue(t);
+      if(allRed){
+        isRed.setValue(state, true);
       }
-      if(isRed.hasKeyValuePair(t, false)){
-        allRed = false;
+      else if(state.isAccepting()){
+        visitCount.getValue(state).incrementAndGet();
+        //System.out.println("dfsBlue(): " + visitCount.getValue(state).get());
+        //try{
+        //Thread.sleep(5000);
+        //} catch(InterruptedException ie){}
+        dfsRed(state);
       }
+      colors.setValue(state, Color.BLUE);
     }
-    if(allRed){
-      isRed.setValue(s, true);
-    }
-    else if(s.isAccepting()){
-      visitCount.getValue(s).incrementAndGet();
-      dfsRed(s);
-    }
-    colors.setValue(s, Color.BLUE);
   }
 
   public void run(){
-  
     long start = System.currentTimeMillis();
     long end;
     

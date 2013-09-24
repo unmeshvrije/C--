@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Collections;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.ExecutorService;
 
 import graph.Graph;
 import graph.State;
@@ -13,7 +14,8 @@ import graph.State;
 import ndfs.Result;
 import ndfs.CycleFound;
 import ndfs.NoCycleFound;
-import ndfs.mcndfs_alg2.MapWithDefaultValues;
+import ndfs.MapWithDefaultValues;
+import ndfs.Color;
 
 class Worker implements Runnable
 {
@@ -26,11 +28,14 @@ class Worker implements Runnable
   // Globals
   private MapWithDefaultValues<State, Boolean> isRed;
   private MapWithDefaultValues<State, AtomicInteger> visitCount;
+  private ExecutorService executor;
 
   public Worker(final Graph graph,
       MapWithDefaultValues<State, Boolean> isRed,
       MapWithDefaultValues<State, AtomicInteger> visitCount,
-      long randomSeed)
+      long randomSeed,
+      ExecutorService executor
+      )
   {
     // Locals
     this.graph = graph;
@@ -41,20 +46,26 @@ class Worker implements Runnable
     // Globals
     this.isRed = isRed;
     this.visitCount  = visitCount;
+    this.executor = executor;
   }
 
   private void dfsRed(State s) throws Result {
+    
+    if (Thread.currentThread().isInterrupted()) {
+      //System.out.println("Returned interrupted");
+      return;
+    }
     isPink.setValue(s, true);
   
     List<State> shuffledList = graph.post(s);
-    //Collections.shuffle(shuffledList, new Random(randomSeed));
+    Collections.shuffle(shuffledList, new Random(randomSeed));
       for (State t : shuffledList) {
         if (colors.hasKeyValuePair(t, Color.CYAN)) {
           throw new CycleFound();
         }
-        else if ( true
-          && isPink.hasKeyValuePair(t, false) 
-          && isRed.hasKeyValuePair(t, false) 
+        if ( true
+             && isPink.hasKeyValuePair(t, false) 
+             && isRed.hasKeyValuePair(t, false) 
         ){
           dfsRed(t);
         }
@@ -63,6 +74,9 @@ class Worker implements Runnable
         visitCount.getValue(s).decrementAndGet();
         while (visitCount.getValue(s).get() != 0){
           // spin
+          if (Thread.currentThread().isInterrupted()) {
+            break;
+          }
         }
       }
       isRed.setValue(s, true);
@@ -71,9 +85,14 @@ class Worker implements Runnable
 
 
   private void dfsBlue(State s) throws Result {
+    
+    if (Thread.currentThread().isInterrupted()) {
+      //System.out.println("Returned interrupted");
+      return;
+    }
     colors.setValue(s, Color.CYAN);
     List<State> shuffledList = graph.post(s);
-    //Collections.shuffle(shuffledList, new Random(randomSeed));
+    Collections.shuffle(shuffledList, new Random(randomSeed));
     for (State t : shuffledList) {
       if( true
         && colors.hasKeyValuePair(t, Color.WHITE)
@@ -90,12 +109,18 @@ class Worker implements Runnable
   }
 
   public void run(){
+  
+    long start = System.currentTimeMillis();
+    long end;
+    
     try {
       dfsBlue(graph.getInitialState());
       throw new NoCycleFound();
-    } catch (Result e) {
-      // TODO: Set a flag
-      System.out.println("We got : " + e.toString());
+    } catch (Result r) {
+      end = System.currentTimeMillis();
+      System.out.println(r.getMessage());
+      System.out.printf("%s took %d ms\n", "MC_NDFS", end - start);
+      executor.shutdownNow();
     }
   }
 

@@ -1,4 +1,4 @@
-package ndfs.mcndfs_alg3;
+package ndfs;
 
 public enum Color {
   CYAN,

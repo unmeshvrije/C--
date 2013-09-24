@@ -1,2 +1,7 @@
-ctags --language-force=java src/ndfs/mcndfs_alg2/*.java src/driver/Main.java  src/ndfs/*.java
-ctags --language-force=java src/ndfs/nndfs/*.java src/driver/Main.java  src/ndfs/*.java
+SRCROOT=/home/ppp1229/git
+cd $SRCROOT/src/ndfs/mcndfs_alg2
+ctags --language-force=java *.java $SRCROOT/src/driver/Main.java  $SRCROOT/src/ndfs/*.java
+cd $SRCROOT/src/ndfs/mcndfs_alg3
+ctags --language-force=java *.java $SRCROOT/src/driver/Main.java  $SRCROOT/src/ndfs/*.java
+cd $SRCROOT/src/ndfs/mcndfs_op1
+ctags --language-force=java *.java $SRCROOT/src/driver/Main.java  $SRCROOT/src/ndfs/*.java
