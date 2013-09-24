@@ -82,12 +82,12 @@ class Worker implements Runnable
 
         visitCount.getValue(state).decrementAndGet();
         //visitCount.getValue(state).getAndDecrement();
-        while (visitCount.getValue(state).get() != 0){ //ugly workaround: condition was "!= 0"
+        while (visitCount.getValue(state).get() != 0){
           // spin
           if (Thread.currentThread().isInterrupted()) {
             break;
           }
-          System.out.println("dfsRed(): " + visitCount.getValue(state).get());
+          System.out.println("dfsRed(): " + visitCount.getValue(state).get() + "hash code: " + state.hashCode());
         }
       }
       isRed.setValue(state, true);
@@ -134,10 +134,10 @@ class Worker implements Runnable
       }
       else if(state.isAccepting()){
         visitCount.getValue(state).incrementAndGet();
-        //System.out.println("dfsBlue(): " + visitCount.getValue(state).get());
-        //try{
-        //Thread.sleep(5000);
-        //} catch(InterruptedException ie){}
+        System.out.println("dfsBlue(): " + visitCount.getValue(state).get() + "hash code : " + state.hashCode());
+        try{
+        Thread.sleep(5000);
+        } catch(InterruptedException ie){}
         dfsRed(state);
       }
       colors.setValue(state, Color.BLUE);
