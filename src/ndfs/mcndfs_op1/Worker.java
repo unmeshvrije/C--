@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.ExecutorService;
 import java.util.Stack;
+import java.util.Queue;
 
 import graph.Graph;
 import graph.State;
@@ -50,17 +51,51 @@ class Worker implements Runnable
     this.executor = executor;
   }
 
-  private void dfsRed(State s) throws Result {
-
+  private void dfsRedRec(State s) throws Result {
+    
     if (Thread.currentThread().isInterrupted()) {
       return;
     }
+    
+    colors.setValue(s, Color.PINK);
+            
+    List<State> shuffledList = graph.post(s);
+    Collections.shuffle(shuffledList, new Random(randomSeed));
+      for (State t : shuffledList) {
+        if (colors.hasKeyValuePair(t, Color.CYAN)) {
+          throw new CycleFound();
+        }
+        if ( true
+             && (!colors.hasKeyValuePair(t, Color.PINK))
+             && isRed.hasKeyValuePair(t, false) 
+        ){
+          dfsRed(t);
+        }
+      }
+      if (s.isAccepting()) {
+        visitCount.getValue(s).decrementAndGet();
+        while (visitCount.getValue(s).get() != 0){
+          // spin
+          if (Thread.currentThread().isInterrupted()) {
+            break;
+          }
+        }
+      }
+      isRed.setValue(s, true);
+    }
 
-    Stack<State> stack = new Stack<State>();
+  private void dfsRed(State s) throws Result {
+
+
+    Stack<State> stack = new Stack<State>();    
     stack.push(s);
+
     State state;
 
     while (!stack.isEmpty()) {
+      if (Thread.currentThread().isInterrupted()) {
+        return;
+      }
       state = stack.pop();
       colors.setValue(state, Color.PINK);
     
@@ -87,13 +122,49 @@ class Worker implements Runnable
           if (Thread.currentThread().isInterrupted()) {
             break;
           }
-          System.out.println("dfsRed(): " + visitCount.getValue(state).get() + "hash code: " + state.hashCode());
+         // System.out.println("dfsRed(): " + visitCount.getValue(state).get() + "hash code: " + state.hashCode());
         }
       }
       isRed.setValue(state, true);
     }
   }
 
+  private void dfsBlueRec(State s) throws Result {
+    
+    if (Thread.currentThread().isInterrupted()) {
+      return;
+    }
+    
+    boolean allRed = true;
+    colors.setValue(s, Color.CYAN);
+    List<State> shuffledList = graph.post(s);
+    Collections.shuffle(shuffledList, new Random(randomSeed));
+    for (State t : shuffledList) {
+      if( true
+        && colors.hasKeyValuePair(t, Color.CYAN)
+        && (s.isAccepting() || t.isAccepting())
+      ){
+          throw new CycleFound();
+      }
+      if( true
+        && colors.hasKeyValuePair(t, Color.WHITE)
+        && isRed.hasKeyValuePair(t, false)
+      ){
+        dfsBlue(t);
+      }
+      if(isRed.hasKeyValuePair(t, false)){
+        allRed = false;
+      }
+    }
+    if(allRed){
+      isRed.setValue(s, true);
+    }
+    else if(s.isAccepting()){
+      visitCount.getValue(s).incrementAndGet();
+      dfsRed(s);
+    }
+    colors.setValue(s, Color.BLUE);
+  }
 
   private void dfsBlue(State s) throws Result {
 
@@ -134,10 +205,11 @@ class Worker implements Runnable
       }
       else if(state.isAccepting()){
         visitCount.getValue(state).incrementAndGet();
-        System.out.println("dfsBlue(): " + visitCount.getValue(state).get() + "hash code : " + state.hashCode());
+       /* System.out.println("dfsBlue(): " + visitCount.getValue(state).get() + "hash code : " + state.hashCode());
         try{
         Thread.sleep(5000);
         } catch(InterruptedException ie){}
+        */
         dfsRed(state);
       }
       colors.setValue(state, Color.BLUE);
@@ -151,11 +223,16 @@ class Worker implements Runnable
     try {
       dfsBlue(graph.getInitialState());
       throw new NoCycleFound();
-    } catch (Result r) {
+    } catch (CycleFound cf) {
+      end = System.currentTimeMillis();
+      System.out.println(cf.getMessage());
+      System.out.printf("%s took %d ms\n", "MC_NDFS", end - start);
+      executor.shutdownNow();
+    }
+    catch (Result r) {
       end = System.currentTimeMillis();
       System.out.println(r.getMessage());
       System.out.printf("%s took %d ms\n", "MC_NDFS", end - start);
-      executor.shutdownNow();
     }
   }
 

@@ -76,7 +76,8 @@ class Worker implements Runnable
           // spin
           if (Thread.currentThread().isInterrupted()) {
             break;
-          }
+          } 
+          System.out.printf("%d\n",visitCount.getValue(s).get());
         }
       }
       isRed.setValue(s, true);
@@ -116,11 +117,15 @@ class Worker implements Runnable
     try {
       dfsBlue(graph.getInitialState());
       throw new NoCycleFound();
+    } catch (CycleFound cf) {
+      end = System.currentTimeMillis();
+      System.out.println(cf.getMessage());
+      System.out.printf("%s took %d ms\n", "MC_NDFS", end - start);
+      executor.shutdownNow();
     } catch (Result r) {
       end = System.currentTimeMillis();
       System.out.println(r.getMessage());
       System.out.printf("%s took %d ms\n", "MC_NDFS", end - start);
-      executor.shutdownNow();
     }
   }
 

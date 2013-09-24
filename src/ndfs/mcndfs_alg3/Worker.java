@@ -127,11 +127,18 @@ class Worker implements Runnable
     try {
       dfsBlue(graph.getInitialState());
       throw new NoCycleFound();
-    } catch (Result r) {
+    } 
+    catch (CycleFound cf) {
+      end = System.currentTimeMillis();
+      System.out.println(cf.getMessage());
+      System.out.printf("%s took %d ms\n", "MC_NDFS", end - start);
+      executor.shutdownNow();
+    }
+    catch (Result r) {
       end = System.currentTimeMillis();
       System.out.println(r.getMessage());
       System.out.printf("%s took %d ms\n", "MC_NDFS", end - start);
-      executor.shutdownNow();
+      //executor.shutdownNow();
     }
   }
 
