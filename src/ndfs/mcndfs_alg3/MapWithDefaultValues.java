@@ -31,7 +31,7 @@ public class MapWithDefaultValues<KeyType, ValueType>{
   boolean hasKeyValuePair(KeyType key,ValueType value){
     ValueType v = getValue(key);
     if(v==null){
-      return v.equals(defaultValue);
+      return value.equals(defaultValue);
     }
     return v.equals(value);
   }
