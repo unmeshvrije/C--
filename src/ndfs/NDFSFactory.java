@@ -23,7 +23,7 @@ public class NDFSFactory {
   }
 
   public static NDFS createMCNDFSOp1(Graph graph, int nWorkers, int depth) {
-    return new ndfs.mcndfs_op1.Master(graph, nWorkers, depth);
+    return new ndfs.mcndfs_op1.NNDFS(graph, nWorkers);
   }
 
 }

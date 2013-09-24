@@ -1,4 +1,4 @@
-package ndfs.mcndfs_op1;
+package ndfs.mcndfs_master_slave;
 
 import java.util.HashMap;
 import java.util.ArrayList;

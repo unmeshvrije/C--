@@ -1,4 +1,4 @@
-package ndfs.mcndfs_op1;
+package ndfs.mcndfs_master_slave;
 
 public enum NDFSThreadState {
   DONE,       // finished task, no cycle found

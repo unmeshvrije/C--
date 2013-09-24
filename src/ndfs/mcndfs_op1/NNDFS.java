@@ -1,4 +1,4 @@
-package ndfs.mcndfs_alg3;
+package ndfs.mcndfs_op1;
 
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -41,6 +41,11 @@ public class NNDFS implements NDFS {
     // Create threads here
     Worker[] worker = new Worker[nThreads];
     ExecutorService executor = Executors.newFixedThreadPool(nThreads);
+
+    /*System.out.println("Spwaning " + nThreads + " threads");
+    try {
+      Thread.sleep(2000);
+    } catch(InterruptedException ie){}*/
 
     try{
       for (int i = 0; i < nThreads; ++i){

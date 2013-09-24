@@ -30,6 +30,7 @@ PINK	/home/ppp1229/git/src/ndfs/Color.java	/^  PINK$/;"	e	enum:Color	file:
 RED	/home/ppp1229/git/src/ndfs/Color.java	/^  RED,$/;"	e	enum:Color	file:
 Result	/home/ppp1229/git/src/ndfs/Result.java	/^    public Result(String message) {$/;"	m	class:Result
 Result	/home/ppp1229/git/src/ndfs/Result.java	/^public class Result extends Throwable {$/;"	c
+TIMEOUT	NNDFS.java	/^  private static final int TIMEOUT = 50;$/;"	f	class:NNDFS	file:
 WHITE	/home/ppp1229/git/src/ndfs/Color.java	/^  WHITE,$/;"	e	enum:Color	file:
 Worker	Worker.java	/^  public Worker(final Graph graph,$/;"	m	class:Worker
 Worker	Worker.java	/^class Worker implements Runnable$/;"	c
@@ -43,6 +44,7 @@ dfsBlue	Worker.java	/^  private void dfsBlue(State s) throws Result {$/;"	m	clas
 dfsRed	Worker.java	/^  private void dfsRed(State s) throws Result {$/;"	m	class:Worker	file:
 dispatch	/home/ppp1229/git/src/driver/Main.java	/^  private static void dispatch(File file, String version, int nWorkers, int depth)$/;"	m	class:Main	file:
 driver	/home/ppp1229/git/src/driver/Main.java	/^package driver;$/;"	p
+executor	Worker.java	/^  private ExecutorService executor;$/;"	f	class:Worker	file:
 getRandomSeed	NNDFS.java	/^  private long getRandomSeed(Integer i) {$/;"	m	class:NNDFS	file:
 getValue	/home/ppp1229/git/src/ndfs/MapWithDefaultValues.java	/^  public ValueType getValue(KeyType key){$/;"	m	class:MapWithDefaultValues
 graph	NNDFS.java	/^  private Graph graph;$/;"	f	class:NNDFS	file:

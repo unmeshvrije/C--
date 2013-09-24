@@ -2,6 +2,7 @@ package ndfs.mcndfs_alg2;
 
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.RejectedExecutionException;
@@ -21,6 +22,8 @@ public class NNDFS implements NDFS {
   private MapWithDefaultValues<State, Boolean> isRed;
   private MapWithDefaultValues<State, AtomicInteger> visitCount;
   private int nThreads;
+
+  private static final int TIMEOUT = 50;
 
   public NNDFS(Graph graph, int nThreads){
     this.graph = graph;
@@ -54,9 +57,18 @@ public class NNDFS implements NDFS {
       }
     } catch (Exception e) {
       e.printStackTrace();
-    } finally {
+
+      // This should not be in finally block:
+      // It does not work with 1 thread, because service is shutdown
+      // and that poor thread is interrupted before he could finish the work
+      // So he returns without finding cycle (in the case where he should have found one)
+      System.out.println("Calling shutdown()...");
       executor.shutdownNow();
+      try {
+        executor.awaitTermination(TIMEOUT, TimeUnit.SECONDS);
+      } catch (InterruptedException ie) {}
     }
+    
   }
 
   public void ndfs() throws Result {

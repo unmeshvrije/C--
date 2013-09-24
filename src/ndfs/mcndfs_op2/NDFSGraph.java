@@ -11,7 +11,7 @@ import graph.State;
 public class NDFSGraph {
   
   Graph graph;
-  long maxExploredNodes
+  long maxExploredNodes;
   
   // use maxExploredNodes = 0 to explore the whole graph
   // WARNING: this could cause an out of memory error
@@ -47,7 +47,7 @@ public class NDFSGraph {
 			}			
 		}while( false
 				|| setChanged 
-				|| ((maxEploredNodes != 0) && (stateSet.size() > maxExploredNodes))
+				|| ((maxExploredNodes != 0) && (stateSet.size() > maxExploredNodes))
 		);
 		
 		
