@@ -19,7 +19,8 @@ public class NDFSState {
     this.successors = null; // can be assigned using setSuccessors()
   }
   
-  public void setSuccessors(ArrayList<NDFSState> successors){
+  // package access !!!
+  void setSuccessors(ArrayList<NDFSState> successors){
     this.successors = successors;  
   }
   
