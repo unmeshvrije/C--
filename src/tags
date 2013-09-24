@@ -1,0 +1,42 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+ArgumentException	driver/Main.java	/^        ArgumentException(String message) {$/;"	m	class:Main.ArgumentException
+ArgumentException	driver/Main.java	/^    private static class ArgumentException extends Exception {$/;"	c	class:Main
+CycleFound	ndfs/CycleFound.java	/^    public CycleFound() {$/;"	m	class:CycleFound
+CycleFound	ndfs/CycleFound.java	/^    public CycleFound(String message) {$/;"	m	class:CycleFound
+CycleFound	ndfs/CycleFound.java	/^    public CycleFound(int id) {$/;"	m	class:CycleFound
+CycleFound	ndfs/CycleFound.java	/^    public CycleFound(int id, String message) {$/;"	m	class:CycleFound
+CycleFound	ndfs/CycleFound.java	/^public class CycleFound extends Result {$/;"	c
+Main	driver/Main.java	/^public class Main {$/;"	c
+NDFS	ndfs/NDFS.java	/^public interface NDFS {$/;"	i
+NDFSFactory	ndfs/NDFSFactory.java	/^public class NDFSFactory {$/;"	c
+NoCycleFound	ndfs/NoCycleFound.java	/^    public NoCycleFound() {$/;"	m	class:NoCycleFound
+NoCycleFound	ndfs/NoCycleFound.java	/^    public NoCycleFound(String message) {$/;"	m	class:NoCycleFound
+NoCycleFound	ndfs/NoCycleFound.java	/^    public NoCycleFound(int id) {$/;"	m	class:NoCycleFound
+NoCycleFound	ndfs/NoCycleFound.java	/^    public NoCycleFound(int id, String message) {$/;"	m	class:NoCycleFound
+NoCycleFound	ndfs/NoCycleFound.java	/^public class NoCycleFound extends Result {$/;"	c
+Result	ndfs/Result.java	/^    public Result(String message) {$/;"	m	class:Result
+Result	ndfs/Result.java	/^public class Result extends Throwable {$/;"	c
+createMCNDFSNaive	ndfs/NDFSFactory.java	/^    public static NDFS createMCNDFSNaive(Graph graph, Map<State,$/;"	m	class:NDFSFactory
+createNNDFS	ndfs/NDFSFactory.java	/^    public static NDFS createNNDFS(Graph graph, $/;"	m	class:NDFSFactory
+dispatch	driver/Main.java	/^    private static void dispatch(File file, String version, int nrWorkers)$/;"	m	class:Main	file:
+driver	driver/Main.java	/^package driver;$/;"	p
+init	ndfs/NDFS.java	/^    public void init();$/;"	m	interface:NDFS
+main	driver/Main.java	/^    public static void main(String[] argv) {$/;"	m	class:Main
+ndfs	ndfs/CycleFound.java	/^package ndfs;$/;"	p
+ndfs	ndfs/NDFS.java	/^    public void ndfs() throws Result;$/;"	m	interface:NDFS
+ndfs	ndfs/NDFS.java	/^package ndfs;$/;"	p
+ndfs	ndfs/NDFSFactory.java	/^package ndfs;$/;"	p
+ndfs	ndfs/NoCycleFound.java	/^package ndfs;$/;"	p
+ndfs	ndfs/Result.java	/^package ndfs;$/;"	p
+printUsage	driver/Main.java	/^    private static void printUsage() {$/;"	m	class:Main	file:
+runMCNDFS	driver/Main.java	/^    private static void runMCNDFS(Map<State, ndfs.mcndfs_1_naive.Color> colorStore,$/;"	m	class:Main	file:
+runNDFS	driver/Main.java	/^    private static void runNDFS(Map<State, Color> colorStore,$/;"	m	class:Main	file:
+serialVersionUID	driver/Main.java	/^        private static final long serialVersionUID = 1L;$/;"	f	class:Main.ArgumentException	file:
+serialVersionUID	ndfs/CycleFound.java	/^    private static final long serialVersionUID = 1L;$/;"	f	class:CycleFound	file:
+serialVersionUID	ndfs/NoCycleFound.java	/^    private static final long serialVersionUID = 1L;$/;"	f	class:NoCycleFound	file:
+serialVersionUID	ndfs/Result.java	/^    private static final long serialVersionUID = 1L;$/;"	f	class:Result	file:
