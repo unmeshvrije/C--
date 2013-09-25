@@ -32,9 +32,9 @@ public class NDFSFactory {
     return new ndfs.mcndfs_op2.NNDFS(file, nWorkers);
   }*/
 
-  /*public static NDFS createMCNDFSOp3(File file, int nWorkers) {
+  public static NDFS createMCNDFSOp3(File file, int nWorkers) {
     return new ndfs.mcndfs_op3.NNDFS(file, nWorkers);
-  }*/
+  }
 
   public static NDFS createMCNDFSOp4(File file, int nWorkers) {
     return new ndfs.mcndfs_op4.NNDFS(file, nWorkers);
