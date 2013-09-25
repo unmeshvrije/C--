@@ -47,6 +47,10 @@ public class Main {
       ndfs = NDFSFactory.createMCNDFSAlg3(file, nWorkers);
     } else if (version.equals("op1")) {
       ndfs = NDFSFactory.createMCNDFSOp1(file, nWorkers, depth);
+    } else if (version.equals("op3")) {
+      ndfs = NDFSFactory.createMCNDFSOp3(file, nWorkers);
+    } else if (version.equals("op4")) {
+      ndfs = NDFSFactory.createMCNDFSOp4(file, nWorkers);
     } else {
       throw new ArgumentException("Invalid arguments");
     }
@@ -99,8 +103,11 @@ public class Main {
     } else if ( false
               || version.equals("alg2")
               || version.equals("alg3")
-              || version.equals("op1"))
-    {
+              || version.equals("op1")
+              || version.equals("op2")
+              || version.equals("op3")
+              || version.equals("op4")
+    ){
       runMCNDFS(file, version, nWorkers, depth);
     } else {
       throw new ArgumentException("Unkown version: " + version);

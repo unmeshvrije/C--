@@ -1,12 +1,14 @@
-package ndfs.mcndfs_op4;
+package ndfs.mcndfs_op3;
 
 import java.lang.Runnable;
 import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Collections;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.ExecutorService;
+import java.util.Comparator;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -117,16 +119,10 @@ class Worker implements Runnable
       ){
         dfsBlue(t);
       }
-    }
-    
-    // this if statement is moved out of the above for loop 
-    for (State t : shuffledList) {
       if(isRed.hasKeyValuePair(t, false)){
         allRed = false;
-        break;
       }
     }
-    
     if(allRed){
       isRed.setValue(s, true);
     }
@@ -135,6 +131,48 @@ class Worker implements Runnable
       dfsRed(s);
     }
     colors.setValue(s, Color.BLUE);
+  }
+
+  private ArrayList<State> getSortedChildren(State state){
+    
+    class StateWithChildCount{
+       public State state;
+       public int childCount;
+    }
+    
+    class StateWithChildCountComparator 
+      implements Comparator<StateWithChildCount>{
+        
+      public int compare(StateWithChildCount lhs,StateWithChildCount rhs){
+          if(lhs.childCount < rhs.childCount){
+            return -1;
+          }
+          return (lhs.childCount == rhs.childCount) ? 0 : 1;
+      }
+      
+      // not needed, but the compiler wants us to define it
+      public boolean  equals(Object o){
+        return false;
+      }  
+    }
+    
+    ArrayList<StateWithChildCount> swccList = new ArrayList<StateWithChildCount>();
+    for(State s : graph.post(state)){
+      StateWithChildCount swcc = new StateWithChildCount();
+      swcc.state = s;
+      swcc.childCount = countChildren(s);
+    }
+    Collections.sort(swccList,new StateWithChildCountComparator());
+    
+    ArrayList<State> result = new ArrayList<State>();
+    for(StateWithChildCount s : swccList){
+      result.add(s.state);
+    }
+    return result;
+  }
+
+  private int countChildren(State s){
+    return graph.post(s).size();
   }
 
   public void run(){
