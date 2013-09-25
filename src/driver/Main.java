@@ -39,15 +39,14 @@ public class Main {
   }
 
   private static void runMCNDFS(File file, String version, int nWorkers, int depth) throws FileNotFoundException, ArgumentException {
-    Graph graph = GraphFactory.createGraph(file);
-
     NDFS ndfs = null;
+    
     if (version.equals("alg2")) {
-      ndfs = NDFSFactory.createMCNDFSAlg2(graph, nWorkers);
+      ndfs = NDFSFactory.createMCNDFSAlg2(file, nWorkers);
     } else if (version.equals("alg3")) {
-      ndfs = NDFSFactory.createMCNDFSAlg3(graph, nWorkers);
+      ndfs = NDFSFactory.createMCNDFSAlg3(file, nWorkers);
     } else if (version.equals("op1")) {
-      ndfs = NDFSFactory.createMCNDFSOp1(graph, nWorkers, depth);
+      ndfs = NDFSFactory.createMCNDFSOp1(file, nWorkers, depth);
     } else {
       throw new ArgumentException("Invalid arguments");
     }

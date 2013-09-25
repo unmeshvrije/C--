@@ -8,8 +8,12 @@ import java.util.Collections;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.ExecutorService;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+
 import graph.Graph;
 import graph.State;
+import graph.GraphFactory;
 
 import ndfs.Result;
 import ndfs.CycleFound;
@@ -30,15 +34,25 @@ class Worker implements Runnable
   private MapWithDefaultValues<State, AtomicInteger> visitCount;
   private ExecutorService executor;
 
-  public Worker(final Graph graph,
+  public Worker(File file,
       MapWithDefaultValues<State, Boolean> isRed,
       MapWithDefaultValues<State, AtomicInteger> visitCount,
       long randomSeed,
       ExecutorService executor
       )
   {
-    // Locals
+    // create local reference to prevent (invalid) compiler complaints
+    Graph graph = null;
+    
+    try{
+      graph = GraphFactory.createGraph(file);
+    } catch(FileNotFoundException e){
+      System.out.println("Could not open file");
+      System.exit(1);
+    }
     this.graph = graph;
+    
+    
     this.colors = new MapWithDefaultValues<State,Color>(new HashMap<State,Color>(),Color.WHITE);
     this.isPink = new MapWithDefaultValues<State,Boolean>(new HashMap<State,Boolean>(), false);
     this.randomSeed = randomSeed;
