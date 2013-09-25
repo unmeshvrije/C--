@@ -1,3 +1,5 @@
+package ndfs.mcndfs_op2;
+
 import java.lang.OutOfMemoryError;
 
 import java.util.HashSet;
@@ -16,7 +18,7 @@ public class NDFSGraph {
   private long maxExploredNodes;
   private NDFSState[] allStates;
   
-  
+  private NDFSState initialState;
   
   // use maxExploredNodes = 0 to explore the whole graph
   // WARNING: this could cause an out of memory error
@@ -24,10 +26,11 @@ public class NDFSGraph {
     this.graph = graph;
     this.maxExploredNodes = maxExploredNodes;
     this.allStates = null;
+    this.initialState = null;
   }
   
-  public State getInitialState(){
-    return graph.getInitialState();
+  public NDFSState getInitialState(){
+    return initialState;
   }
   
   
@@ -42,8 +45,9 @@ public class NDFSGraph {
     }
     
     HashSet<State> stateSet = new HashSet<State>();
+    stateSet.add(graph.getInitialState());
+    
     HashSet<NDFSState> NDFSStateSet = new HashSet<NDFSState>();
-    stateSet.add(getInitialState());
     
     boolean setChanged;
     
@@ -60,18 +64,29 @@ public class NDFSGraph {
     
     
     // this number will be the uniqueIndex of every NDFSState
-    int index = 0;
+    long index = 0;
     
     // use a temporary hashMap for fast lookup on uniqueIndex'es
     // will be used below to assign successors
-    HashMap<State,Integer> table = new HashMap<State,Integer>();
+    HashMap<State,Long> table = new HashMap<State,Long>();
+   
     
     // hand out uniqueIndexes, put every state in the hashMap 
     for(State s : stateSet){
-      NDFSStateSet.add(new NDFSState(s,index));
-      table.put(s,new Integer(index));
+      
+      NDFSState ns = new NDFSState(s,index);  
+      
+      // this work around is is only used because we want to 
+      // be able to return an NDFSState at getInitialState()
+      if(s.hashCode() == graph.getInitialState().hashCode()){
+        this.initialState = ns;
+      }
+      
+      NDFSStateSet.add(ns);
+      table.put(s,new Long(index));
       index++;
     }
+    
     
     // assign successors: 
     
@@ -92,13 +107,16 @@ public class NDFSGraph {
     
     
     allStates = (NDFSState[]) NDFSStateSet.toArray();
-    return allStates; 
+
+	    return allStates; 
   }
   
   public void permuteSuccessors(long l){
     
-    // we just call this to make sure we dont start modifying a null pointer
-    getAllStates();
+    if(allStates == null){
+      System.out.println("Called NDFSGraph.permuteSuccessors with allStates == null\n");
+      System.exit(1);
+    }
     
     Random random = new Random(l);
     for(int i=0;i<allStates.length;i++){

@@ -30,9 +30,9 @@ public class NDFSFactory {
   }
   
   // 'extend' graph and state interfaces
-  /*public static NDFS createMCNDFSOp2(File file, int nWorkers) {
+  public static NDFS createMCNDFSOp2(File file, int nWorkers) {
     return new ndfs.mcndfs_op2.NNDFS(file, nWorkers);
-  }*/
+  }
 
   // sort children
   public static NDFS createMCNDFSOp3(File file, int nWorkers) {
