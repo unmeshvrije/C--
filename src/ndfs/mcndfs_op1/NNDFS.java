@@ -5,6 +5,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.RejectedExecutionException;
+
+import java.io.File;
+
 import graph.State;
 import graph.Graph;
 
@@ -17,13 +20,13 @@ import ndfs.MapWithDefaultValues;
 
 public class NNDFS implements NDFS {
 
-  private Graph graph;
+  private File file;
   private MapWithDefaultValues<State, Boolean> isRed;
   private MapWithDefaultValues<State, AtomicInteger> visitCount;
   private int nThreads;
   
-  public NNDFS(Graph graph, int nThreads){
-    this.graph = graph;
+  public NNDFS(File file, int nThreads){
+    this.file = file;
     this.isRed = new MapWithDefaultValues<State, Boolean>(new HashMap<State, Boolean>(), false);
     this.visitCount = new MapWithDefaultValues<State, AtomicInteger>(new HashMap<State, AtomicInteger>(), new AtomicInteger(0));
     this.nThreads = nThreads;
@@ -42,14 +45,9 @@ public class NNDFS implements NDFS {
     Worker[] worker = new Worker[nThreads];
     ExecutorService executor = Executors.newFixedThreadPool(nThreads);
 
-    /*System.out.println("Spwaning " + nThreads + " threads");
-    try {
-      Thread.sleep(2000);
-    } catch(InterruptedException ie){}*/
-
     try{
       for (int i = 0; i < nThreads; ++i){
-        worker[i] = new Worker(graph, isRed, visitCount, getRandomSeed(i), executor);
+        worker[i] = new Worker(file, isRed, visitCount, getRandomSeed(i), executor);
         try{
           executor.submit(worker[i]);
         } catch (RejectedExecutionException re) {
@@ -64,6 +62,6 @@ public class NNDFS implements NDFS {
   }
 
   public void ndfs() throws Result {
-    nndfs(graph.getInitialState());
+    nndfs(null);
   }
 }
