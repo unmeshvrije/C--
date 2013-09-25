@@ -66,41 +66,7 @@ class Worker implements Runnable
     this.executor = executor;
   }
 
-  private void dfsRedRec(State s) throws Result {
-    
-    if (Thread.currentThread().isInterrupted()) {
-      return;
-    }
-    
-    colors.setValue(s, Color.PINK);
-            
-    List<State> shuffledList = graph.post(s);
-    Collections.shuffle(shuffledList, new Random(randomSeed));
-      for (State t : shuffledList) {
-        if (colors.hasKeyValuePair(t, Color.CYAN)) {
-          throw new CycleFound();
-        }
-        if ( true
-             && (!colors.hasKeyValuePair(t, Color.PINK))
-             && isRed.hasKeyValuePair(t, false) 
-        ){
-          dfsRed(t);
-        }
-      }
-      if (s.isAccepting()) {
-        visitCount.getValue(s).decrementAndGet();
-        while (visitCount.getValue(s).get() != 0){
-          // spin
-          if (Thread.currentThread().isInterrupted()) {
-            break;
-          }
-        }
-      }
-      isRed.setValue(s, true);
-    }
-
   private void dfsRed(State s) throws Result {
-
 
     Stack<State> stack = new Stack<State>();    
     stack.push(s);
@@ -128,7 +94,6 @@ class Worker implements Runnable
         }
       }
       if (state.isAccepting()) {
-        // Error: for 1 thread: this this value could be -1 ???
 
         visitCount.getValue(state).decrementAndGet();
         //visitCount.getValue(state).getAndDecrement();
@@ -137,48 +102,12 @@ class Worker implements Runnable
           if (Thread.currentThread().isInterrupted()) {
             break;
           }
-         // System.out.println("dfsRed(): " + visitCount.getValue(state).get() + "hash code: " + state.hashCode());
+          
+         //System.out.println("dfsRed(): " + visitCount.getValue(state).get() + "hash code: " + state.hashCode());
         }
       }
       isRed.setValue(state, true);
     }
-  }
-
-  private void dfsBlueRec(State s) throws Result {
-    
-    if (Thread.currentThread().isInterrupted()) {
-      return;
-    }
-    
-    boolean allRed = true;
-    colors.setValue(s, Color.CYAN);
-    List<State> shuffledList = graph.post(s);
-    Collections.shuffle(shuffledList, new Random(randomSeed));
-    for (State t : shuffledList) {
-      if( true
-        && colors.hasKeyValuePair(t, Color.CYAN)
-        && (s.isAccepting() || t.isAccepting())
-      ){
-          throw new CycleFound();
-      }
-      if( true
-        && colors.hasKeyValuePair(t, Color.WHITE)
-        && isRed.hasKeyValuePair(t, false)
-      ){
-        dfsBlue(t);
-      }
-      if(isRed.hasKeyValuePair(t, false)){
-        allRed = false;
-      }
-    }
-    if(allRed){
-      isRed.setValue(s, true);
-    }
-    else if(s.isAccepting()){
-      visitCount.getValue(s).incrementAndGet();
-      dfsRed(s);
-    }
-    colors.setValue(s, Color.BLUE);
   }
 
   private void dfsBlue(State s) throws Result {
@@ -195,6 +124,7 @@ class Worker implements Runnable
       state = stack.pop();
 
       boolean allRed = true;
+      boolean whiteChild = false;
       colors.setValue(state, Color.CYAN);
       List<State> shuffledList = graph.post(state);
       Collections.shuffle(shuffledList, new Random(randomSeed));
@@ -209,22 +139,26 @@ class Worker implements Runnable
           && colors.hasKeyValuePair(t, Color.WHITE)
           && isRed.hasKeyValuePair(t, false)
         ){
+          stack.push(state);
           stack.push(t);
+          whiteChild = true;
+          break;
         }
         if(isRed.hasKeyValuePair(t, false)){
           allRed = false;
         }
       }
+      
+      if (whiteChild) {
+        continue;
+      }
+      
+      state = stack.pop();
       if(allRed){
         isRed.setValue(state, true);
       }
       else if(state.isAccepting()){
         visitCount.getValue(state).incrementAndGet();
-       /* System.out.println("dfsBlue(): " + visitCount.getValue(state).get() + "hash code : " + state.hashCode());
-        try{
-        Thread.sleep(5000);
-        } catch(InterruptedException ie){}
-        */
         dfsRed(state);
       }
       colors.setValue(state, Color.BLUE);

@@ -83,8 +83,10 @@ class Worker implements Runnable
       }
       if (s.isAccepting()) {
         visitCount.getValue(s).decrementAndGet();
+        System.out.println("");
         while (visitCount.getValue(s).get() != 0){
           // spin
+          System.out.println("dfsRed(): " + visitCount.getValue(s).get() + "hash code: " + s.hashCode());
           if (Thread.currentThread().isInterrupted()) {
             break;
           }
@@ -109,6 +111,7 @@ class Worker implements Runnable
         && colors.hasKeyValuePair(t, Color.CYAN)
         && (s.isAccepting() || t.isAccepting())
       ){
+          System.out.println("Early");
           throw new CycleFound();
       }
       if( true
@@ -126,6 +129,11 @@ class Worker implements Runnable
     }
     else if(s.isAccepting()){
       visitCount.getValue(s).incrementAndGet();
+        System.out.println("dfsBlue(): " + visitCount.getValue(s).get() + "hash code : " + s.hashCode());
+        try{
+        Thread.sleep(5000);
+        } catch(InterruptedException ie){}
+        
       dfsRed(s);
     }
     colors.setValue(s, Color.BLUE);
