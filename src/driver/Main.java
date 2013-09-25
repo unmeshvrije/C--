@@ -47,6 +47,8 @@ public class Main {
       ndfs = NDFSFactory.createMCNDFSAlg3(file, nWorkers);
     } else if (version.equals("op1")) {
       ndfs = NDFSFactory.createMCNDFSOp1(file, nWorkers, depth);
+    } else if (version.equals("op3")) {
+      ndfs = NDFSFactory.createMCNDFSOp3(file, nWorkers);
     } else if (version.equals("op4")) {
       ndfs = NDFSFactory.createMCNDFSOp4(file, nWorkers);
     } else {
