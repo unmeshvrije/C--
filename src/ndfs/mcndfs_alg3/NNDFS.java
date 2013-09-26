@@ -5,6 +5,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.RejectedExecutionException;
+import java.util.concurrent.TimeUnit;
 
 import java.io.File;
 
@@ -25,7 +26,8 @@ public class NNDFS implements NDFS {
   private MapWithDefaultValues<State, Boolean> isRed;
   private MapWithDefaultValues<State, AtomicInteger> visitCount;
   private int nThreads;
-  
+  private static final int TIMEOUT = 50;
+
   public NNDFS(File file, int nThreads){
     this.file = file;
     this.isRed = new MapWithDefaultValues<State, Boolean>(new HashMap<State, Boolean>(), false);
@@ -49,16 +51,24 @@ public class NNDFS implements NDFS {
     try{
       for (int i = 0; i < nThreads; ++i){
         worker[i] = new Worker(file, isRed, visitCount, getRandomSeed(i), executor);
-        try{
+        try {
           executor.submit(worker[i]);
         } catch (RejectedExecutionException re) {
           // Do Nothing
         }
-        
       }
     } catch (Exception e) {
       e.printStackTrace();
+
+      // This should not be in finally block:
+      // It does not work with 1 thread, because service is shutdown
+      // and that poor thread is interrupted before he could finish the work
+      // So he returns without finding cycle (in the case where he should have found one)
+      System.out.println("Calling shutdown()...");
       executor.shutdownNow();
+      try {
+        executor.awaitTermination(TIMEOUT, TimeUnit.SECONDS);
+      } catch (InterruptedException ie) {}
     }
   }
 

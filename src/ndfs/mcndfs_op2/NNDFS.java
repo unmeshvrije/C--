@@ -31,6 +31,7 @@ public class NNDFS implements NDFS {
   private BitSet isRed;  
   private MapWithDefaultValues<NDFSState, AtomicInteger> visitCount;
   private int nThreads;
+  private static final int TIMEOUT = 50;
   
   public NNDFS(File file, int nThreads){
     this.file = file;
@@ -52,33 +53,30 @@ public class NNDFS implements NDFS {
   private void nndfs(State s) throws Result {
     // Create threads here
     Worker[] worker = new Worker[nThreads];
-    Future[] future = new Future[nThreads];
     
     ExecutorService executor = Executors.newFixedThreadPool(nThreads);
 
     try{
       for (int i = 0; i < nThreads; ++i){
         worker[i] = new Worker(file, isRed, visitCount, getRandomSeed(i), executor);
-        try{
-          future[i] = executor.submit(worker[i]);
+        try {
+          executor.submit(worker[i]);
         } catch (RejectedExecutionException re) {
           // Do Nothing
         }
-        
       }
     } catch (Exception e) {
       e.printStackTrace();
+
+      // This should not be in finally block:
+      // It does not work with 1 thread, because service is shutdown
+      // and that poor thread is interrupted before he could finish the work
+      // So he returns without finding cycle (in the case where he should have found one)
+      System.out.println("Calling shutdown()...");
       executor.shutdownNow();
-    } finally{
-        /*try {
-          for (int i = 0; i < nThreads; ++i){
-            future[i].get(5000, TimeUnit.MILLISECONDS);
-          }
-        } catch (InterruptedException ie){}
-          catch (ExecutionException ee){}
-          catch (TimeoutException ee){}
-          System.out.println("shutting down");
-      }*/
+      try {
+        executor.awaitTermination(TIMEOUT, TimeUnit.SECONDS);
+      } catch (InterruptedException ie) {}
     }
   }
 

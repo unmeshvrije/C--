@@ -23,6 +23,7 @@ public class NDFSState {
   
   // package access !!!
   void setSuccessors(ArrayList<NDFSState> successors){
+    System.out.println(" this is ndfs state:: set sucessors()\n");
     this.successors = successors;  
   }
   
@@ -31,7 +32,8 @@ public class NDFSState {
     return this.uniqueIndex;
   }
   
-  public List<NDFSState> post(){ 
+  public List<NDFSState> post(String str){ 
+    System.out.printf(str + "this is ndfsstate::post(), my size is %d\n",successors.size());
     return successors;
   }
   

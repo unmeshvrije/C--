@@ -57,6 +57,7 @@ class Worker implements Runnable
       ndfsGraph = new NDFSGraph(graph, 0);
       ndfsGraph.getAllStates();
       ndfsGraph.permuteSuccessors(randomSeed);
+      // we get here
     } catch (OutOfMemoryError oe) {
       System.out.println("Not enough memory!");
       System.exit(1);
@@ -65,6 +66,10 @@ class Worker implements Runnable
     this.ndfsGraph = ndfsGraph;
     
     this.colors = new MapWithDefaultValues<NDFSState,Color>(new HashMap<NDFSState,Color>(),Color.WHITE);
+    
+    System.out.println("hi 1");
+ 
+    
     this.randomSeed = randomSeed;
     
 
@@ -72,6 +77,9 @@ class Worker implements Runnable
     this.isRed = isRed;
     this.visitCount  = visitCount;
     this.executor = executor;
+
+    System.out.println("hi 2");
+
   }
 
   private void dfsRed(NDFSState s) throws Result {
@@ -83,7 +91,7 @@ class Worker implements Runnable
     colors.setValue(s, Color.PINK);
     
     // Use the cached successors
-      for (NDFSState t : s.post()) {
+      for (NDFSState t : s.post("asdf")) {
         if (colors.hasKeyValuePair(t, Color.CYAN)) {
           throw new CycleFound();
         }
@@ -109,15 +117,26 @@ class Worker implements Runnable
 
 
   private void dfsBlue(NDFSState s) throws Result {
-    
+      
+    System.out.println("dfs blue start");
     if (Thread.currentThread().isInterrupted()) {
       return;
     }
+    System.out.println("huh");
     
     boolean allRed = true;
     colors.setValue(s, Color.CYAN);
+    System.out.println("huh what");
     
-    for (NDFSState t : s.post()) {
+    final List<NDFSState> spost = s.post("dfsBlue:");
+    System.out.printf("spost.size() = %d\n",spost.size());
+      
+    
+    
+    for (NDFSState t : spost) {
+      System.out.println("line 134");
+      System.out.printf("index = %d\n",t.getUniqueIndex());
+      
       if( true
         && colors.hasKeyValuePair(t, Color.CYAN)
         && (s.isAccepting() || t.isAccepting())
@@ -128,12 +147,15 @@ class Worker implements Runnable
         && colors.hasKeyValuePair(t, Color.WHITE)
         && (!isRed.get((int)t.getUniqueIndex()))
       ){
+        System.out.println("line 147");
         dfsBlue(t);
+        System.out.println("wtf");
       }
       if(!isRed.get((int)t.getUniqueIndex())){
         allRed = false;
       }
     }
+    System.out.println("line 154");
     if(allRed){
       isRed.set((int)s.getUniqueIndex());
     }
@@ -154,16 +176,22 @@ class Worker implements Runnable
     long end;
  
     try {
-      dfsBlue(ndfsGraph.getInitialState());
+      System.out.println("hi 3");
+      NDFSState initial = ndfsGraph.getInitialState();
+      System.out.println("hi 3.5");
+      dfsBlue(initial);
+      System.out.println("hi 4");
       throw new NoCycleFound();
     } 
     catch (CycleFound cf) {
-      end = System.currentTimeMillis();
+      System.out.println("hi 5");
+    end = System.currentTimeMillis();
       System.out.println(cf.getMessage());
       System.out.printf("%s took %d ms\n", "MC_NDFS", end - start);
       executor.shutdownNow();
     }
     catch (Result r) {
+      System.out.println("hi 6");
       end = System.currentTimeMillis();
       System.out.println(r.getMessage());
       System.out.printf("%s took %d ms\n", "MC_NDFS", end - start);

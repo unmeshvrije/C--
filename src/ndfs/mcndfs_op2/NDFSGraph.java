@@ -57,16 +57,12 @@ public class NDFSGraph {
       for(State s : stateSet2){
         stateSet.addAll(graph.post(s));
         stateSet.add(s);
-      }      
+      }
     }while( false
         || stateSet.size() > stateSet2.size() 
         || ((maxExploredNodes != 0) && (stateSet.size() > maxExploredNodes))
     );
-    
-    
-    
-    
-    
+     
     // this number will be the uniqueIndex of every NDFSState
     long index = 0;
     
@@ -94,6 +90,7 @@ public class NDFSGraph {
     }
     
     
+    
     // assign successors: 
     
     // for each node in the graph
@@ -109,6 +106,7 @@ public class NDFSGraph {
       
       // assign successors set.
       ns.setSuccessors(nsSucc);
+      System.out.printf("initialized succ of node with index %d\n",ns.getUniqueIndex());
     }
     
     
@@ -125,7 +123,7 @@ public class NDFSGraph {
     
     Random random = new Random(l);
     for(int i=0;i<allStates.size();i++){
-      Collections.shuffle(allStates.get(i).post(), random);
+      Collections.shuffle(allStates.get(i).post("qwe"), random);
     }
   }
   
