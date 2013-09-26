@@ -2,12 +2,16 @@ package ndfs.mcndfs_op2;
 
 import java.util.HashMap;
 import java.util.BitSet;
+import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.RejectedExecutionException;
-
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeoutException;
 import java.io.File;
+
+import java.util.concurrent.TimeUnit;
 
 import graph.State;
 import graph.Graph;
@@ -48,13 +52,15 @@ public class NNDFS implements NDFS {
   private void nndfs(State s) throws Result {
     // Create threads here
     Worker[] worker = new Worker[nThreads];
+    Future[] future = new Future[nThreads];
+    
     ExecutorService executor = Executors.newFixedThreadPool(nThreads);
 
     try{
       for (int i = 0; i < nThreads; ++i){
         worker[i] = new Worker(file, isRed, visitCount, getRandomSeed(i), executor);
         try{
-          executor.submit(worker[i]);
+          future[i] = executor.submit(worker[i]);
         } catch (RejectedExecutionException re) {
           // Do Nothing
         }
@@ -63,6 +69,16 @@ public class NNDFS implements NDFS {
     } catch (Exception e) {
       e.printStackTrace();
       executor.shutdownNow();
+    } finally{
+        /*try {
+          for (int i = 0; i < nThreads; ++i){
+            future[i].get(5000, TimeUnit.MILLISECONDS);
+          }
+        } catch (InterruptedException ie){}
+          catch (ExecutionException ee){}
+          catch (TimeoutException ee){}
+          System.out.println("shutting down");
+      }*/
     }
   }
 

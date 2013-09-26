@@ -16,7 +16,7 @@ public class NDFSGraph {
   
   private Graph graph;
   private long maxExploredNodes;
-  private NDFSState[] allStates;
+  private ArrayList<NDFSState> allStates;
   
   private NDFSState initialState;
   
@@ -37,30 +37,34 @@ public class NDFSGraph {
   
   
   // We decided to use an array instead of ArrayList
-  public NDFSState[] getAllStates() 
+  public ArrayList<NDFSState> getAllStates() 
       throws OutOfMemoryError
   {
     if(allStates != null){
       return allStates;
     }
     
+    // we use two hashsets, because we cannot modify one using addAll when iterating over it
     HashSet<State> stateSet = new HashSet<State>();
+    HashSet<State> stateSet2 = null;
+    
     stateSet.add(graph.getInitialState());
-    
-    HashSet<NDFSState> NDFSStateSet = new HashSet<NDFSState>();
-    
-    boolean setChanged;
     
     // explore the graph and put the nodes in stateSet 
     do{
-      setChanged = false;
-      for(State s : stateSet){
-        setChanged |= stateSet.addAll(graph.post(s));
+      stateSet2 = stateSet;
+      stateSet = new HashSet<State>();
+      for(State s : stateSet2){
+        stateSet.addAll(graph.post(s));
+        stateSet.add(s);
       }      
     }while( false
-        || setChanged 
+        || stateSet.size() > stateSet2.size() 
         || ((maxExploredNodes != 0) && (stateSet.size() > maxExploredNodes))
     );
+    
+    
+    
     
     
     // this number will be the uniqueIndex of every NDFSState
@@ -70,6 +74,8 @@ public class NDFSGraph {
     // will be used below to assign successors
     HashMap<State,Long> table = new HashMap<State,Long>();
    
+    HashSet<NDFSState> NDFSStateSet = new HashSet<NDFSState>();
+  
     
     // hand out uniqueIndexes, put every state in the hashMap 
     for(State s : stateSet){
@@ -106,9 +112,8 @@ public class NDFSGraph {
     }
     
     
-    allStates = (NDFSState[]) NDFSStateSet.toArray();
-
-	    return allStates; 
+    allStates = new ArrayList<NDFSState>(NDFSStateSet);
+	  return allStates; 
   }
   
   public void permuteSuccessors(long l){
@@ -119,8 +124,8 @@ public class NDFSGraph {
     }
     
     Random random = new Random(l);
-    for(int i=0;i<allStates.length;i++){
-      Collections.shuffle(allStates[i].post(), random);
+    for(int i=0;i<allStates.size();i++){
+      Collections.shuffle(allStates.get(i).post(), random);
     }
   }
   

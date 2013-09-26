@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.BitSet;
 import java.util.Collections;
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.ExecutorService;
 
@@ -25,7 +26,6 @@ class Worker implements Runnable
 {
   // Locals
   private final NDFSGraph ndfsGraph;
-  private NDFSState[] cachedStates;
   private MapWithDefaultValues<NDFSState,Color> colors;
   private long randomSeed;
 
@@ -55,7 +55,7 @@ class Worker implements Runnable
     
     try {
       ndfsGraph = new NDFSGraph(graph, 0);
-      this.cachedStates = ndfsGraph.getAllStates();
+      ndfsGraph.getAllStates();
       ndfsGraph.permuteSuccessors(randomSeed);
     } catch (OutOfMemoryError oe) {
       System.out.println("Not enough memory!");
@@ -152,7 +152,7 @@ class Worker implements Runnable
   
     long start = System.currentTimeMillis();
     long end;
-    
+ 
     try {
       dfsBlue(ndfsGraph.getInitialState());
       throw new NoCycleFound();
@@ -168,6 +168,7 @@ class Worker implements Runnable
       System.out.println(r.getMessage());
       System.out.printf("%s took %d ms\n", "MC_NDFS", end - start);
     }
+    System.out.println("thread done");
   }
 
 }

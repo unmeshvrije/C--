@@ -13,17 +13,20 @@ Use of annotations
 Dont call new Random() inside
 Make Java threads actually run on separate processors/cores (Use prun in test)
 
-# Algo of Master worker
 
-Master()
-{
-  Create tasks ,say T tasks
-  and we have N threads
+Possible optimizations
+ Grab  global lock on both - redState Mapping and StateCounts
+ Grab separate locks on these data structures.
+ Use something like fine grain locking!
 
-  N == T : easiest to implement
-  N > T : Some threads will be idle
 
-  N < T : All threads will have work and work queue will be full
-          Master should wait for any thread to ask for next job
-}
+Permutations:
+  Without randomness: Generate some sequences. and compare with randomizing
+  the post()
+
+
+Avoiding the blue nodes ?
+Difficult to implement correctly: Threads also share the blue state
+and other threads may not work with this node.
+----Can use hash code to identify the states uniquely
 
