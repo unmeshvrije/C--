@@ -57,7 +57,7 @@ public class Main {
       throw new ArgumentException("Invalid arguments");
     }
 
-    long start = System.currentTimeMillis();
+    long start = System.nanoTime();//currentTimeMillis();
     long end;
 
     try {
@@ -65,9 +65,9 @@ public class Main {
       //throw new Error("No result returned by naive");
     }
     catch (Result r) {
-      end = System.currentTimeMillis();
+      end = System.nanoTime();
       System.out.println(r.getMessage());
-      System.out.printf("%s took %d ms\n", "MC_NDFS", end - start);
+      System.out.printf("%s took %ld us\n", "MC_NDFS", (end - start)/1000);
     }
   }
 

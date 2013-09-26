@@ -1,3 +1,5 @@
+package ndfs.mcndfs_op2;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,8 +11,8 @@ public class NDFSState {
   private long uniqueIndex;
   private ArrayList<NDFSState> successors;
   
-  // constructor
-  public NDFSState(
+  // constructor: package access
+  NDFSState(
       State state,
       long uniqueIndex
   ){
@@ -31,6 +33,10 @@ public class NDFSState {
   
   public List<NDFSState> post(){ 
     return successors;
+  }
+  
+  public boolean isAccepting() {
+    return state.isAccepting();
   }
   
   // package access !!!
