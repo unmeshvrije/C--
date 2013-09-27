@@ -8,9 +8,12 @@ import java.util.Collections;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.ExecutorService;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 
-import graph.Graph;
 import graph.State;
+import graph.Graph;
+import graph.GraphFactory;
 
 import ndfs.Result;
 import ndfs.CycleFound;
@@ -30,14 +33,23 @@ class Worker implements Runnable
   private MapWithDefaultValues<State, AtomicInteger> visitCount;
   private ExecutorService executor;
   
-  public Worker(final Graph graph,
+  public Worker(File file,
       MapWithDefaultValues<State, Boolean> isRed,
       MapWithDefaultValues<State, AtomicInteger> visitCount,
       long randomSeed,
       ExecutorService executor
       )
   {
-    // Locals
+    // create local reference to prevent (invalid) compiler complaints
+    Graph graph = null;
+    
+    try{
+      graph = GraphFactory.createGraph(file);
+    } catch(FileNotFoundException e){
+      System.out.println("Could not open file");
+      System.exit(1);
+    }
+    
     this.graph = graph;
     this.colors = new MapWithDefaultValues<State,Color>(new HashMap<State,Color>(),Color.WHITE);
     this.randomSeed = randomSeed;
@@ -71,8 +83,10 @@ class Worker implements Runnable
       }
       if (s.isAccepting()) {
         visitCount.getValue(s).decrementAndGet();
+        System.out.println("");
         while (visitCount.getValue(s).get() != 0){
           // spin
+          System.out.println("dfsRed(): " + visitCount.getValue(s).get() + "hash code: " + s.hashCode());
           if (Thread.currentThread().isInterrupted()) {
             break;
           }
@@ -97,6 +111,7 @@ class Worker implements Runnable
         && colors.hasKeyValuePair(t, Color.CYAN)
         && (s.isAccepting() || t.isAccepting())
       ){
+          System.out.println("Early");
           throw new CycleFound();
       }
       if( true
@@ -114,6 +129,11 @@ class Worker implements Runnable
     }
     else if(s.isAccepting()){
       visitCount.getValue(s).incrementAndGet();
+        System.out.println("dfsBlue(): " + visitCount.getValue(s).get() + "hash code : " + s.hashCode());
+        try{
+        Thread.sleep(5000);
+        } catch(InterruptedException ie){}
+        
       dfsRed(s);
     }
     colors.setValue(s, Color.BLUE);
@@ -127,11 +147,18 @@ class Worker implements Runnable
     try {
       dfsBlue(graph.getInitialState());
       throw new NoCycleFound();
-    } catch (Result r) {
+    } 
+    catch (CycleFound cf) {
+      end = System.currentTimeMillis();
+      System.out.println(cf.getMessage());
+      System.out.printf("%s took %d ms\n", "MC_NDFS", end - start);
+      executor.shutdownNow();
+    }
+    catch (Result r) {
       end = System.currentTimeMillis();
       System.out.println(r.getMessage());
       System.out.printf("%s took %d ms\n", "MC_NDFS", end - start);
-      executor.shutdownNow();
+      //executor.shutdownNow();
     }
   }
 

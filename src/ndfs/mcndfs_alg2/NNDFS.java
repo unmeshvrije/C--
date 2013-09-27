@@ -7,8 +7,11 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.RejectedExecutionException;
 
+import java.io.File;
+
 import graph.State;
 import graph.Graph;
+import graph.GraphFactory;
 
 import ndfs.NDFS;
 import ndfs.Result;
@@ -18,15 +21,15 @@ import ndfs.MapWithDefaultValues;
 
 public class NNDFS implements NDFS {
 
-  private Graph graph;
+  private File file;
   private MapWithDefaultValues<State, Boolean> isRed;
   private MapWithDefaultValues<State, AtomicInteger> visitCount;
   private int nThreads;
 
   private static final int TIMEOUT = 50;
 
-  public NNDFS(Graph graph, int nThreads){
-    this.graph = graph;
+  public NNDFS(File file, int nThreads){
+    this.file = file;
     this.isRed = new MapWithDefaultValues<State, Boolean>(new HashMap<State, Boolean>(), false);
     this.visitCount = new MapWithDefaultValues<State, AtomicInteger>(new HashMap<State, AtomicInteger>(), new AtomicInteger(0));
     this.nThreads = nThreads;
@@ -48,7 +51,7 @@ public class NNDFS implements NDFS {
     
     try{
       for (int i = 0; i < nThreads; ++i){
-        worker[i] = new Worker(graph, isRed, visitCount, getRandomSeed(i), executor);
+        worker[i] = new Worker(file, isRed, visitCount, getRandomSeed(i), executor);
         try {
           executor.submit(worker[i]);
         } catch (RejectedExecutionException re) {
@@ -72,6 +75,6 @@ public class NNDFS implements NDFS {
   }
 
   public void ndfs() throws Result {
-    nndfs(graph.getInitialState());
+    nndfs(null);
   }
 }

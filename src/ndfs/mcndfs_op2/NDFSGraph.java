@@ -1,3 +1,5 @@
+package ndfs.mcndfs_op2;
+
 import java.lang.OutOfMemoryError;
 
 import java.util.HashSet;
@@ -14,9 +16,9 @@ public class NDFSGraph {
   
   private Graph graph;
   private long maxExploredNodes;
-  private NDFSState[] allStates;
+  private ArrayList<NDFSState> allStates;
   
-  
+  private NDFSState initialState;
   
   // use maxExploredNodes = 0 to explore the whole graph
   // WARNING: this could cause an out of memory error
@@ -24,54 +26,70 @@ public class NDFSGraph {
     this.graph = graph;
     this.maxExploredNodes = maxExploredNodes;
     this.allStates = null;
+    this.initialState = null;
   }
   
-  public State getInitialState(){
-    return graph.getInitialState();
+  public NDFSState getInitialState(){
+    return initialState;
   }
   
   
   
   
   // We decided to use an array instead of ArrayList
-  public NDFSState[] getAllStates() 
+  public ArrayList<NDFSState> getAllStates() 
       throws OutOfMemoryError
   {
     if(allStates != null){
       return allStates;
     }
     
+    // we use two hashsets, because we cannot modify one using addAll when iterating over it
     HashSet<State> stateSet = new HashSet<State>();
-    HashSet<NDFSState> NDFSStateSet = new HashSet<NDFSState>();
-    stateSet.add(getInitialState());
+    HashSet<State> stateSet2 = null;
     
-    boolean setChanged;
+    stateSet.add(graph.getInitialState());
     
     // explore the graph and put the nodes in stateSet 
     do{
-      setChanged = false;
-      for(State s : stateSet){
-        setChanged |= stateSet.addAll(graph.post(s));
-      }      
+      stateSet2 = stateSet;
+      stateSet = new HashSet<State>();
+      for(State s : stateSet2){
+        stateSet.addAll(graph.post(s));
+        stateSet.add(s);
+      }
     }while( false
-        || setChanged 
+        || stateSet.size() > stateSet2.size() 
         || ((maxExploredNodes != 0) && (stateSet.size() > maxExploredNodes))
     );
-    
-    
+     
     // this number will be the uniqueIndex of every NDFSState
-    int index = 0;
+    long index = 0;
     
     // use a temporary hashMap for fast lookup on uniqueIndex'es
     // will be used below to assign successors
-    HashMap<State,Integer> table = new HashMap<State,Integer>();
+    HashMap<State,Long> table = new HashMap<State,Long>();
+   
+    HashSet<NDFSState> NDFSStateSet = new HashSet<NDFSState>();
+  
     
     // hand out uniqueIndexes, put every state in the hashMap 
     for(State s : stateSet){
-      NDFSStateSet.add(new NDFSState(s,index));
-      table.put(s,new Integer(index));
+      
+      NDFSState ns = new NDFSState(s,index);  
+      
+      // this work around is is only used because we want to 
+      // be able to return an NDFSState at getInitialState()
+      if(s.hashCode() == graph.getInitialState().hashCode()){
+        this.initialState = ns;
+      }
+      
+      NDFSStateSet.add(ns);
+      table.put(s,new Long(index));
       index++;
     }
+    
+    
     
     // assign successors: 
     
@@ -88,21 +106,24 @@ public class NDFSGraph {
       
       // assign successors set.
       ns.setSuccessors(nsSucc);
+      System.out.printf("initialized succ of node with index %d\n",ns.getUniqueIndex());
     }
     
     
-    allStates = (NDFSState[]) NDFSStateSet.toArray();
-    return allStates; 
+    allStates = new ArrayList<NDFSState>(NDFSStateSet);
+	  return allStates; 
   }
   
   public void permuteSuccessors(long l){
     
-    // we just call this to make sure we dont start modifying a null pointer
-    getAllStates();
+    if(allStates == null){
+      System.out.println("Called NDFSGraph.permuteSuccessors with allStates == null\n");
+      System.exit(1);
+    }
     
     Random random = new Random(l);
-    for(int i=0;i<allStates.length;i++){
-      Collections.shuffle(allStates[i].post(), random);
+    for(int i=0;i<allStates.size();i++){
+      Collections.shuffle(allStates.get(i).post("qwe"), random);
     }
   }
   

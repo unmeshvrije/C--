@@ -1,17 +1,18 @@
-package ndfs.mcndfs_op4;
+package ndfs.mcndfs_op2;
 
 import java.lang.Runnable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.BitSet;
 import java.util.Collections;
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.ExecutorService;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 
-import graph.State;
 import graph.Graph;
 import graph.GraphFactory;
 
@@ -24,18 +25,18 @@ import ndfs.Color;
 class Worker implements Runnable
 {
   // Locals
-  private final Graph graph;
-  private MapWithDefaultValues<State,Color> colors;
+  private final NDFSGraph ndfsGraph;
+  private MapWithDefaultValues<NDFSState,Color> colors;
   private long randomSeed;
 
   // Globals
-  private MapWithDefaultValues<State, Boolean> isRed;
-  private MapWithDefaultValues<State, AtomicInteger> visitCount;
+  private BitSet isRed;
+  private MapWithDefaultValues<NDFSState, AtomicInteger> visitCount;
   private ExecutorService executor;
   
   public Worker(File file,
-      MapWithDefaultValues<State, Boolean> isRed,
-      MapWithDefaultValues<State, AtomicInteger> visitCount,
+      BitSet isRed,
+      MapWithDefaultValues<NDFSState, AtomicInteger> visitCount,
       long randomSeed,
       ExecutorService executor
       )
@@ -50,33 +51,53 @@ class Worker implements Runnable
       System.exit(1);
     }
     
-    this.graph = graph;
-    this.colors = new MapWithDefaultValues<State,Color>(new HashMap<State,Color>(),Color.WHITE);
+    NDFSGraph ndfsGraph = null;
+    
+    try {
+      ndfsGraph = new NDFSGraph(graph, 0);
+      ndfsGraph.getAllStates();
+      ndfsGraph.permuteSuccessors(randomSeed);
+      // we get here
+    } catch (OutOfMemoryError oe) {
+      System.out.println("Not enough memory!");
+      System.exit(1);
+    }
+    
+    this.ndfsGraph = ndfsGraph;
+    
+    this.colors = new MapWithDefaultValues<NDFSState,Color>(new HashMap<NDFSState,Color>(),Color.WHITE);
+    
+    System.out.println("hi 1");
+ 
+    
     this.randomSeed = randomSeed;
+    
 
     // Globals
     this.isRed = isRed;
     this.visitCount  = visitCount;
     this.executor = executor;
+
+    System.out.println("hi 2");
+
   }
 
-  private void dfsRed(State s) throws Result {
+  private void dfsRed(NDFSState s) throws Result {
     
     if (Thread.currentThread().isInterrupted()) {
       return;
     }
     
     colors.setValue(s, Color.PINK);
-            
-    List<State> shuffledList = graph.post(s);
-    Collections.shuffle(shuffledList, new Random(randomSeed));
-      for (State t : shuffledList) {
+    
+    // Use the cached successors
+      for (NDFSState t : s.post("asdf")) {
         if (colors.hasKeyValuePair(t, Color.CYAN)) {
           throw new CycleFound();
         }
         if ( true
              && (!colors.hasKeyValuePair(t, Color.PINK))
-             && isRed.hasKeyValuePair(t, false) 
+             && (!isRed.get((int)t.getUniqueIndex()))
         ){
           dfsRed(t);
         }
@@ -90,21 +111,32 @@ class Worker implements Runnable
           }
         }
       }
-      isRed.setValue(s, true);
-    }
+      
+      isRed.set((int)s.getUniqueIndex());
+   }
 
 
-  private void dfsBlue(State s) throws Result {
-    
+  private void dfsBlue(NDFSState s) throws Result {
+      
+    System.out.println("dfs blue start");
     if (Thread.currentThread().isInterrupted()) {
       return;
     }
+    System.out.println("huh");
     
     boolean allRed = true;
     colors.setValue(s, Color.CYAN);
-    List<State> shuffledList = graph.post(s);
-    Collections.shuffle(shuffledList, new Random(randomSeed));
-    for (State t : shuffledList) {
+    System.out.println("huh what");
+    
+    final List<NDFSState> spost = s.post("dfsBlue:");
+    System.out.printf("spost.size() = %d\n",spost.size());
+      
+    
+    
+    for (NDFSState t : spost) {
+      System.out.println("line 134");
+      System.out.printf("index = %d\n",t.getUniqueIndex());
+      
       if( true
         && colors.hasKeyValuePair(t, Color.CYAN)
         && (s.isAccepting() || t.isAccepting())
@@ -113,25 +145,26 @@ class Worker implements Runnable
       }
       if( true
         && colors.hasKeyValuePair(t, Color.WHITE)
-        && isRed.hasKeyValuePair(t, false)
+        && (!isRed.get((int)t.getUniqueIndex()))
       ){
+        System.out.println("line 147");
         dfsBlue(t);
+        System.out.println("wtf");
       }
-    }
-    
-    // this if statement is moved out of the above for loop 
-    for (State t : shuffledList) {
-      if(isRed.hasKeyValuePair(t, false)){
+      if(!isRed.get((int)t.getUniqueIndex())){
         allRed = false;
-        break;
       }
     }
-    
+    System.out.println("line 154");
     if(allRed){
-      isRed.setValue(s, true);
+      isRed.set((int)s.getUniqueIndex());
     }
     else if(s.isAccepting()){
       visitCount.getValue(s).incrementAndGet();
+        try{
+        Thread.sleep(5000);
+        } catch(InterruptedException ie){}
+        
       dfsRed(s);
     }
     colors.setValue(s, Color.BLUE);
@@ -141,23 +174,29 @@ class Worker implements Runnable
   
     long start = System.currentTimeMillis();
     long end;
-    
+ 
     try {
-      dfsBlue(graph.getInitialState());
+      System.out.println("hi 3");
+      NDFSState initial = ndfsGraph.getInitialState();
+      System.out.println("hi 3.5");
+      dfsBlue(initial);
+      System.out.println("hi 4");
       throw new NoCycleFound();
     } 
     catch (CycleFound cf) {
-      end = System.currentTimeMillis();
+      System.out.println("hi 5");
+    end = System.currentTimeMillis();
       System.out.println(cf.getMessage());
       System.out.printf("%s took %d ms\n", "MC_NDFS", end - start);
       executor.shutdownNow();
     }
     catch (Result r) {
+      System.out.println("hi 6");
       end = System.currentTimeMillis();
       System.out.println(r.getMessage());
       System.out.printf("%s took %d ms\n", "MC_NDFS", end - start);
-      //executor.shutdownNow();
     }
+    System.out.println("thread done");
   }
 
 }

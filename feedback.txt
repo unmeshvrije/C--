@@ -7,6 +7,10 @@ you to use ExecutorCompletionService or even simpler ExectorService
 
 3.
 how to minimize the possibility of threads searching the same area of the graph? 
-Sharing the red color is not enough. Think about the details of handling the results of the post function 
+Sharing the red color is not enough. 
+
+Think about the details of handling the results of the post function
+: shuffle the results of post
 
 4. Adding something to HashMap may introduce race conditions
+: HOW ?

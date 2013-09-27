@@ -1,13 +1,17 @@
-package ndfs.mcndfs_alg3;
+package ndfs.mcndfs_op2;
 
 import java.util.HashMap;
+import java.util.BitSet;
+import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.RejectedExecutionException;
-import java.util.concurrent.TimeUnit;
-
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeoutException;
 import java.io.File;
+
+import java.util.concurrent.TimeUnit;
 
 import graph.State;
 import graph.Graph;
@@ -23,15 +27,18 @@ import ndfs.MapWithDefaultValues;
 public class NNDFS implements NDFS {
 
   private File file;
-  private MapWithDefaultValues<State, Boolean> isRed;
-  private MapWithDefaultValues<State, AtomicInteger> visitCount;
+  //private MapWithDefaultValues<State, Boolean> isRed;
+  private BitSet isRed;  
+  private MapWithDefaultValues<NDFSState, AtomicInteger> visitCount;
   private int nThreads;
   private static final int TIMEOUT = 50;
-
+  
   public NNDFS(File file, int nThreads){
     this.file = file;
-    this.isRed = new MapWithDefaultValues<State, Boolean>(new HashMap<State, Boolean>(), false);
-    this.visitCount = new MapWithDefaultValues<State, AtomicInteger>(new HashMap<State, AtomicInteger>(), new AtomicInteger(0));
+//    this.isRed = new MapWithDefaultValues<State, Boolean>(new HashMap<State, Boolean>(), false);
+    this.isRed = new BitSet();
+
+    this.visitCount = new MapWithDefaultValues<NDFSState, AtomicInteger>(new HashMap<NDFSState, AtomicInteger>(), new AtomicInteger(0));
     this.nThreads = nThreads;
   }
 
@@ -46,6 +53,7 @@ public class NNDFS implements NDFS {
   private void nndfs(State s) throws Result {
     // Create threads here
     Worker[] worker = new Worker[nThreads];
+    
     ExecutorService executor = Executors.newFixedThreadPool(nThreads);
 
     try{

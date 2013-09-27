@@ -39,20 +39,25 @@ public class Main {
   }
 
   private static void runMCNDFS(File file, String version, int nWorkers, int depth) throws FileNotFoundException, ArgumentException {
-    Graph graph = GraphFactory.createGraph(file);
-
     NDFS ndfs = null;
+    
     if (version.equals("alg2")) {
-      ndfs = NDFSFactory.createMCNDFSAlg2(graph, nWorkers);
+      ndfs = NDFSFactory.createMCNDFSAlg2(file, nWorkers);
     } else if (version.equals("alg3")) {
-      ndfs = NDFSFactory.createMCNDFSAlg3(graph, nWorkers);
+      ndfs = NDFSFactory.createMCNDFSAlg3(file, nWorkers);
     } else if (version.equals("op1")) {
-      ndfs = NDFSFactory.createMCNDFSOp1(graph, nWorkers, depth);
+      ndfs = NDFSFactory.createMCNDFSOp1(file, nWorkers, depth);
+    } else if (version.equals("op2")) {
+      ndfs = NDFSFactory.createMCNDFSOp2(file, nWorkers);
+    } else if (version.equals("op3")) {
+      ndfs = NDFSFactory.createMCNDFSOp3(file, nWorkers);
+    } else if (version.equals("op4")) {
+      ndfs = NDFSFactory.createMCNDFSOp4(file, nWorkers);
     } else {
       throw new ArgumentException("Invalid arguments");
     }
 
-    long start = System.currentTimeMillis();
+    long start = System.nanoTime();//currentTimeMillis();
     long end;
 
     try {
@@ -60,9 +65,9 @@ public class Main {
       //throw new Error("No result returned by naive");
     }
     catch (Result r) {
-      end = System.currentTimeMillis();
+      end = System.nanoTime();
       System.out.println(r.getMessage());
-      System.out.printf("%s took %d ms\n", "MC_NDFS", end - start);
+      System.out.printf("%s took %ld us\n", "MC_NDFS", (end - start)/1000);
     }
   }
 
@@ -100,8 +105,11 @@ public class Main {
     } else if ( false
               || version.equals("alg2")
               || version.equals("alg3")
-              || version.equals("op1"))
-    {
+              || version.equals("op1")
+              || version.equals("op2")
+              || version.equals("op3")
+              || version.equals("op4")
+    ){
       runMCNDFS(file, version, nWorkers, depth);
     } else {
       throw new ArgumentException("Unkown version: " + version);
