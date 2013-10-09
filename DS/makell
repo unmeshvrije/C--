@@ -1,0 +1,2 @@
+all: llmain.c ll.c ll.h
+	gcc -g -Wall -o llmain llmain.c ll.c

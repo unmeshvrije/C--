@@ -1,0 +1,5 @@
+When removing the weak attribute and re-executing the build commands the last one fails with following error message (on Linux):
+
+multiple definition of `power2'
+
+The 2nd last one still succeeds and ./slow has the same output.

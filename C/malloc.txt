@@ -1,0 +1,4 @@
+When we use malloc to allocate memory for 2D array
+malloc stores bookkeeping information before EACH row (number of bytes allocated and last bit is set to 1 to indicate that the block is in use/active)
+
+Thus 3 X 3 matrix will not get consecutive 9 (int*) memory addresses.

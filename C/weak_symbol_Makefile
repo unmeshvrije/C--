@@ -1,0 +1,6 @@
+all:
+	cc -g -c -o weak_symbol_main.o weak_symbol_main.c
+	cc -g -c -o power_slow.o weak_symbol_power_slow.c
+	cc -g -c -o power.o weak_symbol_power.c
+	cc  weak_symbol_main.o power_slow.o         -o slow
+	cc  weak_symbol_main.o power_slow.o power.o -o fast

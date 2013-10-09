@@ -1,0 +1,4 @@
+all: sorting
+
+sorting: sortmain.c sort.h sort.c
+	gcc -g -Wall -o sortmain sortmain.c sort.c

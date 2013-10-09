@@ -1,0 +1,4 @@
+all:	xortest
+
+xortest: xortest.c xorll.c xorll.h
+	gcc -g -o xortest xortest.c xorll.c

@@ -1,0 +1,4 @@
+all:	treemain
+
+treemain: treemain.c bintree.c queue.c stack.c
+	gcc -g -o treemain treemain.c bintree.c queue.c stack.c
