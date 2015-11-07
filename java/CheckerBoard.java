@@ -29,18 +29,12 @@ class CheckerBoardCell extends JButton implements MouseListener {
 
 public class CheckerBoard {
 	public static void main(String s[]) {
-		// Create object of class JFrame with label/title Hello Ween
 		JFrame window = new JFrame("Tic Tac Toe !");
 		
 		// Default layout for the JFrame is BorderLayout with default position CENTER
 		window.setLayout(new GridLayout(0,3));
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		/**
-		* 0 1 2
-		* 3 4 5
-		* 6 7 8
-		*/
 		CheckerBoardCell buttons[] = new CheckerBoardCell[9];
 		for (int i = 0; i < 9; ++i) {
 			buttons[i] = new CheckerBoardCell("CHECK");
