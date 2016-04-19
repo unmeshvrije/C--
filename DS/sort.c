@@ -66,6 +66,60 @@ void quickSort(int a[], int p, int r)
   }
 }
 
+void merge(int a[], int p, int q, int r) {
+  int nLeft  = q-p+1;
+  int nRight = r-q;
+
+  int *L = (int*)malloc(sizeof(int) * nLeft);
+  int *R = (int*)malloc(sizeof(int) * nRight);
+  memcpy(L, a+p, nLeft*sizeof(int));
+  memcpy(R, a+q+1, nRight*sizeof(int));
+
+  printf("Left: \n");
+  PrintArray(L, nLeft);
+  printf("Right: \n");
+  PrintArray(R, nRight);
+
+  int i = 0;
+  int j = 0;
+  int k = p;
+  while (i < nLeft && j < nRight) {
+    if (L[i] <= R[j]) {
+      a[k++] = L[i++];
+    } else {
+      a[k++] = R[j++];
+    }
+  }
+
+  while(i < nLeft) {
+    a[k++] = L[i++];
+  }
+
+  while (j <nRight) {
+    a[k++] = R[j++];
+  }
+
+  printf("After merge: \n");
+  PrintArray(a, r-p+1);
+
+  free(L);
+  free(R);
+}
+
+void mergeSort(int a[], int p, int r) {
+  if (p < r) {
+    int q = floor((p+r)/2);
+    printf("Calling MergetSort(%d, %d)\n", p, q);
+    mergeSort(a, p, q);
+    printf("Calling MergetSort(%d, %d)\n", q+1, r);
+    mergeSort(a, q+1, r);
+
+    printf("Calling merge(%d, %d, %d)\n ", p, q, r);
+    merge(a, p, q, r);
+    //PrintArray(a, r-p+1);
+  }
+}
+
 void PrintArray(int a[], int n)
 {
   int i;

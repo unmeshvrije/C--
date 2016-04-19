@@ -19,9 +19,14 @@ class String
      char& operator[](int index);
      char* GetString(void);
 
-     friend ostream&
-     operator <<(ostream&, String&);
-     friend istream&
-     operator >>(istream&, String&);
+     friend ostream&    operator <<(ostream&, String&);
+     friend istream&     operator >>(istream&, String&);
 
 };
+
+
+
+
+
+
+

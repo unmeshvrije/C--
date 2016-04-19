@@ -8,7 +8,8 @@ int main()
 {
   PrintArray(a, ARRAY_SIZE(a));
  // insertionSort(a, ARRAY_SIZE(a));
- quickSort(a, 0, ARRAY_SIZE(a) -1);
+ // quickSort(a, 0, ARRAY_SIZE(a) -1);
+ mergeSort(a, 0, ARRAY_SIZE(a)-1);
   PrintArray(a, ARRAY_SIZE(a));
   return 0;
 }

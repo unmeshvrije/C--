@@ -1,4 +1,4 @@
 all: sorting
-
+clean: ;rm sort.o sortmain;
 sorting: sortmain.c sort.h sort.c
-	gcc -g -Wall -o sortmain sortmain.c sort.c
+	gcc -g -Wall -o sortmain sortmain.c sort.c -lm
