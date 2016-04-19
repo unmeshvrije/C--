@@ -1,0 +1,70 @@
+Introduction to Java
+
+. What is Java ? 
+Java is a professional programming language used all over the World. Learning a few bits and pieces of Java will help you understanding other programming languages too.
+
+. Classes, Objects, Windows
+Classes are abstract things. Things that you cannot see.
+Objects are things you can see.
+For example, SuperHero is a class. SpiderMan is an object.
+Windows are visual representation of what we call as an application on computers. However, there are applications without a window. Windows make it easy to interact for general users. Windows are all rectangular boxes that you can minimize or maximize or close if you don't like the feel. Window is all about GUI (Graphical User Interface) and GUI is all about Look and Feel. We want to develop windows that look cool and attract users' attention.
+
+. Swing
+It is a GUI widget toolkit for Java. It provides a number of classes we can use in our program to create windows.
+
+. Installation of JDK
+JDK stands for Java Development Kit. It is a set of tools required to develop and execute Java programs. It has Java compiler (javac), interpreter/loader (java) and so on. We will need only javac and java. 
+Go to the Oracle web-site and download the JDK suitable for your platform. (This is a pre-requisite for the session. If you haven't already downloaded, then download it now)
+http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
+
+.. how to check if the download and install was successful.
+For Windows:
+Press Window + R 
+Type cmd and hit enter(Terminal window will open)
+type javac. This should display some help. If it says command not found, then the installation was not successful.
+
+For Linux:
+Press Alt + F2
+type gnome-terminal and hit enter. If this does does not work, type konsole and hit enter
+type javac. This should display some help. If it says command not found, then the installation was not successful.
+
+Fox Mac:
+Press Command + space-bar
+Type Terminal and hit enter (Terminal window will open)
+type javac. This should display some help. If it says command not found, then the installation was not successful.
+
+
+. Writing the first window program
+Choose your favorite editor.
+Notepad++ on Windows.
+vim/gedit/kate on Linux.
+vim/TextEdit on MAC
+
+// Swing is a part of java eXtended library. thus, it is imported from javax
+import javax.swing.*;
+
+// public class name must match with the file name.
+public class SwingWindow {
+
+    // main function must be static (callable without an object), returning void (nothing) and accepting an array ([]) of Strings (command line arguments)
+    public static void main(String s[]){
+
+        // JFrame is a class for windows. frame is an object. "new" creates a new object. "Hello Swings" is a parameter to the JFrame class's Constructor to create the frame.
+        JFrame frame = new JFrame("Hello Swings");
+
+	// We should be able to close the window
+	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        //Create a label to be displayed on the window. Some message like "Hello World".
+        JLabel label = new JLabel("Hello World");
+
+	// Every window created by JFrame class will have a pane for its content. We can add things to this pain by doing following.
+        frame.getContentPane().add(label);
+ 
+        // We want our window to be compact (only big enough to contain everything we want to display)
+        frame.pack();
+
+        //Display the window.
+        frame.setVisible(true);
+    }
+}
