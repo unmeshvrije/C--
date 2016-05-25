@@ -1,0 +1,26 @@
+
+import csv
+def format_csv(list):
+  with open(list[1], 'rb') as csvfile:
+          for row in csvfile.readlines():
+            #print row
+            columns = row.split(',')
+            full_name = columns[2]
+            names = full_name.split(' ')
+            last_name = names[-1]
+
+            last_name_first = last_name
+            print last_name + ":"
+            l = len(names)
+            for i in range (0,l-1):
+              last_name_first += " "
+              last_name_first += names[i]
+              print names[i]
+
+            print last_name_first
+
+
+
+if __name__ == "__main__":
+	import sys
+	format_csv(list(sys.argv))
