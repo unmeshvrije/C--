@@ -12,7 +12,7 @@ class Derived : public Base
    public:
    void fun() {cout << "Derived::fun()" << endl;}
 };
-/*
+
 void TestCast(Base *ptr)
 {
    if (NULL != dynamic_cast<Base*>(ptr))
@@ -36,7 +36,7 @@ void TestCast(Base *ptr)
      cout << "sTATIC-CAST: ptr is NOT of Derived type" << endl;
 
 }
-*/
+
 void f(Base *ptr)
 {
     Derived *p1 = static_cast<Derived*>(ptr);
@@ -68,7 +68,7 @@ int main()
 //    Derived *ptr = new Base();
 
 //    cout << "Test Base *ptr which has Derived type mem:" << endl;
-  //  TestCast(ptr);
+    TestCast(ptr);
   //  cout << "Test Derived *ptr which has Derived type mem:" << endl;
 //    TestCast(ptr2);
 }

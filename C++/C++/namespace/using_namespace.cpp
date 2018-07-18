@@ -9,6 +9,8 @@ int main()
 // or
 // Fully qualified name
 
+// If we use the using directive inside the function, then it's visible only under the function
+
   cout << "Hello C++" << std::endl;
    return 0;
 }

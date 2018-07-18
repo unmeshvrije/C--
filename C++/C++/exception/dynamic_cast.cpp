@@ -36,12 +36,12 @@ void f(Base *ptr)
 
     Derived *p2 = dynamic_cast<Derived*>(ptr);  
     if (NULL == p2)
-      //throw new CastException;
-      throw new exception;
+      throw new CastException;
+      //throw new exception;
      //cout << "Dynamic cast failed" << endl;
     }
-    //catch(CastException *ce)
-    catch(exception *ce)
+    catch(CastException *ce)
+    //catch(exception *ce)
     {
        cout << "Something unexpected.." << endl;
 //       unexpected();
