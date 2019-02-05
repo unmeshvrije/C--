@@ -1,3 +1,4 @@
+namespace unmesh {
 typedef struct Complex {
 
     public:
@@ -51,3 +52,4 @@ typedef struct Complex {
     }
 
 } Complex;
+}

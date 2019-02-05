@@ -136,7 +136,7 @@ void cconv(std::vector<unmesh::Complex>& a, std::vector<unmesh::Complex>& b, std
 
 int main(int argc, char* argv[]) {
     
-    /*unmesh::Complex c1(1, 1);
+    unmesh::Complex c1(1, 1);
     unmesh::Complex c2(2, 2);
     unmesh::Complex c3(88, 6.5);
     unmesh::Complex c4(23, 45);
@@ -197,49 +197,6 @@ int main(int argc, char* argv[]) {
     for (auto o : out2) {
         //std::cout << o.real << "(" << o.imag << "j)" << std::endl;
         std::cout << o << std::endl;
-    }*/
-
-    int N = 10;
-    double in[] = {1,2,3,4,5,6,0,0,0,0};
-
-    double in2[][2] = {{1,2}, {3,4}, {5,6}};
-    /*double *mat [N];
-    for (int i = 0; i < N; ++i) {
-        mat[i] = new double[2];
-        for (int j = 0; j < 2; ++j) {
-            mat[i][j] = i+j+1; //complex<double>(i+1, j+1);
-        }
-    }*/
-    fftw_complex *out3;
-    fftw_complex *out4;
-    fftw_plan p;
-
-    //out3 = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * (N/2 + 1));
-    out3 = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * (2)); // no * n1 = 6 = 10/2 + 1
-
-    //p = fftw_plan_dft_r2c_2d(3, 2, in, out3, FFTW_ESTIMATE);
-    for (int i = 0; i < 3; ++i){
-        p = fftw_plan_dft_r2c_1d(2, in2[i], out3, FFTW_ESTIMATE);
-        fftw_execute(p);
-
-        for (int i = 0; i < 2 ; ++i) {
-            cout << out3[i][0] << ", " << out3[i][1] << endl;
-        }
-        fftw_destroy_plan(p);
     }
-
-    cout << endl;
-    out4 = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * (N/2 + 1));
-    p = fftw_plan_dft_r2c_1d(N/2+1 , in, out4, FFTW_ESTIMATE);
-    fftw_execute(p);
-    for (int i = 0; i < N/2+1 ; ++i) {
-        cout << out4[i][0] << ", " << out4[i][1] << endl;;
-    }
-    fftw_destroy_plan(p);
-
-
-    fftw_free(out3);
-    fftw_free(out4);
-
     return 0;
 }
