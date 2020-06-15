@@ -12,7 +12,7 @@ def test():
 			words.append(OrigWord.replace(k, v))
 
 	for w in words:
-		print w
+		print (w)
 
 if __name__ == "__main__":
 	test()

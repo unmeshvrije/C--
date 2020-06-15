@@ -12,11 +12,18 @@ int main() {
         cout << n <<endl;
     }
 
-    vector<int>().swap(x);
-    cout << "before" << endl;
-    for (auto n : x) {
-        cout << n <<endl;
+    vector<int>y = x;
+
+    x.clear();
+
+    for (auto item: y) {
+        cout << item << endl;
     }
-    cout << "after" << endl;
+   // vector<int>().swap(x);
+   // cout << "before" << endl;
+   // for (auto n : x) {
+   //     cout << n <<endl;
+   // }
+   // cout << "after" << endl;
     return 0;
 }
