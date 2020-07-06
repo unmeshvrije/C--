@@ -2,6 +2,8 @@
 *.lo
 *.la
 *.out
+**/*.class
+**/.DS_Store
 **/*.out
 Makefile
 Makefile.in

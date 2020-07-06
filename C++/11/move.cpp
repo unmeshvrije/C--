@@ -23,19 +23,26 @@ class Vec {
     out << endl << v.my_vec.second << endl;
     return out;
   }
+
+  void print() {
+    cout << "Hello" << endl;
+  }
 };
 
 int main(){
 
-  Vec x  = Vec({1,2,3,4},2);
+  Vec x = Vec({1,2,3,4},2);
   cout << x;
-
+  cout << "Address of x " << hex << &x << endl;
  // Vec y = x;
   //cout << y;
 
   Vec z = move(x);
   cout << "Now..." << endl;
   cout << z;
-  cout << x;
+  cout << "Address of x " << hex << &x << endl;
+  cout << "Address of z " << hex << &z << endl;
+  //cout << x;
+  x.print();
   return 0;
 }
