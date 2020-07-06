@@ -1,6 +1,8 @@
 *.o
 *.lo
 *.la
+*.out
+**/*.out
 Makefile
 Makefile.in
 .libs
