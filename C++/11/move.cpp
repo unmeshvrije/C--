@@ -8,6 +8,11 @@ void myfunc(int i) {
   cout << ' ' << i;
 }
 
+void* operator new (size_t size) {
+    cout << "Allocating " << size << " bytes" << endl;
+    return malloc(size);
+}
+
 class Vec {
   private:
   pair<vector<int>, int> my_vec;
